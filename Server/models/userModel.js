@@ -8,13 +8,13 @@ const userSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: [true, "Please tell us your name!"],
-      maxlength: [10, "A  name must have less or equal then 10 characters"],
+      maxlength: [15, "A  name must have less or equal then 10 characters"],
       minlength: [3, "A  name must have more or equal then 3 characters"],
     },
     lastName: {
       type: String,
       required: [true, "Please tell us your name!"],
-      maxlength: [10, "A  name must have less or equal then 10 characters"],
+      maxlength: [15, "A  name must have less or equal then 10 characters"],
       minlength: [3, "A  name must have more or equal then 3 characters"],
     },
     email: {
@@ -54,6 +54,8 @@ const userSchema = new mongoose.Schema(
       },
     },
     passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
     active: {
       type: Boolean,
       default: false,
@@ -74,6 +76,19 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now();
+  next();
+});
+
+userSchema.pre(/^find/, function (next) {
+  //This point to current query
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
@@ -87,6 +102,21 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
     return JWTTimestamp < changedTimestamp;
   }
   return false;
+};
+
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  console.log({ resetToken }, this.passwordResetToken);
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 const User = mongoose.model("User", userSchema);
