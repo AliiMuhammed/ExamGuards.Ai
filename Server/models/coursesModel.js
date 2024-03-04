@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("./userModel");
 
 const courseSchema = new mongoose.Schema(
   {
@@ -44,9 +45,8 @@ const courseSchema = new mongoose.Schema(
     },
     instructors: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Instructor",
-        required: [true, "Instructor is required!"],
+        type: mongoose.Schema.ObjectId, // identifiy to be a MongoDB ID
+        ref: "User",
       },
     ],
     active: {
@@ -57,6 +57,13 @@ const courseSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+courseSchema.pre("save", async function (next) {
+  const instructorsPromises = this.instructors.map(
+    async (id) => await User.findById(id)
+  );
+  this.instructors = await Promise.all(instructorsPromises);
+});
 
 courseSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
