@@ -1,13 +1,95 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* start globale rules */
+@font-face {
+  font-family: "mainFont";
+  src: url(../Assets/Fonts/Sofia_Sans_Semi_Condensed/SofiaSansSemiCondensed-VariableFont_wght.ttf);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: "mainFontItalic";
+  src: url(../Assets/Fonts/Sofia_Sans_Semi_Condensed/SofiaSansSemiCondensed-Italic-VariableFont_wght.ttf);
 }
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --mainColor: #20ad96;
+  --mainFontColor: #3f3a64;
+  --secondaryFontColor: #adb4b7;
+  --secondaryColor: #57C5B6;
+  --mainBgColor: #F5F6F8;
+  --secondBgColor: #1D292E;
+  --main-transition: all 0.3s ease-in-out;
+  --main-border-radius: 35px;
+}
+
+body {
+
+  font-family: "mainFont", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--mainFontColor);
+  line-height: 1.7;
+}
+
+
+.container {
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+  .container {
+    width: 90%;
+  }
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .container {
+    width: 85%;
+  }
+}
+
+/* Large screens (992px and up) */
+@media only screen and (min-width: 992px) {
+  .container {
+    width: 75%;
+  }
+}
+
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+section {
+  margin-top: 10rem;
+}
+
+/* end globale rules */
