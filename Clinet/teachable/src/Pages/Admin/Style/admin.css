@@ -1,0 +1,6 @@
+.admin-section {
+    margin-top: 0;
+    display: grid;
+    grid-template-columns: 0.4fr 2fr;
+    height: 100vh;
+}

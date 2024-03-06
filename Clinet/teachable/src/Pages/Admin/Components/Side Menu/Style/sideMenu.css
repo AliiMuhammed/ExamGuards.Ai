@@ -1,0 +1,38 @@
+.sideMenu {
+
+    background-color: var(--mainFontColor);
+    color: var(--mainBgColor);
+}
+
+.sideMenu a {
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.sideMenu a:hover {
+    color: var(--mainFontColor)
+}
+
+.sideMenu .submenu-link {
+    color: var(--mainFontColor);
+}
+
+.sideMenu-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+
+.sideMenu-header .logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sideMenu-header .logo img {
+    width: 80%;
+}
