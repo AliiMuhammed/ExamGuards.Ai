@@ -32,13 +32,6 @@ const courseSchema = new mongoose.Schema(
       type: String,
       default: "default.jpg",
     },
-    materials: [
-      {
-        type: String,
-        required: false,
-        trim: true,
-      },
-    ],
     numberOfStudents: {
       type: Number,
       required: false,
@@ -55,14 +48,34 @@ const courseSchema = new mongoose.Schema(
       select: false,
     },
   },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
   { timestamps: true }
 );
+
+// this is virtual populate
+courseSchema.virtual("materials", {
+  ref: "Materials",
+  foreignField: "course",
+  localField: "_id",
+});
 
 courseSchema.pre("save", async function (next) {
   const instructorsPromises = this.instructors.map(
     async (id) => await User.findById(id)
   );
   this.instructors = await Promise.all(instructorsPromises);
+});
+
+courseSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "instructors",
+    select: "-__v -updatedAt -createdAt -courses -role ",
+  }); // here to make the output contains the details of the instructor we should write populating
+
+  next();
 });
 
 courseSchema.virtual("durationWeeks").get(function () {

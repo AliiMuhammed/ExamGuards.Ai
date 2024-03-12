@@ -1,8 +1,11 @@
 const express = require("express");
 const courseController = require("../controllers/coursesController");
 const authController = require("./../controllers/authController");
+const materialsRouter = require("../routes/materials");
 
 const router = express.Router();
+
+router.use("/:courseId/materials", materialsRouter);
 
 router
   .route("/")

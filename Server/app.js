@@ -13,6 +13,7 @@ const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 var usersRouter = require("./routes/users");
 var coursesRouter = require("./routes/courses");
+var materialsRouter = require("./routes/materials");
 
 var app = express();
 
@@ -52,6 +53,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", usersRouter);
 app.use("/courses", coursesRouter);
+app.use("/materials", materialsRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
