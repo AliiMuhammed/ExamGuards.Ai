@@ -2,6 +2,7 @@ const Course = require("../models/coursesModel");
 const APIFeatures = require("./../utils/apiFeatures");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
+const factory = require("./handlerFactory");
 
 exports.getAllCourses = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Course.find(), req.query)
@@ -22,7 +23,7 @@ exports.getAllCourses = catchAsync(async (req, res, next) => {
 });
 
 exports.getCourse = catchAsync(async (req, res, next) => {
-  const course = await Course.findById(req.params.id);
+  const course = await Course.findById(req.params.id).populate("materials");
   // Course.findOne({ _id: req.params.id })
 
   if (!course) {
@@ -66,15 +67,4 @@ exports.updateCourse = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteCourse = catchAsync(async (req, res, next) => {
-  const course = await Course.findByIdAndDelete(req.params.id);
-
-  if (!course) {
-    return next(new AppError("No course found with that ID", 404));
-  }
-
-  res.status(204).json({
-    status: "success",
-    data: null,
-  });
-});
+exports.deleteCourse = factory.deleteOne(Course);
