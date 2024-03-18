@@ -1,16 +1,11 @@
 .sideMenu {
-
+    height: 100%;
     background-color: var(--mainFontColor);
     color: var(--mainBgColor);
+    border: none !important;
+
 }
 
-.sideMenu a {
-    transition: var(--main-transition);
-    -webkit-transition: var(--main-transition);
-    -moz-transition: var(--main-transition);
-    -ms-transition: var(--main-transition);
-    -o-transition: var(--main-transition);
-}
 
 .sideMenu a:hover {
     color: var(--mainFontColor)
@@ -26,7 +21,7 @@
 }
 
 .sideMenu .submenu-link a.active {
-    background-color: #d3d3d3;
+    background-color: #e7e7e7;
 }
 
 .sideMenu-header {
@@ -34,6 +29,15 @@
     justify-content: center;
     align-items: center;
     margin: 2rem;
+}
+
+.sideMenu-header .toggle {
+    background-color: transparent;
+    border: none;
+    color: var(--mainBgColor);
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .sideMenu-header .logo {

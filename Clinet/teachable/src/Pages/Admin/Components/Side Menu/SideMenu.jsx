@@ -6,16 +6,30 @@ import "./Style/sideMenu.css";
 import { FaHome } from "react-icons/fa";
 import { IoPerson, IoPieChartSharp } from "react-icons/io5";
 import { BiSolidReport } from "react-icons/bi";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 function SideMenu() {
+  const [sideMenuToggle, setSideMenuToggle] = useState(false);
+  const handleToggle = () => {
+    setSideMenuToggle(!sideMenuToggle);
+  };
   return (
-    <Sidebar width={"100%"} backgroundColor="" className="sideMenu">
+    <Sidebar
+      collapsed={sideMenuToggle}
+      width={"100%"}
+      backgroundColor=""
+      className="sideMenu"
+      toggled={sideMenuToggle}
+    >
       <div className="sideMenu-header">
         <div className="logo">
           <img src={logo} loading="lazy" alt="logo" />
         </div>
+        <button onClick={handleToggle} className="toggle">
+          {sideMenuToggle ? <IoIosArrowForward /> : <IoIosArrowBack />}
+        </button>
       </div>
-      <Menu>
+      <Menu closeOnClick={true}>
         <MenuItem component={<NavLink to="/admin/home" />} icon={<FaHome />}>
           Home
         </MenuItem>

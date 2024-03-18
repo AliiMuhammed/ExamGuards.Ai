@@ -1,6 +1,28 @@
 .admin-section {
     margin-top: 0;
-    display: grid;
-    grid-template-columns: 0.4fr 2fr;
+    display: flex;
     height: 100vh;
+}
+
+.admin-section .left {
+    height: 100%;
+    flex-grow: 0;
+    max-width: 300px;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+}
+
+.admin-section .right {
+    height: 100%;
+    flex-grow: 1;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
 }
