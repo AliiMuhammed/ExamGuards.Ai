@@ -16,8 +16,17 @@
     color: var(--mainFontColor)
 }
 
+.sideMenu a.active {
+    background-color: #f3f3f3;
+    color: var(--mainFontColor);
+}
+
 .sideMenu .submenu-link {
     color: var(--mainFontColor);
+}
+
+.sideMenu .submenu-link a.active {
+    background-color: #d3d3d3;
 }
 
 .sideMenu-header {

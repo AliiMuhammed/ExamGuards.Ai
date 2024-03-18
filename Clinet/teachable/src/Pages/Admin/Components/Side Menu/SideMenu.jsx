@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../../../../Assets/Images/Logos/h-logo-white.png";
 import "./Style/sideMenu.css";
 import { FaHome } from "react-icons/fa";
@@ -16,28 +16,36 @@ function SideMenu() {
         </div>
       </div>
       <Menu>
-        <MenuItem component={<Link to="/admin/home" />} icon={<FaHome />}>
+        <MenuItem component={<NavLink to="/admin/home" />} icon={<FaHome />}>
           Home
         </MenuItem>
         <SubMenu icon={<IoPerson />} label="Users">
           <MenuItem
-            component={<Link to="/admin/students" />}
+            component={<NavLink to="/admin/students" />}
             className="submenu-link"
           >
             Students
           </MenuItem>
           <MenuItem
-            component={<Link to="/admin/instructors" />}
+            component={<NavLink to="/admin/instructors" />}
             className="submenu-link"
           >
             Instructors
+          </MenuItem>
+          <MenuItem
+            component={<NavLink to="/admin/admins" />}
+            className="submenu-link"
+          >
+            Admins
           </MenuItem>
         </SubMenu>
         <SubMenu icon={<IoPieChartSharp />} label="Charts">
           <MenuItem className="submenu-link"> Pie charts </MenuItem>
           <MenuItem className="submenu-link"> Line charts </MenuItem>
         </SubMenu>
+        <MenuItem icon={<BiSolidReport />}> Courses </MenuItem>
         <MenuItem icon={<BiSolidReport />}> Reports </MenuItem>
+        <MenuItem icon={<BiSolidReport />}> Archive </MenuItem>
       </Menu>
     </Sidebar>
   );
