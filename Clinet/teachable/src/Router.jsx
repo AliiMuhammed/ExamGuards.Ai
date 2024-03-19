@@ -4,12 +4,18 @@ import Admin from "./Pages/Admin/Admin";
 import Notfound from "./Pages/NotFound/Notfound";
 import AdminHome from "./Pages/Admin/Components/Home/AdminHome";
 import AdminStudents from "./Pages/Admin/Components/Students/AdminStudents";
+import Login from "./Pages/Login/Login";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [],
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
     errorElement: <Notfound />,
   },
   {

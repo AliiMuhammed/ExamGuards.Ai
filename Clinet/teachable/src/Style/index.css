@@ -9,6 +9,10 @@
   src: url(../Assets/Fonts/Sofia_Sans_Semi_Condensed/SofiaSansSemiCondensed-Italic-VariableFont_wght.ttf);
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -88,9 +92,9 @@ a {
   text-decoration: none;
 }
 
-section {
+/* section {
   margin-top: 10rem;
-}
+} */
 
 /* end globale rules */
 /* end globale rules */

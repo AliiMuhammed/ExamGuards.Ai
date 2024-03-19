@@ -1,0 +1,43 @@
+.admin-students-section {
+    margin-top: 2rem;
+}
+
+.admin-students-section .inactive-user,
+.admin-students-section .active-user {
+    padding: 8px 15px;
+    color: #fff;
+    font-weight: bold;
+    display: inline-block;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    -o-border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+
+
+
+.admin-students-section .active-user {
+    background-color: green;
+
+}
+.admin-students-section .active-user:hover {
+    background-color: rgb(1, 180, 1);
+
+}
+.admin-students-section .inactive-user {
+    background-color: darkred;
+
+}
+.admin-students-section .inactive-user:hover{
+    background-color: rgb(173, 1, 1);
+
+}

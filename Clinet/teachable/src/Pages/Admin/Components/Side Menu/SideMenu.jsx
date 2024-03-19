@@ -9,7 +9,7 @@ import { BiSolidReport } from "react-icons/bi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 function SideMenu() {
-  const [sideMenuToggle, setSideMenuToggle] = useState(false);
+  const [sideMenuToggle, setSideMenuToggle] = useState(true);
   const handleToggle = () => {
     setSideMenuToggle(!sideMenuToggle);
   };
