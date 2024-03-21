@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import "./style/adminStudents.css";
+import "./style/adminInstructors.css";
 import http from "./../../../../Helper/http";
 import userimg from "../../../../Assets/Images/user.png";
 import MainTabel from "../MainTabel/MainTabel";
 import MainSpinner from "../../../../Shared/Components/MainSpinner";
-function AdminStudents() {
+function AdminInstructors() {
   const [loadingStates, setLoadingStates] = useState({});
   const [users, setUsers] = useState({
     data: [],
@@ -82,9 +82,7 @@ function AdminStudents() {
     if (reloadData) {
       setUsers({ ...users, loading: true });
       const params = new URLSearchParams({
-        // page: 2,
-        // limit: 2,
-        role: "student",
+        role: "instructor",
       }).toString();
 
       http
@@ -106,12 +104,16 @@ function AdminStudents() {
   }, [reloadData]);
 
   return (
-    <section className="admin-students-section">
+    <section className="admin-instructors-section">
       <div className="container">
         {users.data.length === 0 && <MainSpinner />}
         {users.data.length !== 0 && (
           <>
-            <MainTabel title={"Students"} data={users.data} columns={columns} />
+            <MainTabel
+              title={"Instructors"}
+              data={users.data}
+              columns={columns}
+            />
           </>
         )}
       </div>
@@ -119,4 +121,4 @@ function AdminStudents() {
   );
 }
 
-export default AdminStudents;
+export default AdminInstructors;
