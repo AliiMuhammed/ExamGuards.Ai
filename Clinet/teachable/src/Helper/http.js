@@ -6,7 +6,9 @@ const http = {
     try {
       const token = await getAuthUser(); // Wait for the token to be retrieved
       if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token.token}`;
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${token.data.token}`;
       }
 
       const response = await axios.get(url, config);
@@ -22,7 +24,9 @@ const http = {
     try {
       const token = await getAuthUser(); // Wait for the token to be retrieved
       if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token.token}`;
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${token.data.token}`;
       }
 
       const response = await axios.post(url, data, config);
@@ -38,7 +42,9 @@ const http = {
     try {
       const token = await getAuthUser(); // Wait for the token to be retrieved
       if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token.token}`;
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${token.data.token}`;
       }
 
       const response = await axios.put(url, data, config);
@@ -54,7 +60,9 @@ const http = {
     try {
       const token = await getAuthUser(); // Wait for the token to be retrieved
       if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token.token}`;
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${token.data.token}`;
       }
 
       const response = await axios.patch(url, data, config);
@@ -70,7 +78,9 @@ const http = {
     try {
       const token = await getAuthUser(); // Wait for the token to be retrieved
       if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token.token}`;
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${token.data.token}`;
       }
 
       const response = await axios.delete(url, config);
