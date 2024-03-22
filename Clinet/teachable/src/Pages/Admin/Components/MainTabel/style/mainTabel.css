@@ -5,7 +5,8 @@
 
 .main-tabel-section .inactive-user,
 .main-tabel-section .active-user {
-    padding: 8px 15px;
+    font-size: 1rem;
+    padding: 0.5rem 2rem;
     color: #fff;
     font-weight: bold;
     display: inline-block;

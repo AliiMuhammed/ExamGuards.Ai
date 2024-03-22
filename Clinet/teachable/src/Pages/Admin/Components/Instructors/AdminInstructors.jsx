@@ -75,6 +75,16 @@ function AdminInstructors() {
         },
       },
     },
+    {
+      name: "action",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          const userId = users.data[tableMeta.rowIndex]?._id;
+          const isLoading = loadingStates[userId];
+          return <button className="main-btn sm">Assign</button>;
+        },
+      },
+    },
   ];
 
   const [reloadData, setReloadData] = useState(true);

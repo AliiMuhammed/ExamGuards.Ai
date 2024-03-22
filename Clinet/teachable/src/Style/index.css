@@ -92,6 +92,40 @@ a {
   text-decoration: none;
 }
 
+.main-btn {
+  padding: 1rem 3rem;
+  border-radius: var(--main-border-radius);
+  -webkit-border-radius: var(--main-border-radius);
+  -moz-border-radius: var(--main-border-radius);
+  -ms-border-radius: var(--main-border-radius);
+  -o-border-radius: var(--main-border-radius);
+  border: 2px solid var(--mainFontColor);
+  color: #fff;
+  font-size: 1.1rem;
+  background-color: var(--mainFontColor);
+  transition: var(--main-transition);
+  -webkit-transition: var(--main-transition);
+  -moz-transition: var(--main-transition);
+  -ms-transition: var(--main-transition);
+  -o-transition: var(--main-transition);
+  cursor: pointer;
+}
+
+.main-btn.sm {
+  font-size: 1rem;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+}
+
+.main-btn:hover {
+  background-color: transparent;
+  color: var(--mainFontColor);
+}
+
 /* section {
   margin-top: 10rem;
 } */
