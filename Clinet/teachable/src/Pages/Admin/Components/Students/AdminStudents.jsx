@@ -54,9 +54,6 @@ function AdminStudents() {
       name: "email",
     },
     {
-      name: "role",
-    },
-    {
       name: "active",
       options: {
         customBodyRender: (value, tableMeta) => {

@@ -1,3 +1,9 @@
 .admin-instructors-section {
     margin-top: 2rem;
 }
+
+.actions-btns {
+    display: flex;
+    justify-content: flex-start;
+
+}

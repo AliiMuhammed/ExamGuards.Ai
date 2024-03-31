@@ -6,7 +6,12 @@ import "./Style/sideMenu.css";
 import { FaHome } from "react-icons/fa";
 import { IoPerson, IoPieChartSharp } from "react-icons/io5";
 import { BiSolidReport } from "react-icons/bi";
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import {
+  IoIosArrowForward,
+  IoIosArrowBack,
+  IoIosArchive,
+} from "react-icons/io";
+import { FaBook } from "react-icons/fa6";
 
 function SideMenu() {
   const [sideMenuToggle, setSideMenuToggle] = useState(true);
@@ -57,9 +62,9 @@ function SideMenu() {
           <MenuItem className="submenu-link"> Pie charts </MenuItem>
           <MenuItem className="submenu-link"> Line charts </MenuItem>
         </SubMenu>
-        <MenuItem icon={<BiSolidReport />}> Courses </MenuItem>
+        <MenuItem icon={<FaBook />}> Courses </MenuItem>
         <MenuItem icon={<BiSolidReport />}> Reports </MenuItem>
-        <MenuItem icon={<BiSolidReport />}> Archive </MenuItem>
+        <MenuItem icon={<IoIosArchive />}> Archive </MenuItem>
       </Menu>
     </Sidebar>
   );

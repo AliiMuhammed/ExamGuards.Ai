@@ -2,14 +2,17 @@ import React from "react";
 import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./style/mainTabel.css";
-const MainTabel = ({ data, columns, title }) => {
+
+
+const MainTabel = ({ data, columns, title, customOptions }) => {
   const options = {
     filterType: "multiselect",
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 10,
-    rowsPerPageOptions: [10, 50, 100],
+    rowsPerPage: 7,
+    rowsPerPageOptions: [7, 50, 100],
   };
+
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -44,9 +47,10 @@ const MainTabel = ({ data, columns, title }) => {
           title={title}
           data={data}
           columns={columns}
-          options={options}
+          options={customOptions ? customOptions : options}
         />
       </ThemeProvider>
+
     </section>
   );
 };

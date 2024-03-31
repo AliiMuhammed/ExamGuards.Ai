@@ -121,6 +121,19 @@ a {
   -o-border-radius: 25px;
 }
 
+.main-btn.sm.delete {
+  background-color: #8b0000;
+  border-color: #8b0000;
+  margin-left: 1rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.main-btn.sm.delete:hover {
+  background-color: transparent;
+}
+
 .main-btn:hover {
   background-color: transparent;
   color: var(--mainFontColor);
