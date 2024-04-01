@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./style/adminInstructors.css";
 import http from "./../../../../Helper/http";
 import MainTabel from "../MainTabel/MainTabel";
-
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
@@ -15,15 +14,13 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import Alert from "@mui/material/Alert";
 import MyToast from "../../../../Shared/Components/MyToast";
 
 function AdminInstructors() {
   const [loadingStates, setLoadingStates] = useState({});
-  const [deleteLoadingStates, setDeleteLoadingStates] = useState({});
   const [open, setOpen] = useState(false);
-  const [SucessOpen, setSucessOpen] = useState(false);
+  const [ToastOpen, setToastOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
   const [toastMsg, setToastMsg] = useState({
     msg: "",
@@ -33,6 +30,11 @@ function AdminInstructors() {
     open: false,
     id: "",
   });
+  const [openUpdateDilog, setOpenUpdateDilog] = useState({
+    open: false,
+    id: "",
+  });
+
   const [users, setUsers] = useState({
     data: [],
     loading: false,
@@ -42,6 +44,10 @@ function AdminInstructors() {
     loading: false,
   });
   const [newInstractor, setNewInstractor] = useState({
+    loading: false,
+    errorMsg: "",
+  });
+  const [updateInstractor, setUpdateInstractor] = useState({
     loading: false,
     errorMsg: "",
   });
@@ -62,25 +68,29 @@ function AdminInstructors() {
             name: user.firstName + " " + user.lastName,
           }));
 
-          setUsers({ data: localUsers, loading: false });
+          setUsers({ data: localUsers, loading: false, errorMsg: "" });
           setReloadData(false);
         })
         .catch((err) => {
-          console.log(err);
+          setUsers({
+            ...users,
+            loading: false,
+            errorMsg: "Something went wrong!",
+          });
         });
     }
   }, [reloadData]);
 
   // handle open and colse toaster
-  const handleSucessOpen = () => {
-    setSucessOpen(true);
+  const handleToastOpen = () => {
+    setToastOpen(true);
   };
   const handleSucessClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
 
-    setSucessOpen(false);
+    setToastOpen(false);
   };
 
   // handel activation user
@@ -99,15 +109,72 @@ function AdminInstructors() {
           msg: "Operation was completed successfully",
           type: "success",
         });
-        handleSucessOpen();
+        handleToastOpen();
       })
       .catch((err) => {
         console.log(err);
         setUsers({ ...users, loading: false });
         setLoadingStates({ ...loadingStates, [id]: false });
+        setToastMsg({
+          ...toastMsg,
+          msg: "Something went wrong",
+          type: "error",
+        });
+        handleToastOpen();
       });
   };
 
+  //handel udate user dilog
+  const handleCloseUpdateDilog = () => {
+    setOpenUpdateDilog({ open: false, id: "" });
+    setUpdateInstractor((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
+  };
+  const handleClickOpenUpdateDilog = (id) => {
+    setOpenUpdateDilog({ open: true, id: id });
+    setUpdateInstractor((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
+  };
+  // handel update user
+  const updateUser = (data) => {
+    setUpdateInstractor({ ...updateInstractor, loading: true });
+
+    http
+      .PATCH(`users/${openUpdateDilog.id}`, data)
+      .then((res) => {
+        setUpdateInstractor({
+          ...updateInstractor,
+          loading: false,
+          errorMsg: "",
+        });
+        setReloadData(true);
+        setToastMsg({
+          ...toastMsg,
+          msg: "Instructor updated successfully",
+          type: "success",
+        });
+        handleCloseUpdateDilog();
+        handleToastOpen();
+      })
+      .catch((err) => {
+        setUpdateInstractor({
+          ...updateInstractor,
+          loading: false,
+          errorMsg: "Please enter valid data",
+        });
+
+        setToastMsg({
+          ...toastMsg,
+          msg: "Something went wrong",
+          type: "error",
+        });
+        handleToastOpen();
+      });
+  };
   //handel delete user dilog
   const handleCloseDeleteDilog = () => {
     setOpenDeleteDilog({ open: false, id: "" });
@@ -132,7 +199,7 @@ function AdminInstructors() {
           msg: "Instructor deleted successfully",
           type: "success",
         });
-        handleSucessOpen();
+        handleToastOpen();
       })
 
       .catch((err) => {
@@ -146,7 +213,7 @@ function AdminInstructors() {
           msg: "Something went wrong",
           type: "error",
         });
-        handleSucessOpen();
+        handleToastOpen();
       });
   };
 
@@ -159,7 +226,6 @@ function AdminInstructors() {
     setOpen(false);
     newInstractor.errorMsg = "";
   };
-
   //add new instructor
   const addInstractor = (data) => {
     setNewInstractor({ ...newInstractor, loading: true });
@@ -176,7 +242,7 @@ function AdminInstructors() {
           msg: "Instructor added successfully",
           type: "success",
         });
-        handleSucessOpen();
+        handleToastOpen();
       })
       .catch((err) => {
         setNewInstractor({
@@ -184,9 +250,14 @@ function AdminInstructors() {
           loading: false,
           errorMsg: err?.response?.data?.message,
         });
+        setToastMsg({
+          ...toastMsg,
+          msg: "Something went wrong",
+          type: "error",
+        });
+        handleToastOpen();
       });
   };
-
   // table column and options
   const columns = [
     {
@@ -242,7 +313,6 @@ function AdminInstructors() {
       options: {
         customBodyRender: (value, tableMeta) => {
           const userId = users.data[tableMeta.rowIndex]?._id;
-          const isLoading = deleteLoadingStates[userId];
 
           return (
             <div className="actions-btns">
@@ -253,11 +323,15 @@ function AdminInstructors() {
                   handleClickOpenDeleteDilog(userId);
                 }}
               >
-                {isLoading ? (
-                  <CircularProgress size={20} color="inherit" />
-                ) : (
-                  "Delete"
-                )}
+                Delete
+              </button>
+              <button
+                className="main-btn sm update"
+                onClick={() => {
+                  handleClickOpenUpdateDilog(userId);
+                }}
+              >
+                Update
               </button>
             </div>
           );
@@ -285,16 +359,117 @@ function AdminInstructors() {
   return (
     <section className="admin-instructors-section">
       <div className="container">
-        {users.data.length === 0 && (
-          <Alert severity="info">No Instructors Found</Alert>
+        {users.errorMsg !== "" && (
+          <Alert severity="error">{users.errorMsg}</Alert>
         )}
-        <MainTabel
-          title={"Instructors"}
-          data={users.data}
-          columns={columns}
-          customOptions={options}
-        />
+        {users.data.length === 0 && users.errorMsg === "" && (
+          <>
+            <Alert severity="info">No Instructors Found</Alert>
+            <MainTabel
+              title={"Instructors"}
+              data={users.data}
+              columns={columns}
+              customOptions={options}
+            />
+          </>
+        )}
+        {users.data.length > 0 && users.errorMsg === "" && (
+          <MainTabel
+            title={"Instructors"}
+            data={users.data}
+            columns={columns}
+            customOptions={options}
+          />
+        )}
       </div>
+      {/* update dialog */}
+      <Dialog
+        open={openUpdateDilog.open}
+        onClose={handleCloseUpdateDilog}
+        fullWidth
+        PaperProps={{
+          component: "form",
+          onSubmit: (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries(formData.entries());
+            const filteredObj = Object.fromEntries(
+              Object.entries(formJson).filter(([key, value]) => value !== "")
+            );
+            if (Object.keys(filteredObj).length === 0) {
+              setUpdateInstractor((prevState) => ({
+                ...prevState,
+                errorMsg: "You must enter valid data to update",
+              }));
+            } else {
+              updateInstractor.errorMsg = "";
+              updateUser(filteredObj);
+            }
+          },
+        }}
+      >
+        <DialogTitle>Udate Instractor</DialogTitle>
+        <DialogContent>
+          {updateInstractor.errorMsg !== "" && (
+            <Alert severity="error">{updateInstractor.errorMsg}</Alert>
+          )}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            name="firstName"
+            label="First Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            name="lastName"
+            label="Last Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            name="email"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            name="role"
+            label="ٌRole"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleCloseUpdateDilog}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={newInstractor.loading}
+          >
+            {updateInstractor.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "update"
+            )}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* add dialog */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -384,6 +559,7 @@ function AdminInstructors() {
           </Button>
         </DialogActions>
       </Dialog>
+      {/* confirm delete dialog */}
       <Dialog
         fullWidth
         open={openDeleteDilog.open}
@@ -416,10 +592,10 @@ function AdminInstructors() {
           </Button>
         </DialogActions>
       </Dialog>
-      ;
+      {/* toast */}
       <MyToast
         handleClose={handleSucessClose}
-        open={SucessOpen}
+        open={ToastOpen}
         msg={toastMsg}
       />
     </section>

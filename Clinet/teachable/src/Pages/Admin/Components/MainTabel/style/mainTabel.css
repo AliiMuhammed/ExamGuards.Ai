@@ -63,3 +63,7 @@
     -o-border-radius: 50%;
 }
 
+.actions-btns {
+    display: flex;
+    justify-content: center;
+}
