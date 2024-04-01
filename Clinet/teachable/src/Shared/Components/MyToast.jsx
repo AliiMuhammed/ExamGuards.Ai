@@ -11,11 +11,11 @@ const MyToast = ({ handleClose, open, msg }) => {
     >
       <Alert
         onClose={handleClose}
-        severity="success"
+        severity={msg.type}
         variant="filled"
         sx={{ width: "100%" }}
       >
-        {msg}
+        {msg.msg}
       </Alert>
     </Snackbar>
   );

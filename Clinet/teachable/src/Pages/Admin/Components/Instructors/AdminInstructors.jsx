@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import "./style/adminInstructors.css";
 import http from "./../../../../Helper/http";
-import userimg from "../../../../Assets/Images/user.png";
 import MainTabel from "../MainTabel/MainTabel";
 
 import Tooltip from "@mui/material/Tooltip";
@@ -12,6 +11,7 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -25,15 +25,21 @@ function AdminInstructors() {
   const [open, setOpen] = useState(false);
   const [SucessOpen, setSucessOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
-  const [toastMsg, setToastMsg] = useState("");
+  const [toastMsg, setToastMsg] = useState({
+    msg: "",
+    type: "",
+  });
+  const [openDeleteDilog, setOpenDeleteDilog] = useState({
+    open: false,
+    id: "",
+  });
   const [users, setUsers] = useState({
     data: [],
     loading: false,
     errorMsg: "",
   });
   const [deleteUser, setDeleteUser] = useState({
-    errorMsg: "",
-    successMsg: "",
+    loading: false,
   });
   const [newInstractor, setNewInstractor] = useState({
     loading: false,
@@ -58,7 +64,6 @@ function AdminInstructors() {
 
           setUsers({ data: localUsers, loading: false });
           setReloadData(false);
-          console.log(users.data);
         })
         .catch((err) => {
           console.log(err);
@@ -89,7 +94,11 @@ function AdminInstructors() {
         setReloadData(true);
         setUsers({ ...users, loading: false });
         setLoadingStates({ ...loadingStates, [id]: false });
-        setToastMsg("Operation was completed successfully");
+        setToastMsg({
+          ...toastMsg,
+          msg: "Operation was completed successfully",
+          type: "success",
+        });
         handleSucessOpen();
       })
       .catch((err) => {
@@ -99,28 +108,45 @@ function AdminInstructors() {
       });
   };
 
+  //handel delete user dilog
+  const handleCloseDeleteDilog = () => {
+    setOpenDeleteDilog({ open: false, id: "" });
+  };
+  const handleClickOpenDeleteDilog = (id) => {
+    setOpenDeleteDilog({ open: true, id: id });
+  };
   // handel delete user
-  const handleDelete = (id) => {
-    setDeleteLoadingStates({ ...deleteLoadingStates, [id]: true });
+  const handleDelete = () => {
+    setDeleteUser({ ...deleteUser, loading: true });
     http
-      .DELETE(`users/${id}`)
+      .DELETE(`users/${openDeleteDilog.id}`)
       .then((res) => {
         setReloadData(true);
-        setDeleteLoadingStates({ ...deleteLoadingStates, [id]: false });
         setDeleteUser({
           ...deleteUser,
-          successMsg: res.data.message,
+          loading: false,
         });
-        setToastMsg("Instructor deleted successfully");
+        handleCloseDeleteDilog();
+        setToastMsg({
+          ...toastMsg,
+          msg: "Instructor deleted successfully",
+          type: "success",
+        });
         handleSucessOpen();
       })
 
       .catch((err) => {
-        setDeleteLoadingStates({ ...deleteLoadingStates, [id]: false });
         setDeleteUser({
           ...deleteUser,
-          errorMsg: err.response.data.message,
+          loading: false,
         });
+        handleCloseDeleteDilog();
+        setToastMsg({
+          ...toastMsg,
+          msg: "Something went wrong",
+          type: "error",
+        });
+        handleSucessOpen();
       });
   };
 
@@ -138,14 +164,18 @@ function AdminInstructors() {
   const addInstractor = (data) => {
     setNewInstractor({ ...newInstractor, loading: true });
     data.role = "instructor";
-    console.log(data);
     http
       .POST("users/signup", data)
       .then((res) => {
         setNewInstractor({ ...newInstractor, loading: false });
         setReloadData(true);
         handleClose();
-        setToastMsg("Instructor added successfully");
+
+        setToastMsg({
+          ...toastMsg,
+          msg: "Instructor added successfully",
+          type: "success",
+        });
         handleSucessOpen();
       })
       .catch((err) => {
@@ -171,7 +201,6 @@ function AdminInstructors() {
               style={{
                 backgroundImage: `url(${userImg})`,
               }}
-              
             ></div>
           );
         },
@@ -221,7 +250,7 @@ function AdminInstructors() {
               <button
                 className="main-btn sm delete"
                 onClick={() => {
-                  handleDelete(userId);
+                  handleClickOpenDeleteDilog(userId);
                 }}
               >
                 {isLoading ? (
@@ -266,7 +295,6 @@ function AdminInstructors() {
           customOptions={options}
         />
       </div>
-
       <Dialog
         open={open}
         onClose={handleClose}
@@ -339,10 +367,56 @@ function AdminInstructors() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add</Button>
+          <Button variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={newInstractor.loading}
+          >
+            {newInstractor.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Add"
+            )}
+          </Button>
         </DialogActions>
       </Dialog>
+      <Dialog
+        fullWidth
+        open={openDeleteDilog.open}
+        onClose={handleCloseDeleteDilog}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Do you want to delete this user?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            If you delete this user, you will not be able to recover it.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleCloseDeleteDilog}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDelete}
+            variant="contained"
+            disabled={deleteUser.loading}
+            color="error"
+          >
+            {deleteUser.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Delete"
+            )}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      ;
       <MyToast
         handleClose={handleSucessClose}
         open={SucessOpen}
