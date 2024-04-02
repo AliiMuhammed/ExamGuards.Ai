@@ -1,11 +1,10 @@
 import React from "react";
 import "../Style/backdrop.css";
-import CircularProgress from "@mui/material/CircularProgress";
-
+import { PacmanLoader } from "react-spinners";
 const Backdrop = () => {
   return (
     <div className="backdrop">
-      <CircularProgress size={80} color="white" />
+      <PacmanLoader color="#20ad96" loading size={30} speedMultiplier={1} />{" "}
     </div>
   );
 };

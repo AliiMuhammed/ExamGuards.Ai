@@ -7,6 +7,7 @@ import AdminStudents from "./Pages/Admin/Components/Students/AdminStudents";
 import Login from "./Pages/Login/Login";
 import AdminInstructors from "./Pages/Admin/Components/Instructors/AdminInstructors";
 import Admins from "./Pages/Admin/Components/ِAdmins/Admins";
+import AdminCourses from "./Pages/Admin/Components/Courses/AdminCourses";
 
 export const routes = createBrowserRouter([
   {
@@ -36,10 +37,15 @@ export const routes = createBrowserRouter([
       {
         path: "/admin/instructors",
         element: <AdminInstructors />,
-      },{
-        path:"/admin/admins",
-        element:<Admins/>
-      }
+      },
+      {
+        path: "/admin/admins",
+        element: <Admins />,
+      },
+      {
+        path: "/admin/courses",
+        element: <AdminCourses />,
+      },
     ],
     errorElement: <Notfound />,
   },
