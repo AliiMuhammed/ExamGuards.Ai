@@ -125,18 +125,14 @@ function AdminStudents() {
   const handelActivation = (id) => {
     setLoadingStates({ ...loadingStates, [id]: true });
 
-    setUsers({ ...users, loading: true });
     http
       .PATCH(`users/activate/${id}`)
       .then((res) => {
         console.log(res);
         setReloadData(true);
-        setUsers({ ...users, loading: false });
         setLoadingStates({ ...loadingStates, [id]: false });
       })
       .catch((err) => {
-        console.log(err);
-        setUsers({ ...users, loading: false });
         setLoadingStates({ ...loadingStates, [id]: false });
       });
   };
@@ -312,6 +308,18 @@ function AdminStudents() {
             <MainTabel title={"Students"} data={users.data} columns={columns} />
           )}
         {users.data.length === 0 &&
+          users.errorMsg === "" &&
+          users.loading === true && (
+            <CircularProgress
+              sx={{
+                margin: "auto",
+                display: "block",
+              }}
+              size={60}
+              color="inherit"
+            />
+          )}
+        {users.data.length > 0 &&
           users.errorMsg === "" &&
           users.loading === true && (
             <CircularProgress

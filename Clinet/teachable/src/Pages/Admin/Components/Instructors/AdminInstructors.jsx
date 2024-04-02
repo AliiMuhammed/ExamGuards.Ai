@@ -102,12 +102,10 @@ function AdminInstructors() {
   const handelActivation = (id) => {
     setLoadingStates({ ...loadingStates, [id]: true });
 
-    setUsers({ ...users, loading: true });
     http
       .PATCH(`users/activate/${id}`)
       .then((res) => {
         setReloadData(true);
-        setUsers({ ...users, loading: false });
         setLoadingStates({ ...loadingStates, [id]: false });
         setToastMsg({
           ...toastMsg,
@@ -117,8 +115,6 @@ function AdminInstructors() {
         handleToastOpen();
       })
       .catch((err) => {
-        console.log(err);
-        setUsers({ ...users, loading: false });
         setLoadingStates({ ...loadingStates, [id]: false });
         setToastMsg({
           ...toastMsg,
@@ -397,6 +393,18 @@ function AdminInstructors() {
             />
           )}
         {users.data.length === 0 &&
+          users.errorMsg === "" &&
+          users.loading === true && (
+            <CircularProgress
+              sx={{
+                margin: "auto",
+                display: "block",
+              }}
+              size={60}
+              color="inherit"
+            />
+          )}
+        {users.data.length > 0 &&
           users.errorMsg === "" &&
           users.loading === true && (
             <CircularProgress

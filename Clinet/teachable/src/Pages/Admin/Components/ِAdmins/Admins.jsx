@@ -61,14 +61,9 @@ const Admins = () => {
   useEffect(() => {
     if (reloadData) {
       setUsers({ ...users, loading: true });
-      const params = new URLSearchParams({
-        // page: 2,
-        // limit: 2,
-        role: "admin",
-      }).toString();
 
       http
-        .GET(`users?${params}`)
+        .GET(`users?role=admin&role=super admin`)
         .then((res) => {
           const localUsers = res?.data?.data?.data?.map((user) => ({
             ...user,
@@ -164,13 +159,10 @@ const Admins = () => {
   const handelActivation = (id) => {
     setLoadingStates({ ...loadingStates, [id]: true });
 
-    setUsers({ ...users, loading: true });
     http
       .PATCH(`users/activate/${id}`)
       .then((res) => {
-        console.log(res);
         setReloadData(true);
-        setUsers({ ...users, loading: false });
         setLoadingStates({ ...loadingStates, [id]: false });
         setToastMsg({
           ...toastMsg,
@@ -180,8 +172,6 @@ const Admins = () => {
         handleToastOpen();
       })
       .catch((err) => {
-        console.log(err);
-        setUsers({ ...users, loading: false });
         setLoadingStates({ ...loadingStates, [id]: false });
         setToastMsg({
           ...toastMsg,
@@ -226,6 +216,7 @@ const Admins = () => {
       options: {
         customBodyRender: (value, tableMeta) => {
           const userId = users.data[tableMeta.rowIndex]?._id;
+          const role = users.data[tableMeta.rowIndex]?.role;
           const isLoading = loadingStates[userId];
 
           return (
@@ -315,7 +306,6 @@ const Admins = () => {
   const addAdmin = (data) => {
     setNewAdmin({ ...newAdmin, loading: true });
     data.role = "admin";
-    console.log(data);
     http
       .POST("users/signup", data)
       .then((res) => {
@@ -411,6 +401,18 @@ const Admins = () => {
             />
           )}
         {users.data.length === 0 &&
+          users.errorMsg === "" &&
+          users.loading === true && (
+            <CircularProgress
+              sx={{
+                margin: "auto",
+                display: "block",
+              }}
+              size={60}
+              color="inherit"
+            />
+          )}
+        {users.data.length > 0 &&
           users.errorMsg === "" &&
           users.loading === true && (
             <CircularProgress
