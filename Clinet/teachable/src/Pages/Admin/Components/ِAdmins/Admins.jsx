@@ -15,7 +15,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
 import Alert from "@mui/material/Alert";
 import MyToast from "../../../../Shared/Components/MyToast";
 
@@ -24,11 +27,16 @@ const Admins = () => {
   const [open, setOpen] = React.useState(false);
   const [reloadData, setReloadData] = useState(true);
   const [ToastOpen, setToastOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState("");
   const [toastMsg, setToastMsg] = useState({
     msg: "",
     type: "",
   });
   const [openDeleteDilog, setOpenDeleteDilog] = useState({
+    open: false,
+    id: "",
+  });
+  const [openUpdateDilog, setOpenUpdateDilog] = useState({
     open: false,
     id: "",
   });
@@ -45,7 +53,10 @@ const Admins = () => {
     errorMsg: "",
     successMsg: "",
   });
-
+  const [updateAmdin, setUpdateAmdin] = useState({
+    loading: false,
+    errorMsg: "",
+  });
   //call all admins
   useEffect(() => {
     if (reloadData) {
@@ -76,6 +87,22 @@ const Admins = () => {
         });
     }
   }, [reloadData]);
+
+  //handel udate user dialog
+  const handleCloseUpdateDilog = () => {
+    setOpenUpdateDilog({ open: false, id: "" });
+    setUpdateAmdin((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
+  };
+  const handleClickOpenUpdateDilog = (id) => {
+    setOpenUpdateDilog({ open: true, id: id });
+    setUpdateAmdin((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
+  };
 
   // handle open and colse toaster
   const handleToastOpen = () => {
@@ -235,6 +262,14 @@ const Admins = () => {
               >
                 Delete
               </button>
+              <button
+                className="main-btn sm update"
+                onClick={() => {
+                  handleClickOpenUpdateDilog(userId);
+                }}
+              >
+                Update
+              </button>
             </div>
           );
         },
@@ -261,11 +296,19 @@ const Admins = () => {
   //handle open and close dilog add admin
 
   const handleClickOpen = () => {
+    setNewAdmin((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setNewAdmin((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
   };
 
   //add admin functoin
@@ -301,6 +344,42 @@ const Admins = () => {
         handleToastOpen();
       });
   };
+  // handel update user
+  const updateUser = (data) => {
+    setUpdateAmdin({ ...updateAmdin, loading: true });
+
+    http
+      .PATCH(`users/${openUpdateDilog.id}`, data)
+      .then((res) => {
+        setUpdateAmdin({
+          ...updateAmdin,
+          loading: false,
+          errorMsg: "",
+        });
+        setReloadData(true);
+        setToastMsg({
+          ...toastMsg,
+          msg: "Admin updated successfully",
+          type: "success",
+        });
+        handleCloseUpdateDilog();
+        handleToastOpen();
+      })
+      .catch((err) => {
+        setUpdateAmdin({
+          ...updateAmdin,
+          loading: false,
+          errorMsg: "Please enter valid data",
+        });
+
+        setToastMsg({
+          ...toastMsg,
+          msg: "Something went wrong",
+          type: "error",
+        });
+        handleToastOpen();
+      });
+  };
 
   return (
     <section className="admin-admins-section">
@@ -308,27 +387,137 @@ const Admins = () => {
         {users.errorMsg !== "" && (
           <Alert severity="error">{users.errorMsg}</Alert>
         )}
-        {users.data.length === 0 && users.errorMsg === "" && (
-          <>
-            <Alert severity="info">No Admins Found</Alert>
+        {users.data.length === 0 &&
+          users.errorMsg === "" &&
+          users.loading === false && (
+            <>
+              <Alert severity="info">No Admins Found</Alert>
+              <MainTabel
+                title={"Admins"}
+                data={users.data}
+                columns={columns}
+                customOptions={options}
+              />
+            </>
+          )}
+        {users.data.length > 0 &&
+          users.errorMsg === "" &&
+          users.loading === false && (
             <MainTabel
               title={"Admins"}
               data={users.data}
               columns={columns}
               customOptions={options}
             />
-          </>
-        )}
-        {users.data.length > 0 && users.errorMsg === "" && (
-          <MainTabel
-            title={"Admins"}
-            data={users.data}
-            columns={columns}
-            customOptions={options}
-          />
-        )}
+          )}
+        {users.data.length === 0 &&
+          users.errorMsg === "" &&
+          users.loading === true && (
+            <CircularProgress
+              sx={{
+                margin: "auto",
+                display: "block",
+              }}
+              size={60}
+              color="inherit"
+            />
+          )}
       </div>
-
+      {/* update dialog */}
+      <Dialog
+        open={openUpdateDilog.open}
+        onClose={handleCloseUpdateDilog}
+        fullWidth
+        PaperProps={{
+          component: "form",
+          onSubmit: (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries(formData.entries());
+            formJson.role = selectedRole;
+            console.log(formJson);
+            const filteredObj = Object.fromEntries(
+              Object.entries(formJson).filter(([key, value]) => value !== "")
+            );
+            if (Object.keys(filteredObj).length === 0) {
+              setUpdateAmdin((prevState) => ({
+                ...prevState,
+                errorMsg: "You must enter valid data to update",
+              }));
+            } else {
+              updateAmdin.errorMsg = "";
+              updateUser(filteredObj);
+            }
+          },
+        }}
+      >
+        <DialogTitle>Udate Instractor</DialogTitle>
+        <DialogContent>
+          {updateAmdin.errorMsg !== "" && (
+            <Alert severity="error">{updateAmdin.errorMsg}</Alert>
+          )}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            name="firstName"
+            label="First Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            name="lastName"
+            label="Last Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            name="email"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+          <FormControl fullWidth variant="standard" margin="dense">
+            <InputLabel htmlFor="role">Role</InputLabel>
+            <Select
+              id="role"
+              name="role"
+              value={selectedRole}
+              onChange={(event) => setSelectedRole(event.target.value)}
+            >
+              <MenuItem value="admin">Admin</MenuItem>
+              <MenuItem value="student">Student</MenuItem>
+              <MenuItem value="instructor">Instructor</MenuItem>
+              <MenuItem value="super admin">Super Admin</MenuItem>
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleCloseUpdateDilog}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={updateAmdin.loading}
+          >
+            {updateAmdin.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "update"
+            )}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* add admin dialog */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -405,7 +594,7 @@ const Admins = () => {
           <Button type="submit">Add</Button>
         </DialogActions>
       </Dialog>
-
+      {/* delete admin dialog */}
       <Dialog
         fullWidth
         open={openDeleteDilog.open}

@@ -13,6 +13,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import MyToast from "../../../../Shared/Components/MyToast";
@@ -22,6 +26,7 @@ function AdminInstructors() {
   const [open, setOpen] = useState(false);
   const [ToastOpen, setToastOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
+  const [selectedRole, setSelectedRole] = useState("");
   const [toastMsg, setToastMsg] = useState({
     msg: "",
     type: "",
@@ -220,11 +225,17 @@ function AdminInstructors() {
   //handle open and close dilog add instructor
   const handleClickOpen = () => {
     setOpen(true);
-    newInstractor.errorMsg = "";
+    setNewInstractor((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
   };
   const handleClose = () => {
     setOpen(false);
-    newInstractor.errorMsg = "";
+    setNewInstractor((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
   };
   //add new instructor
   const addInstractor = (data) => {
@@ -362,25 +373,41 @@ function AdminInstructors() {
         {users.errorMsg !== "" && (
           <Alert severity="error">{users.errorMsg}</Alert>
         )}
-        {users.data.length === 0 && users.errorMsg === "" && (
-          <>
-            <Alert severity="info">No Instructors Found</Alert>
+        {users.data.length === 0 &&
+          users.errorMsg === "" &&
+          users.loading === false && (
+            <>
+              <Alert severity="info">No Instructors Found</Alert>
+              <MainTabel
+                title={"Instructors"}
+                data={users.data}
+                columns={columns}
+                customOptions={options}
+              />
+            </>
+          )}
+        {users.data.length > 0 &&
+          users.errorMsg === "" &&
+          users.loading === false && (
             <MainTabel
               title={"Instructors"}
               data={users.data}
               columns={columns}
               customOptions={options}
             />
-          </>
-        )}
-        {users.data.length > 0 && users.errorMsg === "" && (
-          <MainTabel
-            title={"Instructors"}
-            data={users.data}
-            columns={columns}
-            customOptions={options}
-          />
-        )}
+          )}
+        {users.data.length === 0 &&
+          users.errorMsg === "" &&
+          users.loading === true && (
+            <CircularProgress
+              sx={{
+                margin: "auto",
+                display: "block",
+              }}
+              size={60}
+              color="inherit"
+            />
+          )}
       </div>
       {/* update dialog */}
       <Dialog
@@ -393,6 +420,8 @@ function AdminInstructors() {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
+            formJson.role = selectedRole;
+            console.log(formJson);
             const filteredObj = Object.fromEntries(
               Object.entries(formJson).filter(([key, value]) => value !== "")
             );
@@ -441,15 +470,20 @@ function AdminInstructors() {
             fullWidth
             variant="standard"
           />
-          <TextField
-            margin="dense"
-            id="name"
-            name="role"
-            label="ٌRole"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+          <FormControl fullWidth variant="standard" margin="dense">
+            <InputLabel htmlFor="role">Role</InputLabel>
+            <Select
+              id="role"
+              name="role"
+              value={selectedRole}
+              onChange={(event) => setSelectedRole(event.target.value)}
+            >
+              <MenuItem value="admin">Admin</MenuItem>
+              <MenuItem value="student">Student</MenuItem>
+              <MenuItem value="instructor">Instructor</MenuItem>
+              <MenuItem value="super admin">Super Admin</MenuItem>
+            </Select>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={handleCloseUpdateDilog}>
@@ -459,7 +493,7 @@ function AdminInstructors() {
             variant="contained"
             type="submit"
             color="success"
-            disabled={newInstractor.loading}
+            disabled={updateInstractor.loading}
           >
             {updateInstractor.loading ? (
               <CircularProgress size={20} color="inherit" />
