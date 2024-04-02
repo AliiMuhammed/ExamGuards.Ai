@@ -1,0 +1,9 @@
+.backdrop {
+    z-index: 1000000000000000000;
+    width: 100vh;
+    height: 100vh;
+    background-color: var(--mainFontColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
