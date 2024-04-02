@@ -212,6 +212,9 @@ const Admins = () => {
       name: "email",
     },
     {
+      name: "role",
+    },
+    {
       name: "active",
       options: {
         customBodyRender: (value, tableMeta) => {
@@ -222,8 +225,8 @@ const Admins = () => {
           return (
             <button
               onClick={() => handelActivation(userId)}
-              disabled={isLoading}
-              className={value ? "active-user" : "inactive-user"}
+              disabled={role === "super admin" || isLoading}
+              className={value ? " main-btn sm update" : " main-btn sm delete"}
             >
               {isLoading ? (
                 <CircularProgress size={20} color="inherit" />
@@ -237,11 +240,13 @@ const Admins = () => {
         },
       },
     },
+
     {
       name: "action",
       options: {
         customBodyRender: (value, tableMeta) => {
           const userId = users.data[tableMeta.rowIndex]?._id;
+          const role = users.data[tableMeta.rowIndex]?.role;
 
           return (
             <div className="actions-btns">
@@ -250,6 +255,7 @@ const Admins = () => {
                 onClick={() => {
                   handleClickOpenDeleteDilog(userId);
                 }}
+                disabled={role === "super admin"}
               >
                 Delete
               </button>
@@ -258,6 +264,7 @@ const Admins = () => {
                 onClick={() => {
                   handleClickOpenUpdateDilog(userId);
                 }}
+                disabled={role === "super admin"}
               >
                 Update
               </button>

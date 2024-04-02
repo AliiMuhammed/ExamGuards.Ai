@@ -130,6 +130,17 @@ a {
   display: flex;
 }
 
+.main-btn.sm.update:disabled,
+.main-btn.sm.delete:disabled,
+.main-btn.sm.update:disabled:hover,
+.main-btn.sm.delete:disabled:hover {
+  background-color: #888888;
+  border-color: #888888;
+  color: white;
+  cursor: auto;
+}
+
+
 .main-btn.sm.update {
   background-color: green;
   border-color: green;

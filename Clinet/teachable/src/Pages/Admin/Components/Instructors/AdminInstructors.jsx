@@ -301,7 +301,7 @@ function AdminInstructors() {
             <button
               onClick={() => handelActivation(userId)}
               disabled={isLoading}
-              className={value ? "active-user" : "inactive-user"}
+              className={value ? " main-btn sm update" : " main-btn sm delete"}
             >
               {isLoading ? (
                 <CircularProgress size={20} color="inherit" />
