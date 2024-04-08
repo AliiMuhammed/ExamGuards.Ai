@@ -18,7 +18,9 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Alert from "@mui/material/Alert";
 import MyToast from "../../../../Shared/Components/MyToast";
+import { getAuthUser } from "../../../../Helper/Storage";
 function AdminStudents() {
+  const user = getAuthUser();
   const [loadingStates, setLoadingStates] = useState({});
   const [reloadData, setReloadData] = useState(true);
   const [ToastOpen, setToastOpen] = useState(false);
@@ -180,11 +182,17 @@ function AdminStudents() {
       name: "photo",
       label: "Image",
       options: {
-        customBodyRender: (value) => {
+        customBodyRender: (value, tableMeta) => {
+          const userImg = users.data[tableMeta.rowIndex]?.photo;
           return (
             <div
               className="user-table-img"
-              style={{ backgroundImage: `url(${userimg})` }}
+              style={{
+                backgroundImage: `url(${userImg})`,
+              }}
+              onError={(e) => {
+                e.target.style.backgroundImage = `url(${userimg})`;
+              }}
             ></div>
           );
         },
@@ -403,7 +411,9 @@ function AdminStudents() {
                 <MenuItem value="admin">Admin</MenuItem>
                 <MenuItem value="student">Student</MenuItem>
                 <MenuItem value="instructor">Instructor</MenuItem>
-                <MenuItem value="super admin">Super Admin</MenuItem>
+                {user?.data.data.user.role === "super admin" && (
+                  <MenuItem value="super admin">super admin</MenuItem>
+                )}
               </Select>
             </FormControl>
           </DialogContent>

@@ -62,7 +62,9 @@ function SideMenu() {
           <MenuItem className="submenu-link"> Pie charts </MenuItem>
           <MenuItem className="submenu-link"> Line charts </MenuItem>
         </SubMenu>
-        <MenuItem icon={<FaBook />}> Courses </MenuItem>
+        <MenuItem component={<NavLink to="/admin/courses" />} icon={<FaBook />}>
+          Courses
+        </MenuItem>
         <MenuItem icon={<BiSolidReport />}> Reports </MenuItem>
         <MenuItem icon={<IoIosArchive />}> Archive </MenuItem>
       </Menu>

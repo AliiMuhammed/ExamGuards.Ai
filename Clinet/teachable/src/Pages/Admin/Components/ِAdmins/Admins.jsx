@@ -21,8 +21,10 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Alert from "@mui/material/Alert";
 import MyToast from "../../../../Shared/Components/MyToast";
+import { getAuthUser } from "../../../../Helper/Storage";
 
 const Admins = () => {
+  const user = getAuthUser();
   const [loadingStates, setLoadingStates] = useState({});
   const [open, setOpen] = React.useState(false);
   const [reloadData, setReloadData] = useState(true);
@@ -219,13 +221,17 @@ const Admins = () => {
       options: {
         customBodyRender: (value, tableMeta) => {
           const userId = users.data[tableMeta.rowIndex]?._id;
-          const role = users.data[tableMeta.rowIndex]?.role;
           const isLoading = loadingStates[userId];
+          const role = users.data[tableMeta.rowIndex]?.role;
 
           return (
             <button
               onClick={() => handelActivation(userId)}
-              disabled={role === "super admin" || isLoading}
+              disabled={
+                (user?.data.data.user.role !== "super admin" &&
+                  role === "super admin") ||
+                isLoading
+              }
               className={value ? " main-btn sm update" : " main-btn sm delete"}
             >
               {isLoading ? (
@@ -255,7 +261,10 @@ const Admins = () => {
                 onClick={() => {
                   handleClickOpenDeleteDilog(userId);
                 }}
-                disabled={role === "super admin"}
+                disabled={
+                  user?.data.data.user.role !== "super admin" &&
+                  role === "super admin"
+                }
               >
                 Delete
               </button>
@@ -264,7 +273,10 @@ const Admins = () => {
                 onClick={() => {
                   handleClickOpenUpdateDilog(userId);
                 }}
-                disabled={role === "super admin"}
+                disabled={
+                  user?.data.data.user.role !== "super admin" &&
+                  role === "super admin"
+                }
               >
                 Update
               </button>
@@ -276,13 +288,11 @@ const Admins = () => {
   ];
   const options = {
     customToolbar: () => (
-      <>
-        <Tooltip title="Add Admin">
-          <IconButton onClick={handleClickOpen}>
-            <AddIcon />
-          </IconButton>
-        </Tooltip>
-      </>
+      <Tooltip title="Add Admin">
+        <IconButton onClick={handleClickOpen}>
+          <AddIcon />
+        </IconButton>
+      </Tooltip>
     ),
     filterType: "multiselect",
     selectableRows: "none",
@@ -504,7 +514,9 @@ const Admins = () => {
               <MenuItem value="admin">Admin</MenuItem>
               <MenuItem value="student">Student</MenuItem>
               <MenuItem value="instructor">Instructor</MenuItem>
-              <MenuItem value="super admin">Super Admin</MenuItem>
+              {user?.data.data.user.role === "super admin" && (
+                <MenuItem value="super admin">super admin</MenuItem>
+              )}
             </Select>
           </FormControl>
         </DialogContent>

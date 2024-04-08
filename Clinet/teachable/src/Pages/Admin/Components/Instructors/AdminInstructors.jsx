@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "./style/adminInstructors.css";
+import userimg from "../../../../Assets/Images/user.png";
 import http from "./../../../../Helper/http";
 import MainTabel from "../MainTabel/MainTabel";
 import Tooltip from "@mui/material/Tooltip";
@@ -20,8 +21,10 @@ import MenuItem from "@mui/material/MenuItem";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import MyToast from "../../../../Shared/Components/MyToast";
+import { getAuthUser } from "../../../../Helper/Storage";
 
 function AdminInstructors() {
+  const user = getAuthUser();
   const [loadingStates, setLoadingStates] = useState({});
   const [open, setOpen] = useState(false);
   const [ToastOpen, setToastOpen] = useState(false);
@@ -279,6 +282,9 @@ function AdminInstructors() {
               style={{
                 backgroundImage: `url(${userImg})`,
               }}
+              onError={(e) => {
+                e.target.style.backgroundImage = `url(${userimg})`;
+              }}
             ></div>
           );
         },
@@ -348,13 +354,11 @@ function AdminInstructors() {
   ];
   const options = {
     customToolbar: () => (
-      <>
-        <Tooltip title="Add Instructor">
-          <IconButton onClick={handleClickOpen}>
-            <AddIcon />
-          </IconButton>
-        </Tooltip>
-      </>
+      <Tooltip title="Add Instructor">
+        <IconButton onClick={handleClickOpen}>
+          <AddIcon />
+        </IconButton>
+      </Tooltip>
     ),
     filterType: "multiselect",
     selectableRows: "none",
@@ -489,7 +493,9 @@ function AdminInstructors() {
               <MenuItem value="admin">Admin</MenuItem>
               <MenuItem value="student">Student</MenuItem>
               <MenuItem value="instructor">Instructor</MenuItem>
-              <MenuItem value="super admin">Super Admin</MenuItem>
+              {user?.data.data.user.role === "super admin" && (
+                <MenuItem value="super admin">super admin</MenuItem>
+              )}
             </Select>
           </FormControl>
         </DialogContent>
