@@ -275,7 +275,7 @@ function AdminInstructors() {
       label: "Image",
       options: {
         customBodyRender: (value, tableMeta) => {
-          const userImg = users.data[tableMeta.rowIndex]?.photo;
+          const userImg = users.data[tableMeta.rowIndex]?.file;
           return (
             <div
               className="user-table-img"
