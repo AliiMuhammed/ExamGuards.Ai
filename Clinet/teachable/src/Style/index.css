@@ -24,10 +24,11 @@ html {
 }
 
 :root {
-  --mainColor: #20ad96;
-  --mainFontColor: #3f3a64;
+  --mainColor: #ED6B17;
+  --mainFontColor: #0B4A6E;
   --secondaryFontColor: #adb4b7;
-  --secondaryColor: #57C5B6;
+  --secondaryColor: #ca621d;
+  --disabledColor: #b67144;
   --mainBgColor: #F5F6F8;
   --secondBgColor: #1D292E;
   --main-transition: all 0.3s ease-in-out;
@@ -97,10 +98,10 @@ a {
   -moz-border-radius: var(--main-border-radius);
   -ms-border-radius: var(--main-border-radius);
   -o-border-radius: var(--main-border-radius);
-  border: 2px solid var(--mainFontColor);
+  border: 2px solid var(--mainColor);
   color: #fff;
   font-size: 1.1rem;
-  background-color: var(--mainFontColor);
+  background-color: var(--mainColor);
   transition: var(--main-transition);
   -webkit-transition: var(--main-transition);
   -moz-transition: var(--main-transition);
@@ -132,8 +133,8 @@ a {
 .main-btn.sm.delete:disabled,
 .main-btn.sm.update:disabled:hover,
 .main-btn.sm.delete:disabled:hover {
-  background-color: #888888;
-  border-color: #888888;
+  background-color: var(--disabledColor);
+  border-color: var(--disabledColor);
   color: white;
   cursor: auto;
 }

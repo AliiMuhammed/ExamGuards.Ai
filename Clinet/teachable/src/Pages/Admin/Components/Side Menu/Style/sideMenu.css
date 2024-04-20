@@ -7,21 +7,25 @@
 }
 
 
-.sideMenu a:hover {
-    color: var(--mainFontColor)
+.ps-menu-button:hover {
+    background-color: var(--mainColor) !important;
 }
 
 .sideMenu a.active {
-    background-color: #f3f3f3;
-    color: var(--mainFontColor);
+    background-color: var(--mainColor);
+    color: #fff;
 }
 
 .sideMenu .submenu-link {
     color: var(--mainFontColor);
 }
 
+.sideMenu .submenu-link:hover {
+    color: #fff;
+}
+
 .sideMenu .submenu-link a.active {
-    background-color: #e7e7e7;
+    background-color: var(--mainColor);
 }
 
 .sideMenu-header {
@@ -48,4 +52,9 @@
 
 .sideMenu-header .logo img {
     width: 80%;
+}
+
+.open-icon {
+    width: 3.5rem;
+
 }

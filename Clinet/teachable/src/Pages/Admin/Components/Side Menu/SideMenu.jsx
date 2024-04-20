@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { NavLink } from "react-router-dom";
 import logo from "../../../../Assets/Images/Logos/h-logo-white.png";
+import iconW from "../../../../Assets/Images/Logos/icon w.png";
 import "./Style/sideMenu.css";
 import { FaHome } from "react-icons/fa";
 import { IoPerson, IoPieChartSharp } from "react-icons/io5";
@@ -31,7 +32,7 @@ function SideMenu() {
           <img src={logo} loading="lazy" alt="logo" />
         </div>
         <button onClick={handleToggle} className="toggle">
-          {sideMenuToggle ? <IoIosArrowForward /> : <IoIosArrowBack />}
+          {sideMenuToggle ? <img src={iconW} className="open-icon" alt="icon" /> : <IoIosArrowBack />}
         </button>
       </div>
       <Menu closeOnClick={true}>

@@ -60,34 +60,34 @@ function AdminInstructors() {
     errorMsg: "",
   });
 
-  //call all instructors
-  useEffect(() => {
-    if (reloadData) {
-      setUsers({ ...users, loading: true });
-      const params = new URLSearchParams({
-        role: "instructor",
-      }).toString();
+    //call all instructors
+    useEffect(() => {
+      if (reloadData) {
+        setUsers({ ...users, loading: true });
+        const params = new URLSearchParams({
+          role: "instructor",
+        }).toString();
 
-      http
-        .GET(`users?${params}`)
-        .then((res) => {
-          const localUsers = res?.data?.data?.data?.map((user) => ({
-            ...user,
-            name: user.firstName + " " + user.lastName,
-          }));
+        http
+          .GET(`users?${params}`)
+          .then((res) => {
+            const localUsers = res?.data?.data?.data?.map((user) => ({
+              ...user,
+              name: user.firstName + " " + user.lastName,
+            }));
 
-          setUsers({ data: localUsers, loading: false, errorMsg: "" });
-          setReloadData(false);
-        })
-        .catch((err) => {
-          setUsers({
-            ...users,
-            loading: false,
-            errorMsg: "Something went wrong!",
+            setUsers({ data: localUsers, loading: false, errorMsg: "" });
+            setReloadData(false);
+          })
+          .catch((err) => {
+            setUsers({
+              ...users,
+              loading: false,
+              errorMsg: "Something went wrong!",
+            });
           });
-        });
-    }
-  }, [reloadData]);
+      }
+    }, [reloadData]);
 
   // handle open and colse toaster
   const handleToastOpen = () => {

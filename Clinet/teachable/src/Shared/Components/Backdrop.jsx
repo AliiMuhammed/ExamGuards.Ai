@@ -4,7 +4,7 @@ import { PacmanLoader } from "react-spinners";
 const Backdrop = () => {
   return (
     <div className="backdrop">
-      <PacmanLoader color="#20ad96" loading size={30} speedMultiplier={1} />{" "}
+      <PacmanLoader color="#ED6B17" loading size={30} speedMultiplier={1} />{" "}
     </div>
   );
 };
