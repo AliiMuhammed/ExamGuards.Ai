@@ -4,12 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import adminImg from "../../../../Assets/Images/user.png";
 import { getAuthUser, removeAuthUser } from "../../../../Helper/Storage";
 import { FiLogOut } from "react-icons/fi";
-import { IoNotifications } from "react-icons/io5";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
+import { IoNotifications ,IoClose} from "react-icons/io5";
+import Tooltip from "@mui/material/Tooltip";
+import Drawer from "@mui/material/Drawer";
+import { FaRegClock } from "react-icons/fa6";
 
 const AdminNav = () => {
   const [show, setShow] = useState(false);
@@ -27,74 +25,47 @@ const AdminNav = () => {
   };
   return (
     <nav className="admin-nav">
-      <OverlayTrigger
-        key={"bottom-1"}
-        placement={"bottom"}
-        overlay={<Tooltip>Profile</Tooltip>}
-      >
+      <Tooltip title="Profile">
         <Link
           to={"/admin/profle"}
           className="admin-profile"
           style={{
             backgroundImage: `url(${
-              user ? user?.data?.data?.user?.photo : adminImg
+              user ? user?.data?.data?.user?.file : adminImg
             })`,
           }}
         ></Link>
-      </OverlayTrigger>
-      <OverlayTrigger
-        key={"bottom-3"}
-        placement={"bottom"}
-        overlay={<Tooltip>2 unread notifications</Tooltip>}
-      >
+      </Tooltip>
+
+      <Tooltip title="2 unread notifications">
         <button className="not-btn" onClick={handleShow}>
           <div className="badge-number">5</div>
           <IoNotifications />
         </button>
-      </OverlayTrigger>
-      <OverlayTrigger
-        key={"bottom-2"}
-        placement={"bottom"}
-        overlay={<Tooltip>Logout</Tooltip>}
-      >
+      </Tooltip>
+
+      <Tooltip title="Logout">
         <button className="logout-btn" onClick={handleLogOut}>
           <FiLogOut />
         </button>
-      </OverlayTrigger>
+      </Tooltip>
+      <Drawer open={show} onClose={handleClose} anchor="right" className="drawer-notification">
+        <div className="notification">
+          <div className="header">
+            <div className="time">
+              <FaRegClock />
+              just now
+            </div>
+            <Tooltip title="Delete">
 
-      <Offcanvas show={show} onHide={handleClose} placement={"end"}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Notifications</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <ToastContainer className="position-static">
-            <Toast
-              onClose={() => setShowNot(false)}
-              show={showNot}
-              delay={3000}
-              animation={true}
-            >
-              <Toast.Header>
-                <IoNotifications className="me-2" />
-                <strong className="me-auto">test notification</strong>
-                <small className="text-muted">just now</small>
-              </Toast.Header>
-              <Toast.Body>See? Just like this.</Toast.Body>
-            </Toast>
-            <Toast
-              delay={3000}
-              animation={true}
-            >
-              <Toast.Header>
-                <IoNotifications className="me-2" />
-                <strong className="me-auto">test notification</strong>
-                <small className="text-muted">2 seconds ago</small>
-              </Toast.Header>
-              <Toast.Body>Heads up, toasts will stack automatically</Toast.Body>
-            </Toast>
-          </ToastContainer>
-        </Offcanvas.Body>
-      </Offcanvas>
+            <button className="delete">
+              <IoClose />
+            </button>
+            </Tooltip>
+          </div>
+          <div className="body">test notification bodytest notification bodytest notification bodytest notification bodytest notification bodytest notification bodytest notification bodytest notification body</div>
+        </div>
+      </Drawer>
     </nav>
   );
 };

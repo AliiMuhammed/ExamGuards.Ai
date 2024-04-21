@@ -60,3 +60,44 @@
     right: 0;
     top: 14%;
 }
+
+.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+    padding: 1rem;
+}
+
+.notification {
+    width: 30rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    background-color: #e3e3e3;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.notification .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: .5rem;
+    color: var(--mainColor)
+}
+
+.notification .header button {
+    border: none;
+    background-color: transparent;
+    font-size: 1.4rem;
+    color: var(--mainColor)
+
+}
+
+.notification .header .time svg {
+    margin-right: .5rem;
+}

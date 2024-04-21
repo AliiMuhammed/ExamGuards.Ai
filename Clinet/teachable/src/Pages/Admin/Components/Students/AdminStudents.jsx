@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import "./style/adminStudents.css";
 import http from "./../../../../Helper/http";
-import userimg from "../../../../Assets/Images/user.png";
 import MainTabel from "../MainTabel/MainTabel";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -190,9 +189,6 @@ function AdminStudents() {
               style={{
                 backgroundImage: `url(${userImg})`,
               }}
-              onError={(e) => {
-                e.target.style.backgroundImage = `url(${userimg})`;
-              }}
             ></div>
           );
         },
@@ -211,19 +207,20 @@ function AdminStudents() {
           const userId = users.data[tableMeta.rowIndex]?._id;
           const isLoading = loadingStates[userId];
 
+          let status;
+          if (isLoading) {
+            status = <CircularProgress size={20} color="inherit" />;
+          } else {
+            status = value ? "Activated" : "Inactive";
+          }
+
           return (
             <button
               onClick={() => handelActivation(userId)}
               disabled={isLoading}
               className={value ? " main-btn sm update" : " main-btn sm delete"}
             >
-              {isLoading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : value ? (
-                "Activated"
-              ) : (
-                "Inactive"
-              )}
+              {status}
             </button>
           );
         },

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "./style/adminInstructors.css";
-import userimg from "../../../../Assets/Images/user.png";
 import http from "./../../../../Helper/http";
 import MainTabel from "../MainTabel/MainTabel";
 import Tooltip from "@mui/material/Tooltip";
@@ -60,34 +59,34 @@ function AdminInstructors() {
     errorMsg: "",
   });
 
-    //call all instructors
-    useEffect(() => {
-      if (reloadData) {
-        setUsers({ ...users, loading: true });
-        const params = new URLSearchParams({
-          role: "instructor",
-        }).toString();
+  //call all instructors
+  useEffect(() => {
+    if (reloadData) {
+      setUsers({ ...users, loading: true });
+      const params = new URLSearchParams({
+        role: "instructor",
+      }).toString();
 
-        http
-          .GET(`users?${params}`)
-          .then((res) => {
-            const localUsers = res?.data?.data?.data?.map((user) => ({
-              ...user,
-              name: user.firstName + " " + user.lastName,
-            }));
+      http
+        .GET(`users?${params}`)
+        .then((res) => {
+          const localUsers = res?.data?.data?.data?.map((user) => ({
+            ...user,
+            name: user.firstName + " " + user.lastName,
+          }));
 
-            setUsers({ data: localUsers, loading: false, errorMsg: "" });
-            setReloadData(false);
-          })
-          .catch((err) => {
-            setUsers({
-              ...users,
-              loading: false,
-              errorMsg: "Something went wrong!",
-            });
+          setUsers({ data: localUsers, loading: false, errorMsg: "" });
+          setReloadData(false);
+        })
+        .catch((err) => {
+          setUsers({
+            ...users,
+            loading: false,
+            errorMsg: "Something went wrong!",
           });
-      }
-    }, [reloadData]);
+        });
+    }
+  }, [reloadData]);
 
   // handle open and colse toaster
   const handleToastOpen = () => {
@@ -282,9 +281,6 @@ function AdminInstructors() {
               style={{
                 backgroundImage: `url(${userImg})`,
               }}
-              onError={(e) => {
-                e.target.style.backgroundImage = `url(${userimg})`;
-              }}
             ></div>
           );
         },
@@ -302,6 +298,12 @@ function AdminInstructors() {
         customBodyRender: (value, tableMeta) => {
           const userId = users.data[tableMeta.rowIndex]?._id;
           const isLoading = loadingStates[userId];
+          let status 
+          if (isLoading) {
+            status = <CircularProgress size={20} color="inherit" />;
+          } else {
+            status = value ? "Activated" : "Inactive";
+          }
 
           return (
             <button
@@ -309,13 +311,7 @@ function AdminInstructors() {
               disabled={isLoading}
               className={value ? " main-btn sm update" : " main-btn sm delete"}
             >
-              {isLoading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : value ? (
-                "Activated"
-              ) : (
-                "Inactive"
-              )}
+              {status}
             </button>
           );
         },

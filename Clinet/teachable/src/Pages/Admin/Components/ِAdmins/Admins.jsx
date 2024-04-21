@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import "./style/admins.css";
 import http from "./../../../../Helper/http";
-import userimg from "../../../../Assets/Images/user.png";
 import MainTabel from "../MainTabel/MainTabel";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -199,9 +198,6 @@ const Admins = () => {
               style={{
                 backgroundImage: `url(${userImg})`,
               }}
-              onError={(e) => {
-                e.target.style.backgroundImage = `url(${userimg})`;
-              }}
             ></div>
           );
         },
@@ -224,6 +220,13 @@ const Admins = () => {
           const isLoading = loadingStates[userId];
           const role = users.data[tableMeta.rowIndex]?.role;
 
+          let status;
+          if (isLoading) {
+            status = <CircularProgress size={20} color="inherit" />;
+          } else {
+            status = value ? "Activated" : "Inactive";
+          }
+
           return (
             <button
               onClick={() => handelActivation(userId)}
@@ -234,13 +237,7 @@ const Admins = () => {
               }
               className={value ? " main-btn sm update" : " main-btn sm delete"}
             >
-              {isLoading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : value ? (
-                "Activated"
-              ) : (
-                "Inactive"
-              )}
+              {status}
             </button>
           );
         },
