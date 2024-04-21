@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import adminImg from "../../../../Assets/Images/user.png";
 import { getAuthUser, removeAuthUser } from "../../../../Helper/Storage";
 import { FiLogOut } from "react-icons/fi";
-import { IoNotifications ,IoClose} from "react-icons/io5";
+import { IoNotifications, IoClose } from "react-icons/io5";
 import Tooltip from "@mui/material/Tooltip";
 import Drawer from "@mui/material/Drawer";
 import { FaRegClock } from "react-icons/fa6";
@@ -49,21 +49,42 @@ const AdminNav = () => {
           <FiLogOut />
         </button>
       </Tooltip>
-      <Drawer open={show} onClose={handleClose} anchor="right" className="drawer-notification">
-        <div className="notification">
+      <Drawer
+        open={show}
+        onClose={handleClose}
+        anchor="right"
+        className="drawer-notification"
+      >
+        <div className="cloes-btn">
+          <button onClick={handleClose}>
+            <IoClose />
+          </button>
+        </div>
+        {/* <div className="notification">
           <div className="header">
             <div className="time">
               <FaRegClock />
               just now
             </div>
             <Tooltip title="Delete">
-
-            <button className="delete">
-              <IoClose />
-            </button>
+              <button className="delete">
+                <IoClose />
+              </button>
             </Tooltip>
           </div>
-          <div className="body">test notification bodytest notification bodytest notification bodytest notification bodytest notification bodytest notification bodytest notification bodytest notification body</div>
+          <div className="body">
+            test notification bodytest notification bodytest notification
+            bodytest notification bodytest notification bodytest notification
+            bodytest notification bodytest notification body
+          </div>
+        </div> */}
+        <div className="empty-notification">
+          <div className="icon">
+            <IoNotifications />
+          </div>
+          <div className="text">
+            <p>No new notifications</p>
+          </div>
         </div>
       </Drawer>
     </nav>

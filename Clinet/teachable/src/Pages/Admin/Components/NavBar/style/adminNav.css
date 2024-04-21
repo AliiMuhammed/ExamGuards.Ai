@@ -65,6 +65,13 @@
     padding: 1rem;
 }
 
+.cloes-btn {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .notification {
     width: 30rem;
     display: flex;
@@ -75,7 +82,7 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    background-color: #e3e3e3;
+    background-color: #f0f0f0;
     padding: 1rem;
     margin-bottom: 1rem;
 }
@@ -85,19 +92,53 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 1px solid var(--mainColor);
     padding-bottom: .5rem;
     color: var(--mainColor)
 }
 
-.notification .header button {
+.notification .header button,
+.cloes-btn button {
     border: none;
     background-color: transparent;
     font-size: 1.4rem;
     color: var(--mainColor)
+}
 
+.notification .body {
+    color: var(--mainFontColor)
+}
+
+.cloes-btn button {
+    color: var(--mainFontColor);
+    font-size: 1.6rem;
+    font-weight: bold;
 }
 
 .notification .header .time svg {
     margin-right: .5rem;
+}
+
+.empty-notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 30rem;
+}
+
+.empty-notification .icon {
+
+    background-color: var(--mainFontColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    color: var(--mainColor);
+    margin-bottom: 1rem;
 }
