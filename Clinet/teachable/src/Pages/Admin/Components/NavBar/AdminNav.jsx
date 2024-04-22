@@ -27,7 +27,7 @@ const AdminNav = () => {
     <nav className="admin-nav">
       <Tooltip title="Profile">
         <Link
-          to={"/admin/profle"}
+          to={`/admin/profile/${user?.data?.data?.user?._id}`}
           className="admin-profile"
           style={{
             backgroundImage: `url(${

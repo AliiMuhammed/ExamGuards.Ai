@@ -325,7 +325,6 @@ function AdminInstructors() {
 
           return (
             <div className="actions-btns">
-              <button className="main-btn sm">Assign</button>
               <button
                 className="main-btn sm delete"
                 onClick={() => {

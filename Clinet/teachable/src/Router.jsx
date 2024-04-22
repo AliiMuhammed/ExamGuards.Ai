@@ -8,6 +8,7 @@ import Login from "./Pages/Login/Login";
 import AdminInstructors from "./Pages/Admin/Components/Instructors/AdminInstructors";
 import Admins from "./Pages/Admin/Components/ِAdmins/Admins";
 import AdminCourses from "./Pages/Admin/Components/Courses/AdminCourses";
+import AdminProfile from "./Pages/Admin/Components/Profile/AdminProfile";
 
 export const routes = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const routes = createBrowserRouter([
       {
         path: "/admin/courses",
         element: <AdminCourses />,
+      },
+      {
+        path: "/admin/profile/:id",
+        element: <AdminProfile />,
       },
     ],
     errorElement: <Notfound />,

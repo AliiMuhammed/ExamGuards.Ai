@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "./style/adminCourses.css";
 import courseimg from "../../../../Assets/Images/course.png";
@@ -20,13 +21,15 @@ import MenuItem from "@mui/material/MenuItem";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import MyToast from "../../../../Shared/Components/MyToast";
-import { getAuthCourse } from "../../../../Helper/Storage";
+import Input from "@mui/material/Input";
+import FormHelperText from "@mui/material/FormHelperText";
 const AdminCourses = () => {
   const [loadingStates, setLoadingStates] = useState({});
   const [open, setOpen] = useState(false);
   const [ToastOpen, setToastOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
   const [selectedRole, setSelectedRole] = useState("");
+  const [SelectedIntsructor, setSelectedIntsructor] = useState("");
   const [toastMsg, setToastMsg] = useState({
     msg: "",
     type: "",
@@ -36,6 +39,10 @@ const AdminCourses = () => {
     id: "",
   });
   const [openUpdateDilog, setOpenUpdateDilog] = useState({
+    open: false,
+    id: "",
+  });
+  const [openAssignDilog, setOpenAssignDilog] = useState({
     open: false,
     id: "",
   });
@@ -56,7 +63,16 @@ const AdminCourses = () => {
     loading: false,
     errorMsg: "",
   });
+  const [assignCourse, setAssignCourse] = useState({
+    loading: false,
+    errorMsg: "",
+  });
 
+  const [allInstructors, setAllInstructors] = useState({
+    data: [],
+    loading: false,
+    errorMsg: "",
+  });
   //call all Courses
   useEffect(() => {
     if (reloadData) {
@@ -100,6 +116,21 @@ const AdminCourses = () => {
   const handleCloseUpdateDilog = () => {
     setOpenUpdateDilog({ open: false, id: "" });
     setUpdateCourse((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
+  };
+  //handel udate course dilog
+  const handleCloseAssignDilog = () => {
+    setOpenAssignDilog({ open: false, id: "" });
+    setAssignCourse((prevState) => ({
+      ...prevState,
+      errorMsg: "",
+    }));
+  };
+  const handleClickOpenAssignDilog = (id) => {
+    setOpenAssignDilog({ open: true, id: id });
+    setAssignCourse((prevState) => ({
       ...prevState,
       errorMsg: "",
     }));
@@ -207,14 +238,12 @@ const AdminCourses = () => {
   //add new course
   const addCourse = (data) => {
     setNewCourse({ ...newCourse, loading: true });
-    data.role = "course";
     http
-      .POST("courses/signup", data)
+      .POST("courses", data)
       .then((res) => {
         setNewCourse({ ...newCourse, loading: false });
         setReloadData(true);
         handleClose();
-
         setToastMsg({
           ...toastMsg,
           msg: "Course added successfully",
@@ -223,10 +252,11 @@ const AdminCourses = () => {
         handleToastOpen();
       })
       .catch((err) => {
+        console.log(err);
         setNewCourse({
           ...newCourse,
           loading: false,
-          errorMsg: err?.response?.data?.message,
+          errorMsg: err?.message,
         });
         setToastMsg({
           ...toastMsg,
@@ -264,6 +294,69 @@ const AdminCourses = () => {
       });
   };
 
+  //assign the courses to instructor
+  const AssignCourses = (id) => {
+    const data = {
+      courseId: openAssignDilog.id,
+      instructorId: id,
+    };
+    console.log(data);
+    setAssignCourse({ ...assignCourse, loading: true });
+
+    http
+      .PATCH(`courses/assign`, data)
+      .then((res) => {
+        setAssignCourse({
+          ...assignCourse,
+          loading: false,
+          errorMsg: "",
+        });
+        setReloadData(true);
+        setToastMsg({
+          ...toastMsg,
+          msg: "Course assigned successfully",
+          type: "success",
+        });
+        handleCloseAssignDilog();
+        handleToastOpen();
+      })
+      .catch((err) => {
+        setAssignCourse({
+          ...assignCourse,
+          loading: false,
+          errorMsg: "Please enter valid data",
+        });
+        console.log(err);
+        setToastMsg({
+          ...toastMsg,
+          msg: "Something went wrong",
+          type: "error",
+        });
+        handleToastOpen();
+      });
+  };
+
+  //call all insturctors
+  useEffect(() => {
+    setAllInstructors({ ...allInstructors, loading: true });
+    http
+      .GET("/users?role=instructor")
+      .then((response) => {
+        setAllInstructors({
+          data: response.data.data.data,
+          loading: false,
+          errorMsg: "",
+        });
+      })
+      .catch((err) => {
+        setAllInstructors({
+          ...allInstructors,
+          loading: false,
+          errorMsg: "Something went wrong!",
+        });
+      });
+  }, []);
+
   // table column and options
   const columns = [
     {
@@ -277,9 +370,6 @@ const AdminCourses = () => {
               className="user-table-img"
               style={{
                 backgroundImage: `url(${courseImg})`,
-              }}
-              onError={(e) => {
-                e.target.style.backgroundImage = `url(${courseimg})`;
               }}
             ></div>
           );
@@ -312,6 +402,12 @@ const AdminCourses = () => {
         customBodyRender: (value, tableMeta) => {
           const courseId = courses.data[tableMeta.rowIndex]?._id;
           const isLoading = loadingStates[courseId];
+          let status;
+          if (isLoading) {
+            status = <CircularProgress size={20} color="inherit" />;
+          } else {
+            status = value ? "Activated" : "Inactive";
+          }
 
           return (
             <button
@@ -319,13 +415,7 @@ const AdminCourses = () => {
               disabled={isLoading}
               className={value ? " main-btn sm update" : " main-btn sm delete"}
             >
-              {isLoading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : value ? (
-                "Activated"
-              ) : (
-                "Inactive"
-              )}
+              {status}
             </button>
           );
         },
@@ -339,7 +429,14 @@ const AdminCourses = () => {
 
           return (
             <div className="actions-btns">
-              <button className="main-btn sm">Assign</button>
+              <button
+                className="main-btn sm"
+                onClick={() => {
+                  handleClickOpenAssignDilog(courseId);
+                }}
+              >
+                Assign
+              </button>
               <button
                 className="main-btn sm delete"
                 onClick={() => {
@@ -430,7 +527,70 @@ const AdminCourses = () => {
             />
           )}
       </div>
-      {/* update dialog */}
+      {/* assign dialog */}
+      <Dialog
+        open={openAssignDilog.open}
+        onClose={handleCloseAssignDilog}
+        fullWidth
+        PaperProps={{
+          component: "form",
+          onSubmit: (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries(formData.entries());
+            formJson.role = SelectedIntsructor;
+            if (formJson.role.length === 0) {
+              setAssignCourse((prevState) => ({
+                ...prevState,
+                errorMsg: "Please select instructor",
+              }));
+            } else {
+              assignCourse.errorMsg = "";
+              AssignCourses(SelectedIntsructor);
+            }
+          },
+        }}
+      >
+        <DialogTitle>Assign Course to Instructor</DialogTitle>
+        <DialogContent>
+          {assignCourse.errorMsg !== "" && (
+            <Alert severity="error">{assignCourse.errorMsg}</Alert>
+          )}
+          <FormControl fullWidth variant="standard" margin="dense">
+            <InputLabel htmlFor="instructor">Select a Instructor</InputLabel>
+            <Select
+              id="instructor"
+              name="instructor"
+              value={SelectedIntsructor}
+              onChange={(event) => setSelectedIntsructor(event.target.value)}
+            >
+              {allInstructors.data?.map((instructor) => (
+                <MenuItem key={instructor._id} value={instructor._id}>
+                  {`${instructor.firstName} ${instructor.lastName}`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleCloseAssignDilog}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={assignCourse.loading}
+          >
+            {assignCourse.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Assign"
+            )}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* update dialog
       <Dialog
         open={openUpdateDilog.open}
         onClose={handleCloseUpdateDilog}
@@ -442,7 +602,6 @@ const AdminCourses = () => {
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
             formJson.role = selectedRole;
-            console.log(formJson);
             const filteredObj = Object.fromEntries(
               Object.entries(formJson).filter(([key, value]) => value !== "")
             );
@@ -499,9 +658,11 @@ const AdminCourses = () => {
               value={selectedRole}
               onChange={(event) => setSelectedRole(event.target.value)}
             >
-              <MenuItem value="admin">Admin</MenuItem>
-              <MenuItem value="student">Student</MenuItem>
-              <MenuItem value="course">Course</MenuItem>
+              {allInstructors.data?.map((instructor) => (
+                <MenuItem key={instructor._id} value={instructor._id}>
+                  {`${instructor.firstName} ${instructor.lastName}`}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </DialogContent>
@@ -522,7 +683,7 @@ const AdminCourses = () => {
             )}
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       {/* add dialog */}
       <Dialog
         open={open}
@@ -534,7 +695,28 @@ const AdminCourses = () => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            addCourse(formJson);
+            // Get the file input element
+            const fileInput = document.getElementById("file-input");
+            // Check if a file is selected
+            if (fileInput.files.length > 0) {
+              // Append the file to the FormData object
+              formData.append("file", fileInput.files[0]);
+              formData.append("name", formJson.name);
+              formData.append("description", formJson.description);
+              formData.append("duration", formJson.duration);
+              formData.append("durationWeeks", formJson.durationWeeks);
+              setNewCourse((prevState) => ({
+                ...prevState,
+                errorMsg: "",
+              }));
+              addCourse(formData); // Move addCourse inside the if statement
+            } else {
+              // Handle case where no file is selected
+              setNewCourse((prevState) => ({
+                ...prevState,
+                errorMsg: "please selecte course thumbnail",
+              }));
+            }
           },
         }}
       >
@@ -547,53 +729,57 @@ const AdminCourses = () => {
             autoFocus
             required
             margin="dense"
-            id="name"
-            name="firstName"
-            label="First Name"
+            id="courseName"
+            name="Name"
+            label="Name"
             type="text"
             fullWidth
             variant="standard"
+            
           />
           <TextField
-            required
+            id="outlined-multiline-static"
             margin="dense"
-            id="name"
-            name="lastName"
-            label="Last Name"
+            label="Description"
+            name="description"
             type="text"
             fullWidth
             variant="standard"
+            required
           />
           <TextField
             required
             margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
+            id="duration"
+            name="duration"
+            label="Duration Hours"
+            type="number"
             fullWidth
             variant="standard"
           />
           <TextField
             required
             margin="dense"
-            id="name"
-            name="password"
-            label="Password"
-            type="password"
+            id="durationWeeks"
+            name="durationWeeks"
+            label="Duration Weeks"
+            type="number"
             fullWidth
             variant="standard"
           />
-          <TextField
-            required
-            margin="dense"
-            id="name"
-            name="passwordConfirm"
-            label="Confirm Password"
-            type="password"
-            fullWidth
-            variant="standard"
-          />
+          <FormControl fullWidth sx={{ marginTop: "1.5rem" }}>
+            <Input
+              required
+              id="file-input"
+              variant="standard"
+              name="file"
+              type="file"
+              onChange={() => {}}
+            />
+            <FormHelperText sx={{ margin: "0.5rem 0" }}>
+              Choose a file for the course thumbnail
+            </FormHelperText>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={handleClose}>
@@ -613,6 +799,7 @@ const AdminCourses = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
       {/* confirm delete dialog */}
       <Dialog
         fullWidth
