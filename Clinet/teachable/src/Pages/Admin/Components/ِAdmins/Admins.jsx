@@ -467,7 +467,7 @@ const Admins = () => {
           },
         }}
       >
-        <DialogTitle>Udate Instractor</DialogTitle>
+        <DialogTitle>Update Admin</DialogTitle>
         <DialogContent>
           {updateAmdin.errorMsg !== "" && (
             <Alert severity="error">{updateAmdin.errorMsg}</Alert>
@@ -488,15 +488,6 @@ const Admins = () => {
             name="lastName"
             label="Last Name"
             type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
             fullWidth
             variant="standard"
           />

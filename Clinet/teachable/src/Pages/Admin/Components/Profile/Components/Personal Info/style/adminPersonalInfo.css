@@ -1,0 +1,36 @@
+.admin-personal-info {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1rem;
+}
+
+.admin-personal-info .left {
+    padding: 1rem;
+}
+
+.admin-personal-info .left .image {
+    width: 13rem;
+    height: 13rem;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border: 2px solid var(--mainColor);
+}
+
+.admin-personal-info .right {
+    padding: 1rem;
+
+}
+
+.admin-personal-info .right p {
+    font-size: 1.5rem;
+}
+
+.admin-personal-info .right p span {
+    color: var(--mainColor);
+    margin-right: .7rem;
+}

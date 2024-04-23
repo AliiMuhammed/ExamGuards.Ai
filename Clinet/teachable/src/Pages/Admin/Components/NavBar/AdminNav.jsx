@@ -60,7 +60,7 @@ const AdminNav = () => {
             <IoClose />
           </button>
         </div>
-        {/* <div className="notification">
+        <div className="notification">
           <div className="header">
             <div className="time">
               <FaRegClock />
@@ -77,15 +77,15 @@ const AdminNav = () => {
             bodytest notification bodytest notification bodytest notification
             bodytest notification bodytest notification body
           </div>
-        </div> */}
-        <div className="empty-notification">
+        </div>
+        {/* <div className="empty-notification">
           <div className="icon">
             <IoNotifications />
           </div>
           <div className="text">
             <p>No new notifications</p>
           </div>
-        </div>
+        </div> */}
       </Drawer>
     </nav>
   );

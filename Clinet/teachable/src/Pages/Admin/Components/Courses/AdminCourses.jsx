@@ -145,9 +145,12 @@ const AdminCourses = () => {
   // handel update course
   const updateCourses = (data) => {
     setUpdateCourse({ ...updateCourse, loading: true });
-
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
     http
-      .PATCH(`courses/${openUpdateDilog.id}`, data)
+      .PATCH(`courses/${openUpdateDilog.id}`, formData)
       .then((res) => {
         setUpdateCourse({
           ...updateCourse,
@@ -304,7 +307,7 @@ const AdminCourses = () => {
     setAssignCourse({ ...assignCourse, loading: true });
 
     http
-      .PATCH(`courses/assign`, data)
+      .POST(`courses/assign`, data)
       .then((res) => {
         setAssignCourse({
           ...assignCourse,
@@ -590,31 +593,36 @@ const AdminCourses = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* update dialog
+      {/* update dialog */}
       <Dialog
         open={openUpdateDilog.open}
         onClose={handleCloseUpdateDilog}
         fullWidth
-        PaperProps={{
-          component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            formJson.role = selectedRole;
-            const filteredObj = Object.fromEntries(
-              Object.entries(formJson).filter(([key, value]) => value !== "")
-            );
-            if (Object.keys(filteredObj).length === 0) {
-              setUpdateCourse((prevState) => ({
-                ...prevState,
-                errorMsg: "You must enter valid data to update",
-              }));
-            } else {
-              updateCourse.errorMsg = "";
-              updateCourses(filteredObj);
-            }
-          },
+        component="form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          const formData = new FormData(event.currentTarget);
+          const formJson = Object.fromEntries(formData.entries());
+          const filteredObj = Object.fromEntries(
+            Object.entries(formJson).filter(([key, value]) => value !== "")
+          );
+
+          // Check if a file is selected
+          const fileInput = document.getElementById("file-input");
+          if (fileInput.files.length === 0 || fileInput.files[0].size === 0) {
+            delete filteredObj["photo"];
+          }
+
+          if (Object.keys(filteredObj).length === 0) {
+            setUpdateCourse((prevState) => ({
+              ...prevState,
+              errorMsg: "You must enter valid data to update",
+            }));
+          } else {
+            updateCourses.errorMsg = "";
+            console.log(filteredObj);
+            updateCourses(filteredObj);
+          }
         }}
       >
         <DialogTitle>Udate Course</DialogTitle>
@@ -625,45 +633,43 @@ const AdminCourses = () => {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            name="firstName"
-            label="First Name"
+            id="courseName"
+            name="name"
+            label="Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            id="outlined-multiline-static"
+            margin="dense"
+            label="Description"
+            name="description"
             type="text"
             fullWidth
             variant="standard"
           />
           <TextField
             margin="dense"
-            id="name"
-            name="lastName"
-            label="Last Name"
-            type="text"
+            id="duration"
+            name="duration"
+            label="Duration Hours"
+            type="number"
             fullWidth
             variant="standard"
           />
-          <TextField
-            margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-          <FormControl fullWidth variant="standard" margin="dense">
-            <InputLabel htmlFor="role">Role</InputLabel>
-            <Select
-              id="role"
-              name="role"
-              value={selectedRole}
-              onChange={(event) => setSelectedRole(event.target.value)}
-            >
-              {allInstructors.data?.map((instructor) => (
-                <MenuItem key={instructor._id} value={instructor._id}>
-                  {`${instructor.firstName} ${instructor.lastName}`}
-                </MenuItem>
-              ))}
-            </Select>
+          <FormControl fullWidth sx={{ marginTop: "1.5rem" }}>
+            <Input
+              id="file-input"
+              variant="standard"
+              name="photo"
+              type="file"
+              accept="image/*"
+              onChange={() => {}}
+            />
+            <FormHelperText sx={{ margin: "0.5rem 0" }}>
+              Choose a file for the course thumbnail
+            </FormHelperText>
           </FormControl>
         </DialogContent>
         <DialogActions>
@@ -683,41 +689,28 @@ const AdminCourses = () => {
             )}
           </Button>
         </DialogActions>
-      </Dialog> */}
+      </Dialog>
       {/* add dialog */}
       <Dialog
         open={open}
         onClose={handleClose}
         fullWidth
-        PaperProps={{
-          component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            // Get the file input element
-            const fileInput = document.getElementById("file-input");
-            // Check if a file is selected
-            if (fileInput.files.length > 0) {
-              // Append the file to the FormData object
-              formData.append("file", fileInput.files[0]);
-              formData.append("name", formJson.name);
-              formData.append("description", formJson.description);
-              formData.append("duration", formJson.duration);
-              formData.append("durationWeeks", formJson.durationWeeks);
-              setNewCourse((prevState) => ({
-                ...prevState,
-                errorMsg: "",
-              }));
-              addCourse(formData); // Move addCourse inside the if statement
-            } else {
-              // Handle case where no file is selected
-              setNewCourse((prevState) => ({
-                ...prevState,
-                errorMsg: "please selecte course thumbnail",
-              }));
-            }
-          },
+        component="form" // Set the component to "form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          const formData = new FormData(event.currentTarget);
+          if (formData.has("photo") && formData.get("photo") !== "") {
+            setNewCourse((prevState) => ({
+              ...prevState,
+              errorMsg: "",
+            }));
+            addCourse(formData);
+          } else {
+            setNewCourse((prevState) => ({
+              ...prevState,
+              errorMsg: "Please select a course thumbnail",
+            }));
+          }
         }}
       >
         <DialogTitle>Add New Course</DialogTitle>
@@ -730,12 +723,11 @@ const AdminCourses = () => {
             required
             margin="dense"
             id="courseName"
-            name="Name"
+            name="name"
             label="Name"
             type="text"
             fullWidth
             variant="standard"
-            
           />
           <TextField
             id="outlined-multiline-static"
@@ -757,23 +749,14 @@ const AdminCourses = () => {
             fullWidth
             variant="standard"
           />
-          <TextField
-            required
-            margin="dense"
-            id="durationWeeks"
-            name="durationWeeks"
-            label="Duration Weeks"
-            type="number"
-            fullWidth
-            variant="standard"
-          />
           <FormControl fullWidth sx={{ marginTop: "1.5rem" }}>
             <Input
               required
               id="file-input"
               variant="standard"
-              name="file"
+              name="photo"
               type="file"
+              accept="image/*"
               onChange={() => {}}
             />
             <FormHelperText sx={{ margin: "0.5rem 0" }}>

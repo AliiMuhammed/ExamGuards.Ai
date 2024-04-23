@@ -257,7 +257,7 @@ function AdminStudents() {
     },
   ];
 
-  //call all admins
+  //call all students
   useEffect(() => {
     if (reloadData) {
       setUsers({ ...users, loading: true });
