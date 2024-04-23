@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import { TextField, Button, FormHelperText } from "@mui/material";
 import "./style/adminEditProfile.css";
 import http from "./../../../../../../Helper/http";
-import { getAuthUser } from "../../../../../../Helper/Storage";
+import { getAuthUser, setAuthUser } from "../../../../../../Helper/Storage";
+import MyToast from "../../../../../../Shared/Components/MyToast";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 
 const AdminEditProfile = () => {
-  const Admin = getAuthUser()?.data?.data?.user;
-
+  const Admin = getAuthUser()?.data;
+  const [ToastOpen, setToastOpen] = useState(false);
+  const [toastMsg, setToastMsg] = useState({
+    msg: "",
+    type: "",
+  });
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,29 +39,83 @@ const AdminEditProfile = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    if (formData.firstName !== "") {
-      formData.append("firstName", formData.firstName);
-    }
-    if (formData.lastName !== "") {
-      formData.append("lastName", formData.lastName);
-    }
-    if (formData.file !== null) {
-      formData.append("file", formData.file);
+  // handle open and colse toaster
+  const handleToastOpen = () => {
+    setToastOpen(true);
+  };
+
+  const handleSucessClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
 
+    setToastOpen(false);
+  };
+
+  const handleSubmit = (e) => {
+    setUpdateAmdin({ ...updateAdmin, loading: true });
+    e.preventDefault();
+
+    if (!formData.firstName && !formData.lastName && !formData.file) {
+      setUpdateAmdin({
+        ...updateAdmin,
+        loading: false,
+        errorMsg: "You must enter at least one field to update",
+      });
+      return;
+    }
+    const updatedFormData = new FormData();
+    if (formData.firstName !== "") {
+      updatedFormData.append("firstName", formData.firstName);
+    }
+    if (formData.lastName !== "") {
+      updatedFormData.append("lastName", formData.lastName);
+    }
+    if (formData.file !== null) {
+      updatedFormData.append("photo", formData.file);
+    }
     http
-      .PATCH("users/updateMe", formData)
-      .then(() => {})
-      .catch(() => {});
-    // Add logic to submit form data
-    console.log("Form submitted:", formData);
+      .PATCH("users/updateMe", updatedFormData)
+      .then((res) => {
+        setUpdateAmdin({ ...updateAdmin, loading: false, errorMsg: "" });
+        setToastMsg({
+          ...toastMsg,
+          msg: "ِProfile updated successfully",
+          type: "success",
+        });
+        handleToastOpen();
+        // res.token = Admin.token;
+        let dataWithToken = res.data;
+        dataWithToken.token = Admin.token;
+        res.data = dataWithToken;
+        setAuthUser(res);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          file: null,
+        });
+      })
+      .catch((err) => {
+        setUpdateAmdin({
+          ...updateAdmin,
+          loading: false,
+          errorMsg: "something went wrong",
+        });
+        setToastMsg({
+          ...toastMsg,
+          msg: "Something went wrong",
+          type: "error",
+        });
+        handleToastOpen();
+      });
   };
 
   return (
     <div>
+       {updateAdmin.errorMsg !== "" && (
+      <Alert severity="error">{updateAdmin.errorMsg}</Alert>
+    )}
+
       <form onSubmit={handleSubmit}>
         <TextField
           label="First Name"
@@ -76,7 +137,7 @@ const AdminEditProfile = () => {
           label="Email"
           name="email"
           disabled
-          value={Admin.email}
+          value={Admin.data?.user.email}
           fullWidth
           margin="normal"
         />
@@ -95,10 +156,28 @@ const AdminEditProfile = () => {
           className="update-admin-btn"
           variant="contained"
           color="primary"
+          disabled={updateAdmin.loading}
         >
-          Update
+          {updateAdmin.loading ? (
+            <CircularProgress
+              size={20}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#ED6B17",
+              }}
+            />
+          ) : (
+            "Update"
+          )}
         </Button>
       </form>
+      <MyToast
+        handleClose={handleSucessClose}
+        open={ToastOpen}
+        msg={toastMsg}
+      />
     </div>
   );
 };
