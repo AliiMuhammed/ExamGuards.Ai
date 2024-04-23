@@ -28,7 +28,6 @@ const AdminCourses = () => {
   const [open, setOpen] = useState(false);
   const [ToastOpen, setToastOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
-  const [selectedRole, setSelectedRole] = useState("");
   const [SelectedIntsructor, setSelectedIntsructor] = useState("");
   const [toastMsg, setToastMsg] = useState({
     msg: "",
@@ -476,6 +475,7 @@ const AdminCourses = () => {
     rowsPerPage: 7,
     rowsPerPageOptions: [7, 50, 100],
   };
+
   return (
     <section className="admin-courses-section">
       <div className="container">
@@ -559,21 +559,28 @@ const AdminCourses = () => {
           {assignCourse.errorMsg !== "" && (
             <Alert severity="error">{assignCourse.errorMsg}</Alert>
           )}
-          <FormControl fullWidth variant="standard" margin="dense">
-            <InputLabel htmlFor="instructor">Select a Instructor</InputLabel>
-            <Select
-              id="instructor"
-              name="instructor"
-              value={SelectedIntsructor}
-              onChange={(event) => setSelectedIntsructor(event.target.value)}
-            >
-              {allInstructors.data?.map((instructor) => (
-                <MenuItem key={instructor._id} value={instructor._id}>
-                  {`${instructor.firstName} ${instructor.lastName}`}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+
+          {allInstructors.data.length > 0 && (
+            <FormControl fullWidth variant="standard" margin="dense">
+              <InputLabel htmlFor="instructor">Select a Instructor</InputLabel>
+              <Select
+                id="instructor"
+                name="instructor"
+                value={SelectedIntsructor}
+                onChange={(event) => setSelectedIntsructor(event.target.value)}
+              >
+                {allInstructors.data?.map((instructor) => (
+                  <MenuItem key={instructor._id} value={instructor._id}>
+                    {`${instructor.firstName} ${instructor.lastName}`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+
+          {allInstructors.data.length === 0 && (
+            <Alert severity="info">There is no instructor to assign</Alert>
+          )}
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={handleCloseAssignDilog}>

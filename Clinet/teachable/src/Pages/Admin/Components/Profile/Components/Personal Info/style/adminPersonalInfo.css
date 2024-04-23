@@ -34,3 +34,11 @@
     color: var(--mainColor);
     margin-right: .7rem;
 }
+
+.right .align-data{
+    display: flex;
+}
+
+.right .align-data .status{
+    margin-left: 1rem;
+}

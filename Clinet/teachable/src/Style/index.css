@@ -39,7 +39,7 @@ body {
 
   font-family: "mainFont", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--mainFontColor);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 
@@ -141,8 +141,8 @@ a {
 
 
 .main-btn.sm.update {
-  background-color: green;
-  border-color: green;
+  background-color: var(--mainFontColor);
+  border-color: var(--mainFontColor);
   margin-left: 0.5rem;
   align-items: center;
   justify-content: center;

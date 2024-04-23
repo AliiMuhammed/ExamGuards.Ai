@@ -50,11 +50,11 @@ function AdminInstructors() {
   const [deleteUser, setDeleteUser] = useState({
     loading: false,
   });
-  const [newInstractor, setNewInstractor] = useState({
+  const [newInstructor, setNewInstructor] = useState({
     loading: false,
     errorMsg: "",
   });
-  const [updateInstractor, setUpdateInstractor] = useState({
+  const [updateInstructor, setUpdateInstructor] = useState({
     loading: false,
     errorMsg: "",
   });
@@ -130,27 +130,27 @@ function AdminInstructors() {
   //handel udate user dilog
   const handleCloseUpdateDilog = () => {
     setOpenUpdateDilog({ open: false, id: "" });
-    setUpdateInstractor((prevState) => ({
+    setUpdateInstructor((prevState) => ({
       ...prevState,
       errorMsg: "",
     }));
   };
   const handleClickOpenUpdateDilog = (id) => {
     setOpenUpdateDilog({ open: true, id: id });
-    setUpdateInstractor((prevState) => ({
+    setUpdateInstructor((prevState) => ({
       ...prevState,
       errorMsg: "",
     }));
   };
   // handel update user
   const updateUser = (data) => {
-    setUpdateInstractor({ ...updateInstractor, loading: true });
+    setUpdateInstructor({ ...updateInstructor, loading: true });
 
     http
       .PATCH(`users/${openUpdateDilog.id}`, data)
       .then((res) => {
-        setUpdateInstractor({
-          ...updateInstractor,
+        setUpdateInstructor({
+          ...updateInstructor,
           loading: false,
           errorMsg: "",
         });
@@ -164,8 +164,8 @@ function AdminInstructors() {
         handleToastOpen();
       })
       .catch((err) => {
-        setUpdateInstractor({
-          ...updateInstractor,
+        setUpdateInstructor({
+          ...updateInstructor,
           loading: false,
           errorMsg: "Please enter valid data",
         });
@@ -223,26 +223,26 @@ function AdminInstructors() {
   //handle open and close dilog add instructor
   const handleClickOpen = () => {
     setOpen(true);
-    setNewInstractor((prevState) => ({
+    setNewInstructor((prevState) => ({
       ...prevState,
       errorMsg: "",
     }));
   };
   const handleClose = () => {
     setOpen(false);
-    setNewInstractor((prevState) => ({
+    setNewInstructor((prevState) => ({
       ...prevState,
       errorMsg: "",
     }));
   };
   //add new instructor
-  const addInstractor = (data) => {
-    setNewInstractor({ ...newInstractor, loading: true });
+  const addInstructor = (data) => {
+    setNewInstructor({ ...newInstructor, loading: true });
     data.role = "instructor";
     http
       .POST("users/signup", data)
       .then((res) => {
-        setNewInstractor({ ...newInstractor, loading: false });
+        setNewInstructor({ ...newInstructor, loading: false });
         setReloadData(true);
         handleClose();
 
@@ -254,8 +254,8 @@ function AdminInstructors() {
         handleToastOpen();
       })
       .catch((err) => {
-        setNewInstractor({
-          ...newInstractor,
+        setNewInstructor({
+          ...newInstructor,
           loading: false,
           errorMsg: err?.response?.data?.message,
         });
@@ -433,21 +433,21 @@ function AdminInstructors() {
               Object.entries(formJson).filter(([key, value]) => value !== "")
             );
             if (Object.keys(filteredObj).length === 0) {
-              setUpdateInstractor((prevState) => ({
+              setUpdateInstructor((prevState) => ({
                 ...prevState,
                 errorMsg: "You must enter valid data to update",
               }));
             } else {
-              updateInstractor.errorMsg = "";
+              updateInstructor.errorMsg = "";
               updateUser(filteredObj);
             }
           },
         }}
       >
-        <DialogTitle>Udate Instractor</DialogTitle>
+        <DialogTitle>Udate Instructor</DialogTitle>
         <DialogContent>
-          {updateInstractor.errorMsg !== "" && (
-            <Alert severity="error">{updateInstractor.errorMsg}</Alert>
+          {updateInstructor.errorMsg !== "" && (
+            <Alert severity="error">{updateInstructor.errorMsg}</Alert>
           )}
           <TextField
             autoFocus
@@ -502,9 +502,9 @@ function AdminInstructors() {
             variant="contained"
             type="submit"
             color="success"
-            disabled={updateInstractor.loading}
+            disabled={updateInstructor.loading}
           >
-            {updateInstractor.loading ? (
+            {updateInstructor.loading ? (
               <CircularProgress size={20} color="inherit" />
             ) : (
               "update"
@@ -523,14 +523,14 @@ function AdminInstructors() {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            addInstractor(formJson);
+            addInstructor(formJson);
           },
         }}
       >
-        <DialogTitle>Add New Instractor</DialogTitle>
+        <DialogTitle>Add New Instructor</DialogTitle>
         <DialogContent>
-          {newInstractor.errorMsg !== "" && (
-            <Alert severity="error">{newInstractor.errorMsg}</Alert>
+          {newInstructor.errorMsg !== "" && (
+            <Alert severity="error">{newInstructor.errorMsg}</Alert>
           )}
           <TextField
             autoFocus
@@ -592,9 +592,9 @@ function AdminInstructors() {
             variant="contained"
             type="submit"
             color="success"
-            disabled={newInstractor.loading}
+            disabled={newInstructor.loading}
           >
-            {newInstractor.loading ? (
+            {newInstructor.loading ? (
               <CircularProgress size={20} color="inherit" />
             ) : (
               "Add"
