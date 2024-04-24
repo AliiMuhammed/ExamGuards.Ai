@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Outlet } from "react-router";
 import "./Style/admin.css";
+import MyToast from "../../Shared/Components/MyToast";
 const SideMenu = React.lazy(() => import("./Components/Side Menu/SideMenu"));
 const AdminNav = React.lazy(() => import("./Components/NavBar/AdminNav"));
 const Backdrop = React.lazy(() => import("./../../Shared/Components/Backdrop"));
@@ -17,6 +18,7 @@ const Admin = () => {
           <Outlet />
         </div>
       </section>
+      <MyToast />
     </Suspense>
   );
 };

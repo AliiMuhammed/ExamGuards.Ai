@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "./style/adminCourses.css";
-import courseimg from "../../../../Assets/Images/course.png";
 import http from "./../../../../Helper/http";
 import MainTabel from "../MainTabel/MainTabel";
 import Tooltip from "@mui/material/Tooltip";
@@ -20,19 +19,18 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import MyToast from "../../../../Shared/Components/MyToast";
 import Input from "@mui/material/Input";
 import FormHelperText from "@mui/material/FormHelperText";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
+
 const AdminCourses = () => {
+  const dispatch = useDispatch();
+
   const [loadingStates, setLoadingStates] = useState({});
   const [open, setOpen] = useState(false);
-  const [ToastOpen, setToastOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
   const [SelectedIntsructor, setSelectedIntsructor] = useState("");
-  const [toastMsg, setToastMsg] = useState({
-    msg: "",
-    type: "",
-  });
   const [openDeleteDilog, setOpenDeleteDilog] = useState({
     open: false,
     id: "",
@@ -97,21 +95,7 @@ const AdminCourses = () => {
     }
   }, [reloadData]);
 
-  console.log(courses.data);
-
-  // handle open and colse toaster
-  const handleToastOpen = () => {
-    setToastOpen(true);
-  };
-  const handleSucessClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setToastOpen(false);
-  };
-
-  //handel udate course dilog
+  //handel update course dilog
   const handleCloseUpdateDilog = () => {
     setOpenUpdateDilog({ open: false, id: "" });
     setUpdateCourse((prevState) => ({
@@ -119,7 +103,7 @@ const AdminCourses = () => {
       errorMsg: "",
     }));
   };
-  //handel udate course dilog
+  //handel update course dilog
   const handleCloseAssignDilog = () => {
     setOpenAssignDilog({ open: false, id: "" });
     setAssignCourse((prevState) => ({
@@ -157,13 +141,13 @@ const AdminCourses = () => {
           errorMsg: "",
         });
         setReloadData(true);
-        setToastMsg({
-          ...toastMsg,
-          msg: "Course updated successfully",
-          type: "success",
-        });
+        dispatch(
+          openToast({
+            msg: "Course updated successfully",
+            type: "success",
+          })
+        );
         handleCloseUpdateDilog();
-        handleToastOpen();
       })
       .catch((err) => {
         setUpdateCourse({
@@ -171,13 +155,12 @@ const AdminCourses = () => {
           loading: false,
           errorMsg: "Please enter valid data",
         });
-
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
   //handel delete course dilog
@@ -199,12 +182,12 @@ const AdminCourses = () => {
           loading: false,
         });
         handleCloseDeleteDilog();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Course deleted successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Course deleted successfully",
+            type: "success",
+          })
+        );
       })
 
       .catch((err) => {
@@ -213,12 +196,12 @@ const AdminCourses = () => {
           loading: false,
         });
         handleCloseDeleteDilog();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -246,12 +229,12 @@ const AdminCourses = () => {
         setNewCourse({ ...newCourse, loading: false });
         setReloadData(true);
         handleClose();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Course added successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Course added successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -260,12 +243,12 @@ const AdminCourses = () => {
           loading: false,
           errorMsg: err?.message,
         });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -278,21 +261,21 @@ const AdminCourses = () => {
       .then((res) => {
         setReloadData(true);
         setLoadingStates({ ...loadingStates, [id]: false });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Operation was completed successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Operation was completed successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         setLoadingStates({ ...loadingStates, [id]: false });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -314,13 +297,12 @@ const AdminCourses = () => {
           errorMsg: "",
         });
         setReloadData(true);
-        setToastMsg({
-          ...toastMsg,
-          msg: "Course assigned successfully",
-          type: "success",
-        });
-        handleCloseAssignDilog();
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Course assigned successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         setAssignCourse({
@@ -328,13 +310,12 @@ const AdminCourses = () => {
           loading: false,
           errorMsg: "Please enter valid data",
         });
-        console.log(err);
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -823,12 +804,6 @@ const AdminCourses = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* toast */}
-      <MyToast
-        handleClose={handleSucessClose}
-        open={ToastOpen}
-        msg={toastMsg}
-      />
     </section>
   );
 };

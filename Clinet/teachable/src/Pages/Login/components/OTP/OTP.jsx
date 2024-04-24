@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import "./style/otp.css";
 import logo from "../../../../Assets/Images/Logos/h-logo.png";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
 
 const OTP = ({ handleShowResetPass }) => {
+  const dispatch = useDispatch();
   const [otp, setOTP] = useState("");
 
   const handleChange = (e) => {

@@ -7,30 +7,16 @@ import { Link } from "react-router-dom";
 import { IoChevronBackOutline } from "react-icons/io5";
 import Alert from "@mui/material/Alert";
 import http from "../../../../Helper/http";
-import MyToast from "../../../../Shared/Components/MyToast";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
 
 const ForgetPassword = ({ handleShowOTP }) => {
-  const [ToastOpen, setToastOpen] = useState(false);
-  const [toastMsg, setToastMsg] = useState({
-    msg: "",
-    type: "",
-  });
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [forget, setForget] = useState({
     loading: false,
     errorMsg: "",
   });
-  // handle open and colse toaster
-  const handleToastOpen = () => {
-    setToastOpen(true);
-  };
-  const handleToastClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setToastOpen(false);
-  };
   const handleForget = (e) => {
     e.preventDefault();
     if (!email) {
@@ -50,12 +36,12 @@ const ForgetPassword = ({ handleShowOTP }) => {
           loading: false,
           errorMsg: "",
         });
-        setToastMsg({
-          ...toastMsg,
-          msg: "OTP is sent to your email successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "OTP is sent to your email successfully",
+            type: "success",
+          })
+        );
         handleShowOTP();
       })
       .catch((err) => {
@@ -65,12 +51,12 @@ const ForgetPassword = ({ handleShowOTP }) => {
           loading: false,
           errorMsg: err.message,
         });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -137,7 +123,6 @@ const ForgetPassword = ({ handleShowOTP }) => {
           </div>
         </div>
       </div>
-      <MyToast handleClose={handleToastClose} open={ToastOpen} msg={toastMsg} />
     </section>
   );
 };

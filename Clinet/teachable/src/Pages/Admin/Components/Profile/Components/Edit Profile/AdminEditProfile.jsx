@@ -3,17 +3,14 @@ import { TextField, Button, FormHelperText } from "@mui/material";
 import "./style/adminEditProfile.css";
 import http from "./../../../../../../Helper/http";
 import { getAuthUser, setAuthUser } from "../../../../../../Helper/Storage";
-import MyToast from "../../../../../../Shared/Components/MyToast";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../../../Redux/Slices/toastSlice";
 
 const AdminEditProfile = () => {
   const Admin = getAuthUser()?.data;
-  const [ToastOpen, setToastOpen] = useState(false);
-  const [toastMsg, setToastMsg] = useState({
-    msg: "",
-    type: "",
-  });
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -37,19 +34,6 @@ const AdminEditProfile = () => {
       ...prevFormData,
       file: file,
     }));
-  };
-
-  // handle open and colse toaster
-  const handleToastOpen = () => {
-    setToastOpen(true);
-  };
-
-  const handleSucessClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setToastOpen(false);
   };
 
   const handleSubmit = (e) => {
@@ -78,12 +62,12 @@ const AdminEditProfile = () => {
       .PATCH("users/updateMe", updatedFormData)
       .then((res) => {
         setUpdateAmdin({ ...updateAdmin, loading: false, errorMsg: "" });
-        setToastMsg({
-          ...toastMsg,
-          msg: "ِProfile updated successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Profile updated successfully",
+            type: "success",
+          })
+        );
         // res.token = Admin.token;
         let dataWithToken = res.data;
         dataWithToken.token = Admin.token;
@@ -101,12 +85,12 @@ const AdminEditProfile = () => {
           loading: false,
           errorMsg: "something went wrong",
         });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -173,11 +157,6 @@ const AdminEditProfile = () => {
           )}
         </Button>
       </form>
-      <MyToast
-        handleClose={handleSucessClose}
-        open={ToastOpen}
-        msg={toastMsg}
-      />
     </div>
   );
 };

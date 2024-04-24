@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import "./style/adminChangePassword.css";
-import MyToast from "../../../../../../Shared/Components/MyToast";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { getAuthUser, setAuthUser } from "../../../../../../Helper/Storage";
 import http from "./../../../../../../Helper/http";
 import { TextField, Button, FormHelperText } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../../../Redux/Slices/toastSlice";
 
 const AdminChangePassword = () => {
-  const [ToastOpen, setToastOpen] = useState(false);
-  const [toastMsg, setToastMsg] = useState({
-    msg: "",
-    type: "",
-  });
+  const dispatch = useDispatch();
   const [passChange, setPassChange] = useState({
     password: "",
     passwordConfirm: "",
@@ -31,19 +28,6 @@ const AdminChangePassword = () => {
     }));
   };
 
-  // handle open and colse toaster
-  const handleToastOpen = () => {
-    setToastOpen(true);
-  };
-
-  const handleSucessClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setToastOpen(false);
-  };
-
   const handleSubmit = (e) => {
     setPass({ ...pass, loading: true });
     e.preventDefault();
@@ -60,13 +44,12 @@ const AdminChangePassword = () => {
       .PATCH("users/updateMe")
       .then((res) => {
         setPass({ ...pass, loading: false, errorMsg: "" });
-        setToastMsg({
-          ...toastMsg,
-          msg: "ِPassword Changed successfully",
-          type: "success",
-        });
-        handleToastOpen();
-
+        dispatch(
+          openToast({
+            msg: "ِPassword Changed successfully",
+            type: "success",
+          })
+        );
         setPassChange({
           password: "",
           passwordConfirm: "",
@@ -78,12 +61,12 @@ const AdminChangePassword = () => {
           loading: false,
           errorMsg: "something went wrong",
         });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
   return (
@@ -131,11 +114,6 @@ const AdminChangePassword = () => {
           )}
         </Button>
       </form>
-      <MyToast
-        handleClose={handleSucessClose}
-        open={ToastOpen}
-        msg={toastMsg}
-      />
     </div>
   );
 };

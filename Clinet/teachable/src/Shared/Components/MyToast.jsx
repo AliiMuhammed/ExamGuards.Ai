@@ -1,7 +1,18 @@
+// MyToast.js
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-const MyToast = ({ handleClose, open, msg }) => {
+import { closeToast } from "../../Redux/Slices/toastSlice";
+
+const MyToast = () => {
+  const { open, msg, type } = useSelector((state) => state.toast);
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    dispatch(closeToast());
+  };
+
   return (
     <Snackbar
       open={open}
@@ -11,11 +22,11 @@ const MyToast = ({ handleClose, open, msg }) => {
     >
       <Alert
         onClose={handleClose}
-        severity={msg.type}
+        severity={type}
         variant="filled"
         sx={{ width: "100%" }}
       >
-        {msg.msg}
+        {msg}
       </Alert>
     </Snackbar>
   );

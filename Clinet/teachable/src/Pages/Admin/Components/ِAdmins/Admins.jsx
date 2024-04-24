@@ -19,20 +19,17 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Alert from "@mui/material/Alert";
-import MyToast from "../../../../Shared/Components/MyToast";
 import { getAuthUser } from "../../../../Helper/Storage";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
 
 const Admins = () => {
   const user = getAuthUser();
+  const dispatch = useDispatch();
   const [loadingStates, setLoadingStates] = useState({});
   const [open, setOpen] = React.useState(false);
   const [reloadData, setReloadData] = useState(true);
-  const [ToastOpen, setToastOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState("");
-  const [toastMsg, setToastMsg] = useState({
-    msg: "",
-    type: "",
-  });
   const [openDeleteDilog, setOpenDeleteDilog] = useState({
     open: false,
     id: "",
@@ -52,12 +49,12 @@ const Admins = () => {
   const [newAdmin, setNewAdmin] = useState({
     loading: false,
     errorMsg: "",
-    successMsg: "",
   });
   const [updateAmdin, setUpdateAmdin] = useState({
     loading: false,
     errorMsg: "",
   });
+
   //call all admins
   useEffect(() => {
     if (reloadData) {
@@ -84,7 +81,7 @@ const Admins = () => {
     }
   }, [reloadData]);
 
-  //handel udate user dialog
+  //handel update user dialog
   const handleCloseUpdateDilog = () => {
     setOpenUpdateDilog({ open: false, id: "" });
     setUpdateAmdin((prevState) => ({
@@ -98,19 +95,6 @@ const Admins = () => {
       ...prevState,
       errorMsg: "",
     }));
-  };
-
-  // handle open and colse toaster
-  const handleToastOpen = () => {
-    setToastOpen(true);
-  };
-
-  const handleSucessClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setToastOpen(false);
   };
 
   //handel delete user dilog
@@ -133,12 +117,12 @@ const Admins = () => {
           loading: false,
         });
         handleCloseDeleteDilog();
-        setToastMsg({
-          ...toastMsg,
-          msg: "ِAdmin deleted successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Admin deleted successfully",
+            type: "success",
+          })
+        );
       })
 
       .catch((err) => {
@@ -147,39 +131,38 @@ const Admins = () => {
           loading: false,
         });
         handleCloseDeleteDilog();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
   // handel activation user
   const handelActivation = (id) => {
     setLoadingStates({ ...loadingStates, [id]: true });
-
     http
       .PATCH(`users/activate/${id}`)
       .then((res) => {
         setReloadData(true);
         setLoadingStates({ ...loadingStates, [id]: false });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Operation was completed successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Operation was completed successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         setLoadingStates({ ...loadingStates, [id]: false });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -319,33 +302,31 @@ const Admins = () => {
   //add admin functoin
   const addAdmin = (data) => {
     setNewAdmin({ ...newAdmin, loading: true });
-    data.role = "admin";
     http
       .POST("users/signup", data)
       .then((res) => {
         setNewAdmin({ ...newAdmin, loading: false });
         setReloadData(true);
         handleClose();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Admin added successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Admin added successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
-        console.log(err);
         setNewAdmin({
           ...newAdmin,
           loading: false,
           errorMsg: err?.response?.data?.message,
         });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
   // handel update user
@@ -361,13 +342,13 @@ const Admins = () => {
           errorMsg: "",
         });
         setReloadData(true);
-        setToastMsg({
-          ...toastMsg,
-          msg: "Admin updated successfully",
-          type: "success",
-        });
         handleCloseUpdateDilog();
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Admin updated successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         setUpdateAmdin({
@@ -375,13 +356,12 @@ const Admins = () => {
           loading: false,
           errorMsg: "Please enter valid data",
         });
-
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -451,7 +431,6 @@ const Admins = () => {
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
             formJson.role = selectedRole;
-            console.log(formJson);
             const filteredObj = Object.fromEntries(
               Object.entries(formJson).filter(([key, value]) => value !== "")
             );
@@ -537,7 +516,19 @@ const Admins = () => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            addAdmin(formJson);
+            const filteredObj = Object.fromEntries(
+              Object.entries(formJson).filter(([key, value]) => value !== "")
+            );
+            if (Object.keys(filteredObj).length === 0) {
+              setNewAdmin((prevState) => ({
+                ...prevState,
+                errorMsg: "You must enter data to add new admin",
+              }));
+            } else {
+              newAdmin.errorMsg = "";
+              formJson.role = "admin";
+              addAdmin(formJson);
+            }
           },
         }}
       >
@@ -548,7 +539,6 @@ const Admins = () => {
           )}
           <TextField
             autoFocus
-            required
             margin="dense"
             id="name"
             name="firstName"
@@ -558,7 +548,6 @@ const Admins = () => {
             variant="standard"
           />
           <TextField
-            required
             margin="dense"
             id="name"
             name="lastName"
@@ -568,7 +557,6 @@ const Admins = () => {
             variant="standard"
           />
           <TextField
-            required
             margin="dense"
             id="name"
             name="email"
@@ -578,7 +566,6 @@ const Admins = () => {
             variant="standard"
           />
           <TextField
-            required
             margin="dense"
             id="name"
             name="password"
@@ -588,7 +575,6 @@ const Admins = () => {
             variant="standard"
           />
           <TextField
-            required
             margin="dense"
             id="name"
             name="passwordConfirm"
@@ -599,8 +585,21 @@ const Admins = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add</Button>
+          <Button variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={newAdmin.loading}
+          >
+            {newAdmin.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Add"
+            )}
+          </Button>
         </DialogActions>
       </Dialog>
       {/* delete admin dialog */}
@@ -636,12 +635,6 @@ const Admins = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <MyToast
-        handleClose={handleSucessClose}
-        open={ToastOpen}
-        msg={toastMsg}
-      />
     </section>
   );
 };

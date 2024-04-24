@@ -16,18 +16,15 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Alert from "@mui/material/Alert";
-import MyToast from "../../../../Shared/Components/MyToast";
 import { getAuthUser } from "../../../../Helper/Storage";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
 function AdminStudents() {
+  const dispatch = useDispatch();
   const user = getAuthUser();
   const [loadingStates, setLoadingStates] = useState({});
   const [reloadData, setReloadData] = useState(true);
-  const [ToastOpen, setToastOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState("");
-  const [toastMsg, setToastMsg] = useState({
-    msg: "",
-    type: "",
-  });
   const [openDeleteDilog, setOpenDeleteDilog] = useState({
     open: false,
     id: "",
@@ -49,8 +46,7 @@ function AdminStudents() {
     loading: false,
     errorMsg: "",
   });
-
-  //handel udate user dialog
+  //handel update user dialog
   const handleCloseUpdateDilog = () => {
     setOpenUpdateDilog({ open: false, id: "" });
     setUpdateStudent((prevState) => ({
@@ -65,20 +61,6 @@ function AdminStudents() {
       errorMsg: "",
     }));
   };
-
-  // handle open and colse toaster
-  const handleToastOpen = () => {
-    setToastOpen(true);
-  };
-
-  const handleSucessClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setToastOpen(false);
-  };
-
   //handel delete user dilog
   const handleCloseDeleteDilog = () => {
     setOpenDeleteDilog({ open: false, id: "" });
@@ -99,12 +81,12 @@ function AdminStudents() {
           loading: false,
         });
         handleCloseDeleteDilog();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Student deleted successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Student deleted successfully",
+            type: "success",
+          })
+        );
       })
 
       .catch((err) => {
@@ -113,27 +95,37 @@ function AdminStudents() {
           loading: false,
         });
         handleCloseDeleteDilog();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
   // handel activation user
   const handelActivation = (id) => {
     setLoadingStates({ ...loadingStates, [id]: true });
-
     http
       .PATCH(`users/activate/${id}`)
       .then((res) => {
-        console.log(res);
         setReloadData(true);
         setLoadingStates({ ...loadingStates, [id]: false });
+        dispatch(
+          openToast({
+            msg: "Operation was completed successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
         setLoadingStates({ ...loadingStates, [id]: false });
       });
   };
@@ -151,13 +143,13 @@ function AdminStudents() {
           errorMsg: "",
         });
         setReloadData(true);
-        setToastMsg({
-          ...toastMsg,
-          msg: "Student updated successfully",
-          type: "success",
-        });
         handleCloseUpdateDilog();
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Student updated successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         setUpdateStudent({
@@ -165,13 +157,12 @@ function AdminStudents() {
           loading: false,
           errorMsg: "Please enter valid data",
         });
-
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
   // table column and options
@@ -336,142 +327,137 @@ function AdminStudents() {
               color="inherit"
             />
           )}
-        {/* update dialog */}
-        <Dialog
-          open={openUpdateDilog.open}
-          onClose={handleCloseUpdateDilog}
-          fullWidth
-          PaperProps={{
-            component: "form",
-            onSubmit: (event) => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries(formData.entries());
-              formJson.role = selectedRole;
-              console.log(formJson);
-              const filteredObj = Object.fromEntries(
-                Object.entries(formJson).filter(([key, value]) => value !== "")
-              );
-              if (Object.keys(filteredObj).length === 0) {
-                setUpdateStudent((prevState) => ({
-                  ...prevState,
-                  errorMsg: "You must enter valid data to update",
-                }));
-              } else {
-                updateStudent.errorMsg = "";
-                updateUser(filteredObj);
-              }
-            },
-          }}
-        >
-          <DialogTitle>Udate Instractor</DialogTitle>
-          <DialogContent>
-            {updateStudent.errorMsg !== "" && (
-              <Alert severity="error">{updateStudent.errorMsg}</Alert>
-            )}
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              name="firstName"
-              label="First Name"
-              type="text"
-              fullWidth
-              variant="standard"
-            />
-            <TextField
-              margin="dense"
-              id="name"
-              name="lastName"
-              label="Last Name"
-              type="text"
-              fullWidth
-              variant="standard"
-            />
-            <TextField
-              margin="dense"
-              id="name"
-              name="email"
-              label="Email Address"
-              type="email"
-              fullWidth
-              variant="standard"
-            />
-            <FormControl fullWidth variant="standard" margin="dense">
-              <InputLabel htmlFor="role">Role</InputLabel>
-              <Select
-                id="role"
-                name="role"
-                value={selectedRole}
-                onChange={(event) => setSelectedRole(event.target.value)}
-              >
-                <MenuItem value="admin">Admin</MenuItem>
-                <MenuItem value="student">Student</MenuItem>
-                <MenuItem value="instructor">Instructor</MenuItem>
-                {user?.data.data.user.role === "super admin" && (
-                  <MenuItem value="super admin">super admin</MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </DialogContent>
-          <DialogActions>
-            <Button variant="contained" onClick={handleCloseUpdateDilog}>
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              color="success"
-              disabled={updateStudent.loading}
-            >
-              {updateStudent.loading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : (
-                "update"
-              )}
-            </Button>
-          </DialogActions>
-        </Dialog>
-        {/* delete admin dialog */}
-        <Dialog
-          fullWidth
-          open={openDeleteDilog.open}
-          onClose={handleCloseDeleteDilog}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <DialogTitle id="responsive-dialog-title">
-            {"Do you want to delete this user?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              If you delete this user, you will not be able to recover it.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button variant="contained" onClick={handleCloseDeleteDilog}>
-              Cancel
-            </Button>
-            <Button
-              onClick={handleDelete}
-              variant="contained"
-              disabled={deleteUser.loading}
-              color="error"
-            >
-              {deleteUser.loading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : (
-                "Delete"
-              )}
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-        <MyToast
-          handleClose={handleSucessClose}
-          open={ToastOpen}
-          msg={toastMsg}
-        />
       </div>
+      {/* update dialog */}
+      <Dialog
+        open={openUpdateDilog.open}
+        onClose={handleCloseUpdateDilog}
+        fullWidth
+        PaperProps={{
+          component: "form",
+          onSubmit: (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries(formData.entries());
+            formJson.role = selectedRole;
+            console.log(formJson);
+            const filteredObj = Object.fromEntries(
+              Object.entries(formJson).filter(([key, value]) => value !== "")
+            );
+            if (Object.keys(filteredObj).length === 0) {
+              setUpdateStudent((prevState) => ({
+                ...prevState,
+                errorMsg: "You must enter data to update",
+              }));
+            } else {
+              updateStudent.errorMsg = "";
+              updateUser(filteredObj);
+            }
+          },
+        }}
+      >
+        <DialogTitle>Udate Student</DialogTitle>
+        <DialogContent>
+          {updateStudent.errorMsg !== "" && (
+            <Alert severity="error">{updateStudent.errorMsg}</Alert>
+          )}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            name="firstName"
+            label="First Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            name="lastName"
+            label="Last Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            name="email"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+          <FormControl fullWidth variant="standard" margin="dense">
+            <InputLabel htmlFor="role">Role</InputLabel>
+            <Select
+              id="role"
+              name="role"
+              value={selectedRole}
+              onChange={(event) => setSelectedRole(event.target.value)}
+            >
+              <MenuItem value="admin">Admin</MenuItem>
+              <MenuItem value="student">Student</MenuItem>
+              <MenuItem value="instructor">Instructor</MenuItem>
+              {user?.data.data.user.role === "super admin" && (
+                <MenuItem value="super admin">super admin</MenuItem>
+              )}
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleCloseUpdateDilog}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={updateStudent.loading}
+          >
+            {updateStudent.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "update"
+            )}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* delete student dialog */}
+      <Dialog
+        fullWidth
+        open={openDeleteDilog.open}
+        onClose={handleCloseDeleteDilog}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Do you want to delete this user?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            If you delete this user, you will not be able to recover it.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleCloseDeleteDilog}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDelete}
+            variant="contained"
+            disabled={deleteUser.loading}
+            color="error"
+          >
+            {deleteUser.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Delete"
+            )}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </section>
   );
 }

@@ -19,20 +19,17 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import MyToast from "../../../../Shared/Components/MyToast";
 import { getAuthUser } from "../../../../Helper/Storage";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
 
 function AdminInstructors() {
   const user = getAuthUser();
+  const dispatch = useDispatch();
   const [loadingStates, setLoadingStates] = useState({});
   const [open, setOpen] = useState(false);
-  const [ToastOpen, setToastOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
   const [selectedRole, setSelectedRole] = useState("");
-  const [toastMsg, setToastMsg] = useState({
-    msg: "",
-    type: "",
-  });
   const [openDeleteDilog, setOpenDeleteDilog] = useState({
     open: false,
     id: "",
@@ -41,7 +38,6 @@ function AdminInstructors() {
     open: false,
     id: "",
   });
-
   const [users, setUsers] = useState({
     data: [],
     loading: false,
@@ -88,18 +84,6 @@ function AdminInstructors() {
     }
   }, [reloadData]);
 
-  // handle open and colse toaster
-  const handleToastOpen = () => {
-    setToastOpen(true);
-  };
-  const handleSucessClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setToastOpen(false);
-  };
-
   // handel activation user
   const handelActivation = (id) => {
     setLoadingStates({ ...loadingStates, [id]: true });
@@ -109,25 +93,25 @@ function AdminInstructors() {
       .then((res) => {
         setReloadData(true);
         setLoadingStates({ ...loadingStates, [id]: false });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Operation was completed successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Operation was completed successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         setLoadingStates({ ...loadingStates, [id]: false });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
-  //handel udate user dilog
+  //handel update user dilog
   const handleCloseUpdateDilog = () => {
     setOpenUpdateDilog({ open: false, id: "" });
     setUpdateInstructor((prevState) => ({
@@ -155,13 +139,13 @@ function AdminInstructors() {
           errorMsg: "",
         });
         setReloadData(true);
-        setToastMsg({
-          ...toastMsg,
-          msg: "Instructor updated successfully",
-          type: "success",
-        });
         handleCloseUpdateDilog();
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Instructor updated successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         setUpdateInstructor({
@@ -170,12 +154,12 @@ function AdminInstructors() {
           errorMsg: "Please enter valid data",
         });
 
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
   //handel delete user dilog
@@ -197,12 +181,12 @@ function AdminInstructors() {
           loading: false,
         });
         handleCloseDeleteDilog();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Instructor deleted successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Instructor deleted successfully",
+            type: "success",
+          })
+        );
       })
 
       .catch((err) => {
@@ -211,12 +195,12 @@ function AdminInstructors() {
           loading: false,
         });
         handleCloseDeleteDilog();
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
 
@@ -238,20 +222,18 @@ function AdminInstructors() {
   //add new instructor
   const addInstructor = (data) => {
     setNewInstructor({ ...newInstructor, loading: true });
-    data.role = "instructor";
     http
       .POST("users/signup", data)
       .then((res) => {
         setNewInstructor({ ...newInstructor, loading: false });
         setReloadData(true);
         handleClose();
-
-        setToastMsg({
-          ...toastMsg,
-          msg: "Instructor added successfully",
-          type: "success",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Instructor added successfully",
+            type: "success",
+          })
+        );
       })
       .catch((err) => {
         setNewInstructor({
@@ -259,12 +241,12 @@ function AdminInstructors() {
           loading: false,
           errorMsg: err?.response?.data?.message,
         });
-        setToastMsg({
-          ...toastMsg,
-          msg: "Something went wrong",
-          type: "error",
-        });
-        handleToastOpen();
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
       });
   };
   // table column and options
@@ -298,7 +280,7 @@ function AdminInstructors() {
         customBodyRender: (value, tableMeta) => {
           const userId = users.data[tableMeta.rowIndex]?._id;
           const isLoading = loadingStates[userId];
-          let status 
+          let status;
           if (isLoading) {
             status = <CircularProgress size={20} color="inherit" />;
           } else {
@@ -435,7 +417,7 @@ function AdminInstructors() {
             if (Object.keys(filteredObj).length === 0) {
               setUpdateInstructor((prevState) => ({
                 ...prevState,
-                errorMsg: "You must enter valid data to update",
+                errorMsg: "You must enter data to update",
               }));
             } else {
               updateInstructor.errorMsg = "";
@@ -523,7 +505,19 @@ function AdminInstructors() {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            addInstructor(formJson);
+            const filteredObj = Object.fromEntries(
+              Object.entries(formJson).filter(([key, value]) => value !== "")
+            );
+            if (Object.keys(filteredObj).length === 0) {
+              setNewInstructor((prevState) => ({
+                ...prevState,
+                errorMsg: "You must enter data to add new instructor",
+              }));
+            } else {
+              newInstructor.errorMsg = "";
+              formJson.role = "instructor";
+              addInstructor(formJson);
+            }
           },
         }}
       >
@@ -534,7 +528,6 @@ function AdminInstructors() {
           )}
           <TextField
             autoFocus
-            required
             margin="dense"
             id="name"
             name="firstName"
@@ -544,7 +537,6 @@ function AdminInstructors() {
             variant="standard"
           />
           <TextField
-            required
             margin="dense"
             id="name"
             name="lastName"
@@ -554,7 +546,6 @@ function AdminInstructors() {
             variant="standard"
           />
           <TextField
-            required
             margin="dense"
             id="name"
             name="email"
@@ -564,7 +555,6 @@ function AdminInstructors() {
             variant="standard"
           />
           <TextField
-            required
             margin="dense"
             id="name"
             name="password"
@@ -574,7 +564,6 @@ function AdminInstructors() {
             variant="standard"
           />
           <TextField
-            required
             margin="dense"
             id="name"
             name="passwordConfirm"
@@ -635,12 +624,6 @@ function AdminInstructors() {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* toast */}
-      <MyToast
-        handleClose={handleSucessClose}
-        open={ToastOpen}
-        msg={toastMsg}
-      />
     </section>
   );
 }

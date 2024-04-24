@@ -11,7 +11,6 @@ const AdminPersonalInfo = () => {
   };
 
   const Admin = getAuthUser()?.data?.data?.user;
-  console.log(Admin);
   return (
     <div className="admin-personal-info">
       <div className="left">
