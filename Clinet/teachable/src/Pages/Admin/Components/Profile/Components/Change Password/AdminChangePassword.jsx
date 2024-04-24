@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./style/adminChangePassword.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { getAuthUser, setAuthUser } from "../../../../../../Helper/Storage";
+import { setAuthUser } from "../../../../../../Helper/Storage";
 import http from "./../../../../../../Helper/http";
-import { TextField, Button, FormHelperText } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../../../../../Redux/Slices/toastSlice";
 
@@ -12,6 +12,7 @@ const AdminChangePassword = () => {
   const dispatch = useDispatch();
   const [passChange, setPassChange] = useState({
     password: "",
+    newPassword: "",
     passwordConfirm: "",
   });
 
@@ -35,13 +36,12 @@ const AdminChangePassword = () => {
       setPass({
         ...pass,
         loading: false,
-        errorMsg: "You must fill both fields to change the password",
+        errorMsg: "You must fill all fields to change the password",
       });
       return;
     }
-
     http
-      .PATCH("users/updateMe")
+      .PATCH("users/updatePassword", passChange)
       .then((res) => {
         setPass({ ...pass, loading: false, errorMsg: "" });
         dispatch(
@@ -53,7 +53,9 @@ const AdminChangePassword = () => {
         setPassChange({
           password: "",
           passwordConfirm: "",
+          newPassword: "",
         });
+        setAuthUser(res, res.data?.data?.user?.rememberMe);
       })
       .catch((err) => {
         setPass({
@@ -78,6 +80,14 @@ const AdminChangePassword = () => {
           label="Password"
           name="password"
           value={passChange.password}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="New Password"
+          name="newPassword"
+          value={passChange.newPassword}
           onChange={handleChange}
           fullWidth
           margin="normal"
@@ -110,7 +120,7 @@ const AdminChangePassword = () => {
               }}
             />
           ) : (
-            "Update"
+            "Change Password"
           )}
         </Button>
       </form>

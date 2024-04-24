@@ -9,7 +9,8 @@ import AdminInstructors from "./Pages/Admin/Components/Instructors/AdminInstruct
 import Admins from "./Pages/Admin/Components/ِAdmins/Admins";
 import AdminCourses from "./Pages/Admin/Components/Courses/AdminCourses";
 import AdminProfile from "./Pages/Admin/Components/Profile/AdminProfile";
-import ForgetProcess from "./Pages/Login/components/ForgetProcess/ForgetProcess";
+import RestPass from "./Pages/Login/components/RestPassword/RestPass";
+import ForgetPassword from "./Pages/Login/components/ForgetPassword/ForgetPassword";
 
 export const routes = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/forgetPassword",
-        element: <ForgetProcess/>,
+        element: <ForgetPassword/>,
+      },
+      {
+        path: "/resetPassword/:token",
+        element: <RestPass />,
       },
     ],
     errorElement: <Notfound />,

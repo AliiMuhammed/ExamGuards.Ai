@@ -10,7 +10,7 @@ import http from "../../../../Helper/http";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../../../Redux/Slices/toastSlice";
 
-const ForgetPassword = ({ handleShowOTP }) => {
+const ForgetPassword = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [forget, setForget] = useState({
@@ -38,11 +38,10 @@ const ForgetPassword = ({ handleShowOTP }) => {
         });
         dispatch(
           openToast({
-            msg: "OTP is sent to your email successfully",
+            msg: "Reset link is sent to your email successfully",
             type: "success",
           })
         );
-        handleShowOTP();
       })
       .catch((err) => {
         console.log(err);
