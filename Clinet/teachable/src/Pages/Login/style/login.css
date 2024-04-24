@@ -1,0 +1,140 @@
+.login {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login .container {
+    height: 60%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.login .container .login-form,
+.login .container .img-logo {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login .container .login-form {
+    padding: 2rem;
+}
+
+.login .container .login-form h1 {
+    font-size: 4rem;
+    line-height: 1.2;
+}
+
+.login .container .login-form>span {
+    color: var(--mainColor);
+}
+
+.login .login-form .login-input {
+    margin: 1rem 0;
+}
+
+.login .login-form .login-input:first-child {
+    margin-top: 4rem;
+}
+
+.login .login-form .forget-remmber {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.login .login-form .forget-remmber .remmber input[type="checkbox"] {
+    margin: auto;
+    accent-color: var(--mainColor);
+}
+
+
+.login .login-form .forget-remmber .remmber label {
+    margin-left: .5rem;
+}
+
+.login .login-form .forget-remmber .forget a {
+    color: var(--mainFontColor);
+}
+
+.login .login-form .login-btn {
+    background-color: var(--mainColor) !important;
+    height: 3rem;
+    margin-top: 2.5rem;
+}
+
+.login .login-form .login-btn:disabled {
+    background-color: var(--disabledColor) !important;
+}
+
+.login .container .img-logo {
+
+    background-color: var(--mainFontColor);
+
+}
+
+.login .container .img-logo img {
+    width: 65%;
+}
+
+.login .container .login-form .new-account {
+    margin-top: 1rem;
+}
+
+.login .container .login-form .new-account span {
+    margin-right: .3rem;
+}
+.login .container .login-form .new-account a{
+    color: var(--mainColor);
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+    .login .container {
+        height: 100%;
+    }
+
+    .login .container .img-logo {
+        display: none;
+    }
+
+    .login .container .login-form {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .login .container .login-form h1 {
+        font-size: 2.5rem;
+    }
+
+    .login .login-form .login-input:first-child {
+        margin-top: 2.5rem;
+    }
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .login .container {
+        width: 90%;
+        height: 45%;
+    }
+
+    .login .container .login-form {
+        padding: 1rem;
+    }
+
+    .login .container .login-form h1 {
+        font-size: 2.5rem;
+    }
+
+    .login .login-form .login-input:first-child {
+        margin-top: 2.5rem;
+    }
+}

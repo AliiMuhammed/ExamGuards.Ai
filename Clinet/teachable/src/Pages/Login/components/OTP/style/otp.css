@@ -1,0 +1,111 @@
+.otp-section {
+    height: 100vh;
+    text-align: center;
+}
+
+
+.otp-section .container,
+.otp-section .container .otp-box,
+.otp-section .container .otp-box .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.otp-section .container {
+    height: 100%;
+}
+
+.otp-section .container .otp-box {
+    border: 2px solid var(--mainFontColor);
+    padding: 3rem;
+    border-radius: var(--main-border-radius);
+    -webkit-border-radius: var(--main-border-radius);
+    -moz-border-radius: var(--main-border-radius);
+    -ms-border-radius: var(--main-border-radius);
+    -o-border-radius: var(--main-border-radius);
+    width: 40%;
+}
+
+.otp-section .container .otp-box .header .logo img {
+    width: 500px;
+}
+
+.otp-section .container .otp-box .header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--mainFontColor);
+}
+
+.otp-section .container .otp-box .form-otp {
+    width: 100%;
+    margin-top: 3rem;
+}
+
+.otp-section .container .otp-box .form-otp .resend {
+    margin-top: 1.5rem;
+}
+
+.otp-section .container .otp-box .form-otp .resend button {
+    background-color: transparent;
+    border: none;
+    color: var(--mainColor);
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    cursor: pointer;
+}
+.otp-section .container .otp-box .form-otp .resend button:hover{
+color: var(--disabledColor);
+} 
+
+.otp-section .container .otp-box .form-otp .otp-btn {
+    background-color: var(--mainColor);
+    height: 3rem;
+    margin-top: 2rem;
+}
+
+.otp-section .container .otp-box .form-otp .otp-btn:disabled {
+    background-color: var(--disabledColor);
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+    
+    .otp-section .container .otp-box{
+        padding: 1.5rem;
+        width: 100%;
+    }
+    
+.otp-section .container .otp-box .header .logo img {
+    width: 100%;
+}
+.otp-section .container .otp-box .header h1 {
+    font-size: 2rem;
+}
+
+.otp-section .container .otp-box .form-otp .otp-btn {
+    background-color: var(--mainColor);
+    height: 2.5rem;
+    margin-top: 1.5rem;
+}
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .otp-section .container .otp-box{
+        padding: 2.5rem;
+        width: 80%;
+    }
+}
+
+/* custom screens (992px - 1660px) */
+@media only screen and (min-width: 992px) and (max-width: 1660px) {
+    .otp-section .container .otp-box{
+        padding: 2.5rem;
+        width: 70%;
+    }
+}

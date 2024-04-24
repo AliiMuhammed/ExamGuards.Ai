@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, FormHelperText } from "@mui/material";
 import "./style/adminEditProfile.css";
 import http from "./../../../../../../Helper/http";
-  import { getAuthUser, setAuthUser } from "../../../../../../Helper/Storage";
+import { getAuthUser, setAuthUser } from "../../../../../../Helper/Storage";
 import MyToast from "../../../../../../Shared/Components/MyToast";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
@@ -88,7 +88,7 @@ const AdminEditProfile = () => {
         let dataWithToken = res.data;
         dataWithToken.token = Admin.token;
         res.data = dataWithToken;
-        setAuthUser(res);
+        setAuthUser(res, res?.data?.data?.user?.rememberMe);
         setFormData({
           firstName: "",
           lastName: "",
@@ -112,9 +112,9 @@ const AdminEditProfile = () => {
 
   return (
     <div>
-       {updateAdmin.errorMsg !== "" && (
-      <Alert severity="error">{updateAdmin.errorMsg}</Alert>
-    )}
+      {updateAdmin.errorMsg !== "" && (
+        <Alert severity="error">{updateAdmin.errorMsg}</Alert>
+      )}
 
       <form onSubmit={handleSubmit}>
         <TextField

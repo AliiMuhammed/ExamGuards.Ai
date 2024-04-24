@@ -1,0 +1,120 @@
+.forget-section {
+    height: 100Vh;
+    text-align: center;
+}
+
+.forget-section .container,
+.forget-section .container .forget-box,
+.forget-section .container .forget-box .header,
+.forget-section .container .forget-box .form .back-login a,
+.forget-section .container .forget-box .form .back-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.forget-section .container {
+    height: 100%;
+}
+
+
+.forget-section .container .forget-box {
+    border: 2px solid var(--mainFontColor);
+    padding: 3rem;
+    border-radius: var(--main-border-radius);
+    -webkit-border-radius: var(--main-border-radius);
+    -moz-border-radius: var(--main-border-radius);
+    -ms-border-radius: var(--main-border-radius);
+    -o-border-radius: var(--main-border-radius);
+    width: 40%;
+}
+
+
+
+.forget-section .container .forget-box .header .logo img {
+    width: 500px;
+}
+
+.forget-section .container .forget-box .header h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--mainFontColor);
+}
+
+.forget-section .container .forget-box .form {
+    width: 100%;
+    margin-top: 3rem;
+}
+
+.forget-section .container .forget-box .form .forget-btn {
+    background-color: var(--mainColor);
+    height: 3rem;
+    margin-top: 2rem;
+}
+
+.forget-section .container .forget-box .form .forget-btn:disabled {
+    background-color: var(--disabledColor);
+}
+
+.forget-section .container .forget-box .form .back-login {
+
+    margin-top: 1.5rem
+}
+
+
+.forget-section .container .forget-box .form .back-login a {
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    flex-direction: row;
+}
+
+.forget-section .container .forget-box .form .back-login a:hover {
+    color: var(--mainColor);
+}
+
+.forget-section .container .forget-box .form .back-login a svg {
+    margin-right: .5rem;
+}
+
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+    
+    .forget-section .container .forget-box{
+        padding: 1.5rem;
+        width: 100%;
+    }
+    
+.forget-section .container .forget-box .header .logo img {
+    width: 100%;
+}
+.forget-section .container .forget-box .header h1 {
+    font-size: 2rem;
+}
+
+.forget-section .container .forget-box .form .forget-btn {
+    background-color: var(--mainColor);
+    height: 2.5rem;
+    margin-top: 1.5rem;
+}
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .forget-section .container .forget-box{
+        padding: 2.5rem;
+        width: 80%;
+    }
+}
+
+/* custom screens (992px - 1660px) */
+@media only screen and (min-width: 992px) and (max-width: 1660px) {
+    .forget-section .container .forget-box{
+        padding: 2.5rem;
+        width: 70%;
+    }
+}

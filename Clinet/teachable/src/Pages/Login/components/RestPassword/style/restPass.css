@@ -1,0 +1,117 @@
+.reset-section {
+    height: 100vh;
+    text-align: center;
+}
+
+
+.reset-section .container,
+.reset-section .container .reset-box,
+.reset-section .container .reset-box .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.reset-section .container {
+    height: 100%;
+}
+
+.reset-section .container .reset-box {
+    border: 2px solid var(--mainFontColor);
+    padding: 3rem;
+    border-radius: var(--main-border-radius);
+    -webkit-border-radius: var(--main-border-radius);
+    -moz-border-radius: var(--main-border-radius);
+    -ms-border-radius: var(--main-border-radius);
+    -o-border-radius: var(--main-border-radius);
+    width: 40%;
+}
+
+.reset-section .container .reset-box .header .logo img {
+    width: 500px;
+}
+
+.reset-section .container .reset-box .header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--mainFontColor);
+}
+
+.reset-section .container .reset-box .form-reset {
+    width: 100%;
+    margin-top: 3rem;
+}
+
+.reset-section .container .reset-box .form-reset .reset-password-input {
+    margin-top: 1.5rem;
+}
+
+.reset-section .container .reset-box .form-reset .resend {
+    margin-top: 1.5rem;
+}
+
+.reset-section .container .reset-box .form-reset .resend button {
+    background-color: transparent;
+    border: none;
+    color: var(--mainColor);
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    cursor: pointer;
+}
+
+.reset-section .container .reset-box .form-reset .resend button:hover {
+    color: var(--disabledColor);
+}
+
+.reset-section .container .reset-box .form-reset .reset-btn {
+    background-color: var(--mainColor);
+    height: 3rem;
+    margin-top: 2rem;
+}
+
+.reset-section .container .reset-box .form-reset .reset-btn:disabled {
+    background-color: var(--disabledColor);
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+
+    .reset-section .container .reset-box {
+        padding: 1.5rem;
+        width: 100%;
+    }
+
+    .reset-section .container .reset-box .header .logo img {
+        width: 100%;
+    }
+
+    .reset-section .container .reset-box .header h1 {
+        font-size: 2rem;
+    }
+
+    .reset-section .container .reset-box .form-reset .reset-btn {
+        background-color: var(--mainColor);
+        height: 2.5rem;
+        margin-top: 1.5rem;
+    }
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .reset-section .container .reset-box {
+        padding: 2.5rem;
+        width: 80%;
+    }
+}
+
+/* custom screens (992px - 1660px) */
+@media only screen and (min-width: 992px) and (max-width: 1660px) {
+    .reset-section .container .reset-box {
+        padding: 2.5rem;
+        width: 70%;
+    }
+}
