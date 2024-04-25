@@ -1,0 +1,167 @@
+.register-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-section .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.register-section .container .register-form,
+.register-section .container .img-logo {
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.register-section .container .register-form {
+    padding: 2rem;
+}
+
+.register-section .container .register-form h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+}
+
+
+.register-section .register-form .register-input:first-child {
+    margin-top: 2rem;
+}
+
+.register-section .register-form .register-btn {
+    background-color: var(--mainColor) !important;
+    height: 3rem;
+    margin-top: 2rem;
+}
+
+.register-section .register-form .register-btn:disabled {
+    background-color: var(--disabledColor) !important;
+}
+
+.register-section .register-form .show-pass-login {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.register-section .register-form .show-pass-login .show-pass {
+    display: flex;
+    align-items: center;
+}
+
+.register-section .register-form .show-pass-login .have-account a {
+    color: var(--mainColor);
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    margin-left: .3rem;
+}
+
+.register-section .register-form .show-pass-login .have-account a:hover {
+    color: var(--secondaryColor);
+}
+
+.register-section .register-form .show-pass input[type='checkbox'] {
+    accent-color: var(--mainColor) !important;
+    margin: auto 0;
+    margin-right: .5rem;
+}
+
+.register-section .container .img-logo {
+    padding: 2rem;
+    background-color: var(--mainFontColor);
+    justify-content: space-around;
+
+}
+
+
+.register-section .container .img-logo .logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.register-section .container .img-logo .logo img {
+    width: 40%;
+}
+
+.register-section .container .img-logo .img-ai {
+    width: 100%;
+}
+
+.register-section .container .img-logo .img-ai img {
+    width: 100%;
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+    .register-section .container {
+        grid-template-columns: 1fr;
+    }
+
+    .register-section .container .img-logo {
+        display: none;
+    }
+
+    .register-section .container .register-form {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .register-section .container .register-form h1 {
+        font-size: 2rem;
+    }
+
+    .register-section .register-form .register-input:first-child {
+        margin-top: 2rem;
+    }
+
+    .register-section .register-form .show-pass-login {
+        flex-wrap: wrap;
+    }
+
+    .register-section .register-form .show-pass-login .have-account {
+        margin-top: .5rem;
+    }
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .register-section .container {
+        width: 90%;
+    }
+
+    .register-section .container .register-form {
+        padding: 1rem;
+    }
+
+    .register-section .container .register-form h1 {
+        font-size: 2.5rem;
+    }
+
+    .register-section .register-form .register-input:first-child {
+        margin-top: 2.5rem;
+    }
+
+    .register-section .container .img-logo {
+        padding: 1.5rem;
+    }
+
+    .register-section .container .img-logo .logo img {
+        width: 60%;
+    }
+
+    .register-section .register-form .show-pass-login {
+        font-size: .8rem;
+    }
+}

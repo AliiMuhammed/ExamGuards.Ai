@@ -4,7 +4,8 @@ import { setAuthUser } from "../../Helper/Storage";
 import { useNavigate } from "react-router";
 import http from "../../Helper/http";
 import "./style/login.css";
-import logo from "../../Assets/Images/Logos/h-logo-white.png";
+import logo from "../../Assets/Images/Logos/exam white-01.png";
+import loginImg from "../../Assets/Images/Login/login-img.png";
 import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
@@ -129,7 +130,12 @@ const Login = () => {
           </form>
         </div>
         <div className="img-logo">
-          <img src={logo} alt="logo" loading="lazy" />
+          <div className="logo">
+            <img src={logo} alt="logo" loading="lazy" />
+          </div>
+          <div className="img-ai">
+            <img src={loginImg} alt="ai-img" loading="lazy" />
+          </div>
         </div>
       </div>
     </section>

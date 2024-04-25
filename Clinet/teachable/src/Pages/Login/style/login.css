@@ -6,15 +6,12 @@
 }
 
 .login .container {
-    height: 60%;
-    display: flex;
-    align-items: center;
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .login .container .login-form,
 .login .container .img-logo {
-    width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -40,7 +37,7 @@
 }
 
 .login .login-form .login-input:first-child {
-    margin-top: 4rem;
+    margin-top: 3rem;
 }
 
 .login .login-form .forget-remmber {
@@ -62,6 +59,15 @@
 
 .login .login-form .forget-remmber .forget a {
     color: var(--mainFontColor);
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.login .login-form .forget-remmber .forget a:hover {
+    color: var(--secondaryColor);
 }
 
 .login .login-form .login-btn {
@@ -75,13 +81,30 @@
 }
 
 .login .container .img-logo {
-
+    padding: 2rem;
     background-color: var(--mainFontColor);
+    justify-content: space-around;
 
 }
 
-.login .container .img-logo img {
-    width: 65%;
+
+.login .container .img-logo .logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.login .container .img-logo .logo img {
+    width: 40%;
+}
+
+.login .container .img-logo .img-ai {
+    width: 100%;
+}
+
+.login .container .img-logo .img-ai img {
+    width: 100%;
 }
 
 .login .container .login-form .new-account {
@@ -91,14 +114,24 @@
 .login .container .login-form .new-account span {
     margin-right: .3rem;
 }
-.login .container .login-form .new-account a{
+
+.login .container .login-form .new-account a {
     color: var(--mainColor);
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.login .container .login-form .new-account a:hover {
+    color: var(--secondaryColor);
 }
 
 /* Small screens (up to 767px) */
 @media only screen and (max-width: 767px) {
     .login .container {
-        height: 100%;
+        grid-template-columns: 1fr;
     }
 
     .login .container .img-logo {
@@ -123,7 +156,6 @@
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .login .container {
         width: 90%;
-        height: 45%;
     }
 
     .login .container .login-form {
@@ -136,5 +168,13 @@
 
     .login .login-form .login-input:first-child {
         margin-top: 2.5rem;
+    }
+
+    .login .container .img-logo {
+        padding: 1.5rem;
+    }
+
+    .login .container .img-logo .logo img {
+        width: 60%;
     }
 }
