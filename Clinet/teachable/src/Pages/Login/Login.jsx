@@ -52,7 +52,8 @@ const Login = () => {
         setLogin({
           ...login,
           loading: false,
-          errorMsg: "Email or password is incorrect",
+          errorMsg:
+            err.response.data.message || "Email or password is incorrect",
         });
       });
   };

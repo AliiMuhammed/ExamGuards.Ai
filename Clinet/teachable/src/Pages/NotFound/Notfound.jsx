@@ -1,9 +1,20 @@
-import React from 'react'
-
+import React from "react";
+import NotFoundImg from "../../Assets/Images/Notfound/notFound.png";
+import { Link } from "react-router-dom";
+import "./Style/notfound.css";
 const Notfound = () => {
   return (
-    <div>Notfound</div>
-  )
-}
+    <section className="notfound">
+      <div className="container">
+        <div className="notFound-img">
+          <img src={NotFoundImg} alt="notfound" loading="lazy" />
+        </div>
+        <Link to={"/"} className="back-home">
+          Go to Home
+        </Link>
+      </div>
+    </section>
+  );
+};
 
-export default Notfound
+export default Notfound;

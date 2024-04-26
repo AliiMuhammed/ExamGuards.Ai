@@ -12,6 +12,7 @@ import AdminProfile from "./Pages/Admin/Components/Profile/AdminProfile";
 import RestPass from "./Pages/Login/components/RestPassword/RestPass";
 import ForgetPassword from "./Pages/Login/components/ForgetPassword/ForgetPassword";
 import Register from "./Pages/Register/Register";
+import TestDownload from "./Pages/Test/TestDownload";
 
 export const routes = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const routes = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/test",
+        element: <TestDownload />,
       },
     ],
     errorElement: <Notfound />,

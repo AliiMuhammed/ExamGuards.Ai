@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import "./style/register.css";
 import logo from "../../Assets/Images/Logos/exam white-01.png";
 import registerImg from "../../Assets/Images/Register/register-img.png";
-import { TextField, Button, Checkbox, FormControlLabel } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import { Link } from "react-router-dom";
-
+import { Link ,useNavigate } from "react-router-dom";
+import http from "./../../Helper/http";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../Redux/Slices/toastSlice";
+import CircularProgress from "@mui/material/CircularProgress";
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -95,8 +100,33 @@ const Register = () => {
       setError(newErrorState);
       return;
     }
-
-    // Submit logic (send formData to server or store locally)
+    setRegister({ ...register, loading: true, errorMsg: "" });
+    http
+      .POST("users/signup", formData)
+      .then((res) => {
+        console.log(res);
+        setRegister({ ...register, loading: false, errorMsg: "" });
+        dispatch(
+          openToast({
+            msg: "Account created successfully",
+            type: "success",
+          })
+        );
+        navigate("/login");
+      })
+      .catch((err) => {
+        setRegister({
+          ...register,
+          loading: false,
+          errorMsg: err?.response?.data?.message || "Something went wrong",
+        });
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
+      });
     console.log("Form submitted:", formData);
   };
 
@@ -209,8 +239,21 @@ const Register = () => {
               variant="contained"
               color="primary"
               fullWidth
+              disabled={register.loading}
             >
-              Register
+              {register.loading ? (
+                <CircularProgress
+                  size={20}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    color: "#fff",
+                  }}
+                />
+              ) : (
+                "Register"
+              )}
             </Button>
           </form>
         </div>

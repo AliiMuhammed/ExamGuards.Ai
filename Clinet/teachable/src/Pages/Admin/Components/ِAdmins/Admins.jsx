@@ -470,6 +470,15 @@ const Admins = () => {
             fullWidth
             variant="standard"
           />
+          <TextField
+            margin="dense"
+            id="name"
+            name="phone"
+            label="Phone Number"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
           <FormControl fullWidth variant="standard" margin="dense">
             <InputLabel htmlFor="role">Role</InputLabel>
             <Select
@@ -562,6 +571,15 @@ const Admins = () => {
             name="email"
             label="Email Address"
             type="email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            name="phone"
+            label="Phone Number"
+            type="text"
             fullWidth
             variant="standard"
           />

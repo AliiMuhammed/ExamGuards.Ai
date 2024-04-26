@@ -23,6 +23,7 @@
     "react-spinners": "^0.13.8",
     "redux": "^5.0.1",
     "web-vitals": "^2.1.4",
+    "websocket": "^1.0.34",
     "workbox-background-sync": "^6.6.0",
     "workbox-broadcast-update": "^6.6.0",
     "workbox-cacheable-response": "^6.6.0",

@@ -1,0 +1,60 @@
+.notfound {
+    height: 100vh;
+}
+
+.notfound .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.notfound .container .notFound-img {
+    width: 100%;
+}
+
+.notfound .container .notFound-img img {
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+}
+
+.notfound .container .back-home {
+    background-color: var(--mainColor);
+    padding: .8rem 2rem;
+    color: #fff;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    margin-top: 2rem;
+}
+
+.notfound .container .back-home:hover {
+    background-color: var(--secondaryColor);
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+    .notfound .container .notFound-img img {
+        width: 100%;
+    }
+    .notfound .container .back-home {
+        background-color: var(--mainColor);
+        padding: .6rem 2rem;
+    }
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .notfound .container .notFound-img img {
+        width: 100%;
+    }
+}
