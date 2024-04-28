@@ -8,7 +8,6 @@ import { FaHome } from "react-icons/fa";
 import { IoPerson, IoPieChartSharp } from "react-icons/io5";
 import { BiSolidReport } from "react-icons/bi";
 import {
-  IoIosArrowForward,
   IoIosArrowBack,
   IoIosArchive,
 } from "react-icons/io";

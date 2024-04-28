@@ -13,6 +13,7 @@ import RestPass from "./Pages/Login/components/RestPassword/RestPass";
 import ForgetPassword from "./Pages/Login/components/ForgetPassword/ForgetPassword";
 import Register from "./Pages/Register/Register";
 import TestDownload from "./Pages/Test/TestDownload";
+import Instructor from "./Pages/Instructor/Instructor";
 
 export const routes = createBrowserRouter([
   {
@@ -40,38 +41,43 @@ export const routes = createBrowserRouter([
         path: "/test",
         element: <TestDownload />,
       },
-    ],
-    errorElement: <Notfound />,
-  },
-  {
-    //admin routes
-    path: "/admin",
-    element: <Admin />,
-    children: [
       {
-        path: "/admin/home",
-        element: <AdminHome />,
+        //admin routes
+        path: "/admin",
+        element: <Admin />,
+        children: [
+          {
+            path: "/admin/home",
+            element: <AdminHome />,
+            children: [],
+          },
+          {
+            path: "/admin/students",
+            element: <AdminStudents />,
+          },
+          {
+            path: "/admin/instructors",
+            element: <AdminInstructors />,
+          },
+          {
+            path: "/admin/admins",
+            element: <Admins />,
+          },
+          {
+            path: "/admin/courses",
+            element: <AdminCourses />,
+          },
+          {
+            path: "/admin/profile/:id",
+            element: <AdminProfile />,
+          },
+        ],
+      },
+      //instructor routes
+      {
+        path: "/instructor",
+        element: <Instructor />,
         children: [],
-      },
-      {
-        path: "/admin/students",
-        element: <AdminStudents />,
-      },
-      {
-        path: "/admin/instructors",
-        element: <AdminInstructors />,
-      },
-      {
-        path: "/admin/admins",
-        element: <Admins />,
-      },
-      {
-        path: "/admin/courses",
-        element: <AdminCourses />,
-      },
-      {
-        path: "/admin/profile/:id",
-        element: <AdminProfile />,
       },
     ],
     errorElement: <Notfound />,
