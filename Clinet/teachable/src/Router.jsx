@@ -41,8 +41,8 @@ export const routes = createBrowserRouter([
         path: "/test",
         element: <TestDownload />,
       },
+      //admin routes
       {
-        //admin routes
         path: "/admin",
         element: <Admin />,
         children: [

@@ -14,7 +14,7 @@ import {
 import { FaBook } from "react-icons/fa6";
 
 function SideMenu() {
-  const [sideMenuToggle, setSideMenuToggle] = useState(true);
+  const [sideMenuToggle, setSideMenuToggle] = useState(false);
   const handleToggle = () => {
     setSideMenuToggle(!sideMenuToggle);
   };

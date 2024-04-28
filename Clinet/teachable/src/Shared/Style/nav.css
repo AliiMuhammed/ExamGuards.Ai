@@ -1,4 +1,4 @@
-.admin-nav {
+.user-nav {
     padding: 1rem 1.5rem;
     box-shadow: 0px 5px 13px -3px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -11,7 +11,7 @@
     -o-transition: var(--main-transition);
 }
 
-.admin-nav .admin-profile {
+.user-nav .user-profile {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
@@ -28,8 +28,8 @@
 
 
 
-.admin-nav .logout-btn,
-.admin-nav .not-btn {
+.user-nav .logout-btn,
+.user-nav .not-btn {
     background-color: transparent;
     color: var(--mainFontColor);
     border: none;
@@ -40,7 +40,7 @@
     position: relative;
 }
 
-.admin-nav .not-btn .badge-number {
+.user-nav .not-btn .badge-number {
     position: absolute;
     background-color: red;
     color: white;
@@ -63,6 +63,14 @@
 
 .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
     padding: 1rem;
+    width: 30rem;
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+    .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+        width: 100%;
+    }
 }
 
 .cloes-btn {
@@ -73,7 +81,7 @@
 }
 
 .notification {
-    width: 30rem;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -102,7 +110,8 @@
     border: none;
     background-color: transparent;
     font-size: 1.4rem;
-    color: var(--mainColor)
+    color: var(--mainColor);
+    cursor: pointer;
 }
 
 .notification .body {

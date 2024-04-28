@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import "./style/adminNav.css";
+import "../Style/nav.css";
 import { Link, useNavigate } from "react-router-dom";
-import adminImg from "../../../../Assets/Images/user.png";
-import { getAuthUser, removeAuthUser } from "../../../../Helper/Storage";
+import userImg from "../../Assets/Images/user.png";
+import { getAuthUser, removeAuthUser } from "../../Helper/Storage";
 import { FiLogOut } from "react-icons/fi";
 import { IoNotifications, IoClose } from "react-icons/io5";
 import Tooltip from "@mui/material/Tooltip";
 import Drawer from "@mui/material/Drawer";
 import { FaRegClock } from "react-icons/fa6";
 
-const AdminNav = () => {
+const Nav = () => {
   const [show, setShow] = useState(false);
   const [showNot, setShowNot] = useState(false);
   const handleClose = () => setShow(false);
@@ -19,19 +19,22 @@ const AdminNav = () => {
   };
   const user = getAuthUser();
   const naviagate = useNavigate();
+  const role = user?.data?.data?.user?.role;
   const handleLogOut = () => {
     naviagate("/");
     removeAuthUser();
   };
   return (
-    <nav className="admin-nav">
+    <nav className="user-nav">
       <Tooltip title="Profile">
         <Link
-          to={`/admin/profile/${user?.data?.data?.user?._id}`}
-          className="admin-profile"
+          to={`/${role === "super admin" ? "admin" : role}/profile/${
+            user?.data?.data?.user?._id
+          }`}
+          className="user-profile"
           style={{
             backgroundImage: `url(${
-              user ? user?.data?.data?.user?.file : adminImg
+              user ? user?.data?.data?.user?.file : userImg
             })`,
           }}
         ></Link>
@@ -54,6 +57,7 @@ const AdminNav = () => {
         onClose={handleClose}
         anchor="right"
         className="drawer-notification"
+        sx={{ width: "100px" }}
       >
         <div className="cloes-btn">
           <button onClick={handleClose}>
@@ -91,4 +95,4 @@ const AdminNav = () => {
   );
 };
 
-export default AdminNav;
+export default Nav;

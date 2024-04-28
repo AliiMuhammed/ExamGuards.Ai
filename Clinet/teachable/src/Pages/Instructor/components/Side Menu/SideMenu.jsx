@@ -11,7 +11,7 @@ import { FaBook } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 
 const SideMenu = ({ toggled, setToggled }) => {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const handleToggle = () => {
     setCollapsed(false);
     setToggled(false);
