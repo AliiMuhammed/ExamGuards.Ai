@@ -1,4 +1,10 @@
 .admin-courses-section {
     margin-top: 2rem;
+    height: 100%;
+}
+.admin-courses-section .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 

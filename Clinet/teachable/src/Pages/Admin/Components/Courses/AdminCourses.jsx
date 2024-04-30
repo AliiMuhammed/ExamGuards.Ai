@@ -303,6 +303,7 @@ const AdminCourses = () => {
             type: "success",
           })
         );
+        handleCloseAssignDilog();
       })
       .catch((err) => {
         setAssignCourse({

@@ -53,6 +53,12 @@ const SideMenu = ({ toggled, setToggled }) => {
           <MenuItem component={<NavLink to="/admin/home" />} icon={<FaHome />}>
             Home
           </MenuItem>
+          <MenuItem
+            component={<NavLink to="/instructor/courses" />}
+            icon={<FaBook />}
+          >
+            Courses
+          </MenuItem>
           <SubMenu icon={<IoPerson />} label="Users">
             <MenuItem
               component={<NavLink to="/admin/students" />}
@@ -77,12 +83,6 @@ const SideMenu = ({ toggled, setToggled }) => {
             <MenuItem className="submenu-link"> Pie charts </MenuItem>
             <MenuItem className="submenu-link"> Line charts </MenuItem>
           </SubMenu>
-          <MenuItem
-            component={<NavLink to="/admin/courses" />}
-            icon={<FaBook />}
-          >
-            Courses
-          </MenuItem>
           <MenuItem icon={<BiSolidReport />}> Reports </MenuItem>
           <MenuItem icon={<IoIosArchive />}> Archive </MenuItem>
         </Menu>

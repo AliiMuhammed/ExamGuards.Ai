@@ -53,7 +53,7 @@ const Login = () => {
           ...login,
           loading: false,
           errorMsg:
-            err.response.data.message || "Email or password is incorrect",
+            err?.response?.data?.message || "Email or password is incorrect",
         });
       });
   };

@@ -14,6 +14,7 @@ import ForgetPassword from "./Pages/Login/components/ForgetPassword/ForgetPasswo
 import Register from "./Pages/Register/Register";
 import TestDownload from "./Pages/Test/TestDownload";
 import Instructor from "./Pages/Instructor/Instructor";
+import Courses from "./Pages/Instructor/components/Courses/Courses";
 
 export const routes = createBrowserRouter([
   {
@@ -77,7 +78,12 @@ export const routes = createBrowserRouter([
       {
         path: "/instructor",
         element: <Instructor />,
-        children: [],
+        children: [
+          {
+            path: "/instructor/courses",
+            element: <Courses />,
+          },
+        ],
       },
     ],
     errorElement: <Notfound />,

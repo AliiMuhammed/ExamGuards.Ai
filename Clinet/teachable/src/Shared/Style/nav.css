@@ -9,6 +9,11 @@
     -moz-transition: var(--main-transition);
     -ms-transition: var(--main-transition);
     -o-transition: var(--main-transition);
+    z-index: 1000;
+    position: sticky;
+    width: 100%;
+    top: 0;
+    background-color: #fff;
 }
 
 .user-nav .user-profile {

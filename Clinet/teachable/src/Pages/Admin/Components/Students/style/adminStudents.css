@@ -1,4 +1,10 @@
 .admin-students-section {
     margin-top: 2rem;
+    height: 100%;
 }
 
+.admin-students-section .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
