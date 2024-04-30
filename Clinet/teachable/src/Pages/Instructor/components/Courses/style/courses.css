@@ -17,6 +17,7 @@
     flex-direction: column;
     font-size: 1.5rem;
     width: 100%;
+    height: 100%;
 }
 
 .courses-instructor .container .no-courses svg {
@@ -33,20 +34,37 @@
 .courses-instructor .container .all-assigned-courses .assigned-course {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    justify-content: space-between;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px;
     padding: 1rem;
     border-radius: 5px;
     width: 100%;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.courses-instructor .container .all-assigned-courses .assigned-course:hover {
+    box-shadow: rgb(237, 107, 23, .3) 0px 3px 6px;
+    transform: translateY(-5px);
+    -webkit-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    -o-transform: translateY(-5px);
+    cursor: pointer;
 }
 
 .courses-instructor .container .all-assigned-courses .assigned-course h3 {
     font-size: 1.5rem;
     width: 100%;
+    text-transform: capitalize;
 }
 
 .courses-instructor .container .all-assigned-courses .assigned-course p {
     width: 100%;
+    margin: 1rem 0;
 }
 
 .courses-instructor .container .all-assigned-courses .assigned-course .course-img {
@@ -54,6 +72,35 @@
     background-position: center;
     height: 15rem;
     width: 100%;
+}
+
+.courses-instructor .container .all-assigned-courses .assigned-course .view-course {
+    background-color: var(--mainColor);
+    border: none;
+    padding: 1rem 2rem;
+    width: 100%;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.courses-instructor .container .all-assigned-courses .assigned-course .view-course:active {
+    background-color: var(--mainFontColor);
+}
+
+.courses-instructor .container .all-assigned-courses .assigned-course .view-course:hover {
+    background-color: var(--secondaryColor);
 }
 
 .custom-pagination {

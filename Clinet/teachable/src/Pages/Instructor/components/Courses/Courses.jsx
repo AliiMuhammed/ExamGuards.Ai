@@ -9,7 +9,7 @@ import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import Pagination from "@mui/material/Pagination";
 
 const Courses = () => {
-  const instructorID = getAuthUser().data?.data?.user?._id;
+  const instructorID = getAuthUser()?.data?.data?.user?._id;
   const [page, setPage] = useState(1);
   const [courses, setCourses] = useState({
     loading: false,
@@ -36,7 +36,7 @@ const Courses = () => {
           ...courses,
           loading: false,
           data: [],
-          errorMsg: error.response?.data?.message,
+          errorMsg:"Something went wrong",
         });
       });
   }, [page]);
@@ -99,11 +99,11 @@ const Courses = () => {
                       <div className="body">
                         <h3>{course.name}</h3>
                         <p>
-                          {course.description.length > 100
-                            ? `${course.description.slice(0, 100)}...`
+                          {course.description.length > 90
+                            ? `${course.description.slice(0, 90)}...`
                             : course.description}
                         </p>
-                        <button>View Course</button>
+                        <button className="view-course">View Course</button>
                       </div>
                     </div>
                   );
