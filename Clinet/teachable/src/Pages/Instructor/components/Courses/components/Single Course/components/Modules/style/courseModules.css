@@ -58,8 +58,9 @@
     margin-top: 2rem;
 }
 
-.course-modules-section .container .modules .module-btns button:first-child {
-    margin: 0;
+.course-modules-section .container .modules .module-btns button {
+    margin-left: 0;
+    margin-right: .5rem;
 }
 
 .course-modules-section .container .modules .no-content {
@@ -100,14 +101,14 @@
     .course-modules-section .header .add-modules-btn.main-btn.sm {
         padding: .5rem 1rem;
     }
-}
 
-/* Medium screens (768px - 991px) */
-@media only screen and (min-width: 768px) and (max-width: 991px) {}
+    .course-modules-section .container .modules .module-btns {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
 
-/* Large screens (992px and up) */
-@media only screen and (min-width: 992px) {
-    .container {
-        width: 75%;
+    .course-modules-section .container .modules .module-btns button {
+        margin-bottom: .5rem;
     }
 }
+
