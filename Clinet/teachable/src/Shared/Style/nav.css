@@ -9,7 +9,7 @@
     -moz-transition: var(--main-transition);
     -ms-transition: var(--main-transition);
     -o-transition: var(--main-transition);
-    z-index: 1000;
+    z-index: 99;
     position: sticky;
     width: 100%;
     top: 0;

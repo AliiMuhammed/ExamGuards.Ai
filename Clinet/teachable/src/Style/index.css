@@ -32,7 +32,7 @@ html {
   --mainBgColor: #F5F6F8;
   --secondBgColor: #1D292E;
   --main-transition: all 0.3s ease-in-out;
-  --main-border-radius: 35px;
+  --main-border-radius: 10px;
 }
 
 body {
@@ -110,14 +110,37 @@ a {
   cursor: pointer;
 }
 
+.main-btn.sm svg {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-left: .5rem;
+  transition: var(--main-transition);
+  -webkit-transition: var(--main-transition);
+  -moz-transition: var(--main-transition);
+  -ms-transition: var(--main-transition);
+  -o-transition: var(--main-transition);
+}
+
+.main-btn.sm:hover svg {
+  color: var(--mainFontColor);
+}
+
 .main-btn.sm {
   font-size: 1rem;
   padding: 0.5rem 2rem;
-  border-radius: 25px;
-  -webkit-border-radius: 25px;
-  -moz-border-radius: 25px;
-  -ms-border-radius: 25px;
-  -o-border-radius: 25px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+  .main-btn.sm {
+    padding: .5rem 1rem;
+  }
 }
 
 .main-btn.sm.delete {
@@ -132,7 +155,8 @@ a {
 .main-btn.sm.update:disabled,
 .main-btn.sm.delete:disabled,
 .main-btn.sm.update:disabled:hover,
-.main-btn.sm.delete:disabled:hover {
+.main-btn.sm.delete:disabled:hover,
+.main-btn.sm:disabled:hover svg {
   background-color: var(--disabledColor);
   border-color: var(--disabledColor);
   color: white;

@@ -16,16 +16,18 @@
 
 .instructor-section .right .toggle-container {
     height: 80px;
-    position: absolute;
+    position: fixed;
     top: 0;
-    align-items: center;
-    justify-content: center;
     padding: 1rem;
     display: none;
+    z-index: 99;
 }
 
 .instructor-section .right .toggle-btn {
     background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     font-size: 2rem;
     cursor: pointer;
@@ -50,6 +52,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    width: 100%;
 }
 
 /* Small screens (up to 767px) */

@@ -29,13 +29,14 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     width: 100%;
+    justify-content: center;
 }
 
 .courses-instructor .container .all-assigned-courses .assigned-course {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 20px 6px;
     padding: 1rem;
     border-radius: 5px;
     width: 100%;
@@ -44,10 +45,18 @@
     -moz-transition: var(--main-transition);
     -ms-transition: var(--main-transition);
     -o-transition: var(--main-transition);
+    margin: 0 auto;
+}
+
+.courses-instructor .container .all-assigned-courses .assigned-course .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .courses-instructor .container .all-assigned-courses .assigned-course:hover {
-    box-shadow: rgb(237, 107, 23, .3) 0px 3px 6px;
+    box-shadow: rgb(237, 107, 23, .3) 0px 0px 20px 6px;
     transform: translateY(-5px);
     -webkit-transform: translateY(-5px);
     -moz-transform: translateY(-5px);
@@ -65,6 +74,7 @@
 .courses-instructor .container .all-assigned-courses .assigned-course p {
     width: 100%;
     margin: 1rem 0;
+    word-wrap: break-word;
 }
 
 .courses-instructor .container .all-assigned-courses .assigned-course .course-img {
@@ -79,6 +89,8 @@
     border: none;
     padding: 1rem 2rem;
     width: 100%;
+    display: block;
+    text-align: center;
     color: #fff;
     cursor: pointer;
     border-radius: 5px;
@@ -110,4 +122,35 @@
     justify-content: center;
     margin-top: 3rem;
     margin-bottom: 0;
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+    .courses-instructor .container .all-assigned-courses {
+        grid-template-columns: 1fr;
+    }
+
+    .courses-instructor .container .all-assigned-courses .assigned-course {
+        width: 90%;
+    }
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .courses-instructor .container .all-assigned-courses {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .courses-instructor .container .all-assigned-courses .assigned-course {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 991px) and (max-width: 1194px) {
+    .courses-instructor .container .all-assigned-courses {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .courses-instructor .container .all-assigned-courses .assigned-course {}
 }

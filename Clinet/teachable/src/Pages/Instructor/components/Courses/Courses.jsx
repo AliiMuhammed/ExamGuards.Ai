@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import "./style/courses.css";
 import { getAuthUser } from "../../../../Helper/Storage";
 import http from "./../../../../Helper/http";
@@ -7,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import Pagination from "@mui/material/Pagination";
+import { Link } from 'react-router-dom';
 
 const Courses = () => {
   const instructorID = getAuthUser()?.data?.data?.user?._id;
@@ -36,7 +36,7 @@ const Courses = () => {
           ...courses,
           loading: false,
           data: [],
-          errorMsg:"Something went wrong",
+          errorMsg: "Something went wrong",
         });
       });
   }, [page]);
@@ -103,7 +103,13 @@ const Courses = () => {
                             ? `${course.description.slice(0, 90)}...`
                             : course.description}
                         </p>
-                        <button className="view-course">View Course</button>
+                        
+                        <Link
+                          to={`/instructor/course/${course._id}`}
+                          className="view-course"
+                        >
+                          View Course
+                        </Link>
                       </div>
                     </div>
                   );

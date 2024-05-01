@@ -15,6 +15,7 @@ import Register from "./Pages/Register/Register";
 import TestDownload from "./Pages/Test/TestDownload";
 import Instructor from "./Pages/Instructor/Instructor";
 import Courses from "./Pages/Instructor/components/Courses/Courses";
+import SingleCourse from "./Pages/Instructor/components/Courses/components/Single Course/SingleCourse";
 
 export const routes = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ export const routes = createBrowserRouter([
           {
             path: "/instructor/courses",
             element: <Courses />,
+          },
+          {
+            path: "/instructor/course/:id",
+            element: <SingleCourse />,
           },
         ],
       },

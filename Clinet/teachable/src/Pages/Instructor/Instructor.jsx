@@ -9,7 +9,7 @@ import Footer from "./../../Shared/Components/Footer";
 const Instructor = () => {
   const [toggled, setToggled] = useState(false);
   return (
-    <>
+
       <div className="instructor-section">
         <div className="left">
           <SideMenu toggled={toggled} setToggled={setToggled} />
@@ -25,7 +25,7 @@ const Instructor = () => {
           <Footer />
         </div>
       </div>
-    </>
+
   );
 };
 

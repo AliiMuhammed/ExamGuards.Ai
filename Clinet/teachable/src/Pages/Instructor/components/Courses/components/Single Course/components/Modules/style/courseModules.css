@@ -1,0 +1,113 @@
+.course-modules-section {
+    height: 100%;
+}
+
+.course-modules-section .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.course-modules-section .header .add-modules-btn.main-btn.sm {
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.course-modules-section .no-modules {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    width: 100%;
+    height: 50vh;
+}
+
+.course-modules-section .no-modules svg {
+    color: var(--mainColor);
+}
+
+
+.course-modules-section .container .modules .module-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.course-modules-section .container .modules .module-header .module-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--mainFontColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.course-modules-section .container .modules .module-accordion {
+    margin: 1.5rem 0 !important;
+}
+
+.course-modules-section .container .modules .module-btns {
+    width: 100%;
+    display: flex;
+    margin-top: 2rem;
+}
+
+.course-modules-section .container .modules .module-btns button:first-child {
+    margin: 0;
+}
+
+.course-modules-section .container .modules .no-content {
+    width: 100%;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.course-modules-section .container .modules .module-content .file,
+.course-modules-section .container .modules .module-content .video {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.course-modules-section .container .modules .module-content a {
+    color: var(--mainFontColor);
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    text-decoration: underline;
+}
+
+.course-modules-section .container .modules .module-content a:hover {
+    color: var(--mainColor);
+}
+
+.course-modules-section .container .modules .module-content svg {
+    margin-right: .5rem;
+    color: var(--mainColor);
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+
+    .course-modules-section .header .add-modules-btn.main-btn.sm {
+        padding: .5rem 1rem;
+    }
+}
+
+/* Medium screens (768px - 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {}
+
+/* Large screens (992px and up) */
+@media only screen and (min-width: 992px) {
+    .container {
+        width: 75%;
+    }
+}
