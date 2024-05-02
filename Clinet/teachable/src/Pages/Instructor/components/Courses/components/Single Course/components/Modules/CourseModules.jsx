@@ -185,18 +185,21 @@ const CourseModules = () => {
                             Add Materials <IoAdd />
                           </button>
                         )}
-                        <button
-                          onClick={() =>
-                            setOpenUpdateMaterials({
-                              ...OpenUpdateMaterials,
-                              id: module._id,
-                              open: true,
-                            })
-                          }
-                          className="main-btn update sm"
-                        >
-                          Edit <CiEdit />
-                        </button>
+                        {module.file !== "" && module.video !== "" && (
+                          <button
+                            onClick={() =>
+                              setOpenUpdateMaterials({
+                                ...OpenUpdateMaterials,
+                                id: module._id,
+                                open: true,
+                              })
+                            }
+                            className="main-btn update sm"
+                          >
+                            Edit <CiEdit />
+                          </button>
+                        )}
+
                         <button
                           onClick={() =>
                             setOpenDelete({
