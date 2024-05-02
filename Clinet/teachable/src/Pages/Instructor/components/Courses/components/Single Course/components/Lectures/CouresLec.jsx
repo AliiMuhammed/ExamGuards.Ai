@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./style/couresLec.css";
 import http from "../../../../../../../../Helper/http";
 import { useParams } from "react-router";
-import ReactPlayer from "react-player/youtube";
+import ReactPlayer from "react-player";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -79,7 +79,8 @@ const CouresLec = () => {
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
     );
     if (!videoIdMatch) {
-      throw new Error("Invalid YouTube URL");
+      console.log("Invalid YouTube URL");
+      return;
     }
     const videoId = videoIdMatch[1];
     return `https://img.youtube.com/vi/${videoId}/0.jpg`;
@@ -96,10 +97,10 @@ const CouresLec = () => {
         {modules.data.length === 0 &&
           modules.errorMsg === "" &&
           modules.loading === false && (
-              <div className="no-modules">
-                <span>No Lecturs</span>
-                <HiOutlineArchiveBoxXMark />
-              </div>
+            <div className="no-modules">
+              <span>No Lecturs</span>
+              <HiOutlineArchiveBoxXMark />
+            </div>
           )}
         {/* if loading and there is data*/}
         {modules.data.length > 0 &&
@@ -139,6 +140,7 @@ const CouresLec = () => {
                 <div className="current-video-play">
                   {modules.data.length > 0 && (
                     <ReactPlayer
+                      controls
                       width={"100%"}
                       height={"50vh"}
                       url={modules.data[currentVideoIndex].video}

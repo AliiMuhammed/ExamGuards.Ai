@@ -36,7 +36,7 @@
 }
 
 .couresLec-section .container .videos-container .videos-queue {
-    max-width: 300px;
+    max-width: 200px;
     flex-grow: 0;
     padding-left: 2rem;
     padding-right: .5rem;
@@ -124,4 +124,40 @@
 
 .couresLec-section .container .video-controls button:disabled {
     background-color: var(--disabledColor);
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+
+    .couresLec-section .container .videos-container {
+        flex-direction: column-reverse;
+        height: 100%;
+    }
+
+    .couresLec-section .container .videos-container .videos-queue {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        flex-grow: 0;
+        padding-left: 0;
+        padding-right: 0;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        /* Enable horizontal scrolling */
+        display: flex;
+        /* Add display flex to enable horizontal layout */
+        flex-direction: row;
+    }
+
+    
+
+    .couresLec-section .container .videos-container .videos-queue .video-item {
+        flex-shrink: 0;
+        /* Prevent items from shrinking */
+        width: 100px;
+        height: 100px;
+        margin-right: 0.5rem;
+        margin-bottom: 0;
+    }
+
 }

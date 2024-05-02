@@ -151,6 +151,7 @@ const AddMaterials = ({ open, setOpen, reload }) => {
           type="submit"
           color="success"
           disabled={addMaterials.loading}
+          
         >
           {addMaterials.loading ? (
             <CircularProgress size={20} color="inherit" />
