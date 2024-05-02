@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import "./style/couresLec.css";
 import http from "../../../../../../../../Helper/http";
@@ -143,6 +144,7 @@ const CouresLec = () => {
                       url={modules.data[currentVideoIndex].video}
                     />
                   )}
+                  <h3>{modules.data[currentVideoIndex].title}</h3>
                   <div className="video-controls">
                     <button
                       onClick={handlePreviousVideo}

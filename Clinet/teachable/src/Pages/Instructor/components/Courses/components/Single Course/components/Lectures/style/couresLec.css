@@ -4,7 +4,8 @@
     margin-bottom: 1rem;
     font-size: 1.1rem;
 }
-.couresLec-section  .no-modules {
+
+.couresLec-section .no-modules {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,9 +15,10 @@
     height: 50vh;
 }
 
-.couresLec-section  .no-modules svg {
+.couresLec-section .no-modules svg {
     color: var(--mainColor);
 }
+
 .couresLec-section .container .videos-container {
     display: flex;
     height: 50vh;
@@ -26,6 +28,11 @@
     flex-grow: 1;
     width: 100%;
 
+}
+
+.couresLec-section .container .videos-container .current-video-play h3 {
+    margin: .4rem 0;
+    width: 100%;
 }
 
 .couresLec-section .container .videos-container .videos-queue {
@@ -38,24 +45,25 @@
     flex-direction: column;
     overflow-y: scroll;
 }
+
 .couresLec-section .container .videos-container .videos-queue::-webkit-scrollbar {
     width: 10px;
-  }
-  
-  /* Track */
-  .couresLec-section .container .videos-container .videos-queue::-webkit-scrollbar-track {
+}
+
+/* Track */
+.couresLec-section .container .videos-container .videos-queue::-webkit-scrollbar-track {
     background: #f1f1f1;
-  }
-  
-  /* Handle */
-  .couresLec-section .container .videos-container .videos-queue::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+.couresLec-section .container .videos-container .videos-queue::-webkit-scrollbar-thumb {
     background: var(--mainColor);
-  }
-  
-  /* Handle on hover */
-  .couresLec-section .container .videos-container .videos-queue::-webkit-scrollbar-thumb:hover {
+}
+
+/* Handle on hover */
+.couresLec-section .container .videos-container .videos-queue::-webkit-scrollbar-thumb:hover {
     background: var(--secondaryColor);
-  }
+}
 
 .couresLec-section .container .videos-container .videos-queue .video-item {
     width: 100%;
@@ -88,31 +96,32 @@
     -ms-border-radius: var(--main-border-radius);
     -o-border-radius: var(--main-border-radius);
 }
-.couresLec-section .container .video-controls{
+
+.couresLec-section .container .video-controls {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding: 1.5rem 1rem;
+    padding: 0 1rem;
 }
 
-.couresLec-section .container .video-controls button{
+.couresLec-section .container .video-controls button {
     background-color: var(--mainColor);
     border: none;
     font-size: 1.2rem;
-    color:#fff;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    border-radius:var(--main-border-radius) ;
-    -webkit-border-radius:var(--main-border-radius) ;
-    -moz-border-radius:var(--main-border-radius) ;
-    -ms-border-radius:var(--main-border-radius) ;
-    -o-border-radius:var(--main-border-radius) ;
+    border-radius: var(--main-border-radius);
+    -webkit-border-radius: var(--main-border-radius);
+    -moz-border-radius: var(--main-border-radius);
+    -ms-border-radius: var(--main-border-radius);
+    -o-border-radius: var(--main-border-radius);
     cursor: pointer;
 }
 
-.couresLec-section .container .video-controls button:disabled{
+.couresLec-section .container .video-controls button:disabled {
     background-color: var(--disabledColor);
 }
