@@ -57,7 +57,11 @@ const CourseModules = () => {
         .GET("courses/" + id + "/modules")
         .then((res) => {
           console.log(res.data.data.data);
-          setModules({ ...modules, loading: false, data: res.data.data.data });
+          setModules({
+            ...modules,
+            loading: false,
+            data: res.data.data.data.reverse(),
+          });
           setReloadData(false);
         })
         .catch((err) => {
