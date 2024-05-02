@@ -108,6 +108,9 @@ a {
   -ms-transition: var(--main-transition);
   -o-transition: var(--main-transition);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-btn.sm svg {

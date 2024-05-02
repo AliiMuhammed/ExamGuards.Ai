@@ -6,11 +6,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import Pagination from "@mui/material/Pagination";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Courses = () => {
   const instructorID = getAuthUser()?.data?.data?.user?._id;
   const [page, setPage] = useState(1);
+  const [showPagination, setShowPagination] = useState(false);
   const [courses, setCourses] = useState({
     loading: false,
     errorMsg: "",
@@ -21,8 +22,13 @@ const Courses = () => {
   useEffect(() => {
     setCourses({ ...courses, loading: true });
     http
-      .GET(`courses?instructors=${instructorID}&page=${page}&limit=6`)
+      .GET(
+        `courses?instructors=${instructorID}&active=true&page=${page}&limit=6`
+      )
       .then((response) => {
+        response.data.totalDocs > 6 && response.data.results === 6            
+          ? setShowPagination(true)
+          : setShowPagination(false);
         setTotalPages(response.data?.totalPages);
         setCourses({
           ...courses,
@@ -47,7 +53,6 @@ const Courses = () => {
       setPage(value);
     }
   };
-
   return (
     <section className="courses-instructor">
       <div className="container">
@@ -103,7 +108,7 @@ const Courses = () => {
                             ? `${course.description.slice(0, 90)}...`
                             : course.description}
                         </p>
-                        
+
                         <Link
                           to={`/instructor/course/${course._id}`}
                           className="view-course"
@@ -115,14 +120,16 @@ const Courses = () => {
                   );
                 })}
               </div>
-              <div className="custom-pagination">
-                <Pagination
-                  page={parseInt(page)}
-                  count={parseInt(totalPages)}
-                  onChange={handlePaginationChange}
-                  color="primary"
-                />
-              </div>
+              {showPagination && (
+                <div className="custom-pagination">
+                  <Pagination
+                    page={parseInt(page)}
+                    count={parseInt(totalPages)}
+                    onChange={handlePaginationChange}
+                    color="primary"
+                  />
+                </div>
+              )}
             </>
           )}
       </div>
