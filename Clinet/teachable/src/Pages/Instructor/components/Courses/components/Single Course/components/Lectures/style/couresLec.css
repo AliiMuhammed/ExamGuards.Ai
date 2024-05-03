@@ -30,6 +30,36 @@
 
 }
 
+.couresLec-section .container .videos-container .current-video-play .under-video {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding: 0 0.5rem;
+    text-transform: capitalize;
+}
+
+.couresLec-section .container .videos-container .current-video-play .under-video span {
+    font-size: 1.5rem;
+}
+
+.couresLec-section .container .videos-container .current-video-play .under-video a {
+    color: var(--mainColor);
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.couresLec-section .container .videos-container .current-video-play .under-video a:hover {
+    color: var(--secondaryColor);
+}
+
+.couresLec-section .container .videos-container .current-video-play .under-video a svg {
+    margin-left: .5rem;
+}
+
 .couresLec-section .container .videos-container .current-video-play h3 {
     margin: .4rem 0;
     width: 100%;
@@ -149,7 +179,7 @@
         flex-direction: row;
     }
 
-    
+
 
     .couresLec-section .container .videos-container .videos-queue .video-item {
         flex-shrink: 0;

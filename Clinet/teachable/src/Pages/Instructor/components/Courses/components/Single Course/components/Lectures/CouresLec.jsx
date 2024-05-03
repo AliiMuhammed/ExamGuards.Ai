@@ -8,6 +8,8 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
+import { Link } from "react-router-dom";
+import { FaDownload } from "react-icons/fa6";
 
 const CouresLec = () => {
   const { id } = useParams();
@@ -146,7 +148,16 @@ const CouresLec = () => {
                       url={modules.data[currentVideoIndex].video}
                     />
                   )}
-                  <h3>{modules.data[currentVideoIndex].title}</h3>
+                  <div className="under-video">
+                    <span>{modules.data[currentVideoIndex].title}</span>
+                    <Link
+                      to={modules.data[currentVideoIndex].file}
+                      target="_blank"
+                    >
+                      download materials
+                      <FaDownload />
+                    </Link>
+                  </div>
                   <div className="video-controls">
                     <button
                       onClick={handlePreviousVideo}
