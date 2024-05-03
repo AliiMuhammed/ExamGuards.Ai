@@ -12,10 +12,12 @@ import AdminProfile from "./Pages/Admin/Components/Profile/AdminProfile";
 import RestPass from "./Pages/Login/components/RestPassword/RestPass";
 import ForgetPassword from "./Pages/Login/components/ForgetPassword/ForgetPassword";
 import Register from "./Pages/Register/Register";
-import TestDownload from "./Pages/Test/TestDownload";
 import Instructor from "./Pages/Instructor/Instructor";
 import Courses from "./Pages/Instructor/components/Courses/Courses";
 import SingleCourse from "./Pages/Instructor/components/Courses/components/Single Course/SingleCourse";
+import Guest from "./Middlewares/Guest";
+import GuestProfile from "./Middlewares/GuestProfile";
+import Role from "./Middlewares/Role";
 
 export const routes = createBrowserRouter([
   {
@@ -24,69 +26,80 @@ export const routes = createBrowserRouter([
     children: [
       //login routes
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/forgetPassword",
-        element: <ForgetPassword />,
-      },
-      {
-        path: "/resetPassword/:token",
-        element: <RestPass />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/test",
-        element: <TestDownload />,
-      },
-      //admin routes
-      {
-        path: "/admin",
-        element: <Admin />,
+        element: <Guest />,
         children: [
           {
-            path: "/admin/home",
-            element: <AdminHome />,
-            children: [],
+            path: "/login",
+            element: <Login />,
           },
           {
-            path: "/admin/students",
-            element: <AdminStudents />,
+            path: "/forgetPassword",
+            element: <ForgetPassword />,
           },
           {
-            path: "/admin/instructors",
-            element: <AdminInstructors />,
+            path: "/resetPassword/:token",
+            element: <RestPass />,
           },
           {
-            path: "/admin/admins",
-            element: <Admins />,
-          },
-          {
-            path: "/admin/courses",
-            element: <AdminCourses />,
-          },
-          {
-            path: "/admin/profile/:id",
-            element: <AdminProfile />,
+            path: "/register",
+            element: <Register />,
           },
         ],
       },
-      //instructor routes
       {
-        path: "/instructor",
-        element: <Instructor />,
+        element: <Role />,
         children: [
+          //admin routes
           {
-            path: "/instructor/courses",
-            element: <Courses />,
+            path: "/admin",
+            element: <Admin />,
+            children: [
+              {
+                path: "/admin/home",
+                element: <AdminHome />,
+                children: [],
+              },
+              {
+                path: "/admin/students",
+                element: <AdminStudents />,
+              },
+              {
+                path: "/admin/instructors",
+                element: <AdminInstructors />,
+              },
+              {
+                path: "/admin/admins",
+                element: <Admins />,
+              },
+              {
+                path: "/admin/courses",
+                element: <AdminCourses />,
+              },
+              {
+                element: <GuestProfile />,
+                children: [
+                  {
+                    path: "/admin/profile/:id",
+                    element: <AdminProfile />,
+                  },
+                ],
+              },
+            ],
           },
+          //instructor routes
           {
-            path: "/instructor/course/:id",
-            element: <SingleCourse />,
+            path: "/instructor",
+            element: <Instructor />,
+            children: [
+              {
+                path: "/instructor/courses",
+                element: <Courses />,
+              },
+              {
+                path: "/instructor/course/:id",
+                element: <SingleCourse />,
+              },
+            ],
           },
         ],
       },
