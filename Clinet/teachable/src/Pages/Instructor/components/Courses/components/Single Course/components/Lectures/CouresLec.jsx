@@ -23,7 +23,6 @@ const CouresLec = () => {
   const [reloadData, setReloadData] = useState(true);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
-  // Call all modules
   useEffect(() => {
     if (reloadData) {
       setModules({ ...modules, loading: true });
@@ -51,7 +50,6 @@ const CouresLec = () => {
   }, [reloadData]);
 
   useEffect(() => {
-    // Scroll the videos queue to make the current playing video appear at the top
     if (videosQueueRef.current) {
       videosQueueRef.current.children[currentVideoIndex]?.scrollIntoView({
         behavior: "smooth",
@@ -76,6 +74,8 @@ const CouresLec = () => {
     setCurrentVideoIndex(index);
   };
 
+  const allUrlsEmpty = modules.data.every((video) => video.video === "");
+
   function getYouTubeThumbnail(url) {
     const videoIdMatch = url.match(
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
@@ -91,20 +91,17 @@ const CouresLec = () => {
   return (
     <section className="couresLec-section">
       <div className="container">
-        {/* handelErrors */}
         {modules.errorMsg !== "" && (
           <Alert severity="error">{modules.errorMsg}</Alert>
         )}
-        {/* if no modules */}
         {modules.data.length === 0 &&
           modules.errorMsg === "" &&
           modules.loading === false && (
             <div className="no-modules">
-              <span>No Lecturs</span>
+              <span>No Lectures</span>
               <HiOutlineArchiveBoxXMark />
             </div>
           )}
-        {/* if loading and there is data*/}
         {modules.data.length > 0 &&
           modules.errorMsg === "" &&
           modules.loading === true && (
@@ -117,7 +114,6 @@ const CouresLec = () => {
               color="inherit"
             />
           )}
-        {/* if loading and there is no data */}
         {modules.data.length === 0 &&
           modules.errorMsg === "" &&
           modules.loading === true && (
@@ -130,10 +126,17 @@ const CouresLec = () => {
               color="inherit"
             />
           )}
-        {/* if there is modules */}
         {modules.data.length > 0 &&
           modules.errorMsg === "" &&
-          modules.loading === false && (
+          modules.loading === false && allUrlsEmpty && (
+            <div className="no-modules">
+              <span>No Lectures</span>
+              <HiOutlineArchiveBoxXMark />
+            </div>
+          )}
+        {modules.data.length > 0 &&
+          modules.errorMsg === "" &&
+          modules.loading === false && !allUrlsEmpty && (
             <>
               <div className="header">
                 <h3>Lectures Videos</h3>

@@ -1,0 +1,22 @@
+.exam-section {
+    height: 100vh;
+}
+
+.exam-section .container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.exam-video {
+    width: 30rem;
+    border: 4px solid var(--mainColor);
+}
+
+.message {
+
+    margin: 3rem 0;
+    font-size: 2rem;
+}

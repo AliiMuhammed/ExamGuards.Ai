@@ -26,26 +26,24 @@
 
 .courses-instructor .container .all-assigned-courses {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    width: 100%;
-    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 3rem 1rem;
+    margin-top: 2rem;
 }
 
 .courses-instructor .container .all-assigned-courses .assigned-course {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 20px 6px;
     padding: 1rem;
     border-radius: 5px;
-    width: 100%;
     transition: var(--main-transition);
     -webkit-transition: var(--main-transition);
     -moz-transition: var(--main-transition);
     -ms-transition: var(--main-transition);
     -o-transition: var(--main-transition);
-    margin: 0 auto;
 }
 
 .courses-instructor .container .all-assigned-courses .assigned-course .body {
@@ -124,33 +122,3 @@
     margin-bottom: 0;
 }
 
-/* Small screens (up to 767px) */
-@media only screen and (max-width: 767px) {
-    .courses-instructor .container .all-assigned-courses {
-        grid-template-columns: 1fr;
-    }
-
-    .courses-instructor .container .all-assigned-courses .assigned-course {
-        width: 90%;
-    }
-}
-
-/* Medium screens (768px - 991px) */
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-    .courses-instructor .container .all-assigned-courses {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    .courses-instructor .container .all-assigned-courses .assigned-course {
-        width: 100%;
-    }
-}
-
-@media only screen and (min-width: 991px) and (max-width: 1194px) {
-    .courses-instructor .container .all-assigned-courses {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .courses-instructor .container .all-assigned-courses .assigned-course {}
-}

@@ -18,6 +18,7 @@ import SingleCourse from "./Pages/Instructor/components/Courses/components/Singl
 import Guest from "./Middlewares/Guest";
 import GuestProfile from "./Middlewares/GuestProfile";
 import Role from "./Middlewares/Role";
+import TestDownload from "./Pages/Test/TestDownload";
 
 export const routes = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ export const routes = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        element: <TestDownload />,
+        path: "/test",
       },
     ],
     errorElement: <Notfound />,
