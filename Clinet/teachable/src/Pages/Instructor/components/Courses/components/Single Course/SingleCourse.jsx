@@ -1,53 +1,69 @@
 import React, { useState } from "react";
+import { NavLink, Outlet, useParams } from "react-router-dom";
 import "./style/singleCourse.css";
+import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import CourseModules from "./components/Modules/CourseModules";
-import CouresLec from "./components/Lectures/CouresLec";
-import CourseAss from "./components/Assignments/CourseAss";
-import CourseExams from "./components/Exams/CourseExams";
-import SetGrades from "./components/Grades/SetGrades";
+
+function LinkTab(props) {
+  return <Tab component={NavLink} to={props.href} {...props} />;
+}
+
 const SingleCourse = () => {
+  const { id } = useParams();
   const [value, setValue] = useState(0);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const renderTabContent = () => {
-    switch (value) {
-      case 0:
-        return <CourseModules />;
-      case 1:
-        return <CouresLec />;
-      case 2:
-        return <CourseAss />;
-      case 3:
-        return <CourseExams />;
-      case 4:
-        return <SetGrades />;
-      default:
-        return null;
-    }
-  };
+
   return (
     <section className="single-course-section">
       <div className="Tabs">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          className="course-tabs-contaienr"
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-          allowScrollButtonsMobile
-        >
-          <Tab label="Modules" className="course-tabs" />
-          <Tab label="Lectures" className="course-tabs" />
-          <Tab label="Assignments" className="course-tabs" />
-          <Tab label="exams" className="course-tabs" />
-          <Tab label="set grades" className="course-tabs" />
-        </Tabs>
+        <Box>
+          <Tabs
+            centered
+            value={value}
+            onChange={handleChange}
+            className="course-tabs-container"
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="scrollable auto tabs example"
+            allowScrollButtonsMobile
+            role="navigation"
+            c
+          >
+            <LinkTab
+              className="course-tabs"
+              label="Modules"
+              href={`/instructor/course/${id}/modules`}
+            />
+            <LinkTab
+              className="course-tabs"
+              label="Lectures"
+              href={`/instructor/course/${id}/lectures`}
+            />
+            <LinkTab
+              className="course-tabs"
+              label="Assignments"
+              href={`/instructor/course/${id}/assignments`}
+            />
+            <LinkTab
+              className="course-tabs"
+              label="Exams"
+              href={`/instructor/course/${id}/exams`}
+            />
+            <LinkTab
+              className="course-tabs"
+              label="Set Grades"
+              href={`/instructor/course/${id}/setGrades`}
+            />
+          </Tabs>
+        </Box>
       </div>
-      <div className="course-content">{renderTabContent()}</div>
+      <div className="course-content">
+        <Outlet />
+      </div>
     </section>
   );
 };

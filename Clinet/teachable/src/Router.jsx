@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App";
 import Admin from "./Pages/Admin/Admin";
 import Notfound from "./Pages/NotFound/Notfound";
@@ -19,95 +19,68 @@ import Guest from "./Middlewares/Guest";
 import GuestProfile from "./Middlewares/GuestProfile";
 import Role from "./Middlewares/Role";
 import TestDownload from "./Pages/Test/TestDownload";
+import { AddExam } from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AddExam";
+import CourseModules from "./Pages/Instructor/components/Courses/components/Single Course/components/Modules/CourseModules";
+import CouresLec from "./Pages/Instructor/components/Courses/components/Single Course/components/Lectures/CouresLec";
+import CourseAss from "./Pages/Instructor/components/Courses/components/Single Course/components/Assignments/CourseAss";
+import CourseExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/CourseExams";
+import SetGrades from "./Pages/Instructor/components/Courses/components/Single Course/components/Grades/SetGrades";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      //login routes
       {
         element: <Guest />,
         children: [
-          {
-            path: "/login",
-            element: <Login />,
-          },
-          {
-            path: "/forgetPassword",
-            element: <ForgetPassword />,
-          },
-          {
-            path: "/resetPassword/:token",
-            element: <RestPass />,
-          },
-          {
-            path: "/register",
-            element: <Register />,
-          },
+          { path: "login", element: <Login /> },
+          { path: "forgetPassword", element: <ForgetPassword /> },
+          { path: "resetPassword/:token", element: <RestPass /> },
+          { path: "register", element: <Register /> },
         ],
       },
       {
         element: <Role />,
         children: [
-          //admin routes
           {
-            path: "/admin",
+            path: "admin",
             element: <Admin />,
             children: [
-              {
-                path: "/admin/home",
-                element: <AdminHome />,
-                children: [],
-              },
-              {
-                path: "/admin/students",
-                element: <AdminStudents />,
-              },
-              {
-                path: "/admin/instructors",
-                element: <AdminInstructors />,
-              },
-              {
-                path: "/admin/admins",
-                element: <Admins />,
-              },
-              {
-                path: "/admin/courses",
-                element: <AdminCourses />,
-              },
+              { path: "home", element: <AdminHome /> },
+              { path: "students", element: <AdminStudents /> },
+              { path: "instructors", element: <AdminInstructors /> },
+              { path: "admins", element: <Admins /> },
+              { path: "courses", element: <AdminCourses /> },
               {
                 element: <GuestProfile />,
-                children: [
-                  {
-                    path: "/admin/profile/:id",
-                    element: <AdminProfile />,
-                  },
-                ],
+                children: [{ path: "profile/:id", element: <AdminProfile /> }],
               },
             ],
           },
-          //instructor routes
           {
-            path: "/instructor",
+            path: "instructor",
             element: <Instructor />,
             children: [
+              { path: "courses", element: <Courses /> },
               {
-                path: "/instructor/courses",
-                element: <Courses />,
-              },
-              {
-                path: "/instructor/course/:id",
+                path: "course/:id",
                 element: <SingleCourse />,
+                children: [
+                  { path: "", element: <Navigate to="modules" /> }, // Default redirect
+                  { path: "modules", element: <CourseModules /> },
+                  { path: "lectures", element: <CouresLec /> },
+                  { path: "assignments", element: <CourseAss /> },
+                  { path: "setGrades", element: <SetGrades /> },
+                  { path: "exams", element: <CourseExams /> },
+                  { path: "exams/add", element: <AddExam /> },
+                ],
               },
             ],
           },
         ],
       },
-      {
-        element: <TestDownload />,
-        path: "/test",
-      },
+      { path: "test", element: <TestDownload /> },
     ],
     errorElement: <Notfound />,
   },

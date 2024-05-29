@@ -7,6 +7,7 @@ import examImg from "../../../../../../../../Assets/Images/Exams/exam-img.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 
 const CourseExams = () => {
   const id = useParams().id;
@@ -58,7 +59,7 @@ const CourseExams = () => {
             <>
               <div className="header">
                 <h3>Course Exams</h3>
-                <button className="add-exam-btn main-btn sm">Add Exam</button>
+                <Link to={'/instructor/course/'+id+'/exams/add'} className="add-exam-btn main-btn sm">Add Exam</Link>
               </div>
               <div className="no-exams">
                 <span>No Exams</span>
@@ -100,7 +101,7 @@ const CourseExams = () => {
             <>
               <div className="header">
                 <h3>Course Exams</h3>
-                <button className="add-exam-btn main-btn sm">Add Exam</button>
+                <Link to={'/instructor/course/'+id+'/exams/add'} className="add-exam-btn main-btn sm">Add Exam</Link>
               </div>
               <div className="exams-cards">
                 {exams.data.map((exam) => (
