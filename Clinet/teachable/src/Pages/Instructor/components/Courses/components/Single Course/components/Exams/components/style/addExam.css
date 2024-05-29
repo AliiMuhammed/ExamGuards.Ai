@@ -1,0 +1,29 @@
+.add-exam-section .container  .exam-accordion {
+    margin: 1.5rem 0 !important;
+}
+.add-exam-section .container  .exam-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.add-exam-section .container  .exam-header .exam-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--mainFontColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}.add-exam-section .container  .exam-accordion .required-star{
+    color: var(--mainColor);
+    font-size: 1.3rem;
+}
+.add-exam-section .container  .exam-accordion .date-picker{
+    margin-top: 1rem;
+}
+.add-exam-section .container  .exam-accordion .date-picker .dates{
+display: flex;
+align-items: center;
+margin-top: 1rem;
+}
