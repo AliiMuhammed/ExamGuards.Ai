@@ -1,29 +1,76 @@
-.add-exam-section .container  .exam-accordion {
-    margin: 1.5rem 0 !important;
+.add-exam-section .container {
+    display: grid;
+    width: 90%;
+    grid-template-columns: 2fr .5fr;
 }
-.add-exam-section .container  .exam-header {
+
+
+.add-exam-section .container .exam-options {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 20px 6px;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+
+.add-exam-section .container .exam-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin-bottom: 1rem;
 }
 
-.add-exam-section .container  .exam-header .exam-title {
+.add-exam-section .container .exam-header .exam-title {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--mainFontColor);
     display: flex;
     align-items: center;
     justify-content: center;
-}.add-exam-section .container  .exam-accordion .required-star{
+}
+
+.add-exam-section .container .exam-options label {
+    margin: 1rem 0;
+}
+
+.add-exam-section .container .exam-options .required-star {
     color: var(--mainColor);
     font-size: 1.3rem;
 }
-.add-exam-section .container  .exam-accordion .date-picker{
-    margin-top: 1rem;
+
+
+
+
+.add-exam-section .container .exam-options .exam-type .radio-group-btns-exam-type,
+.add-exam-section .container .exam-options .exam-visibility .radio-group-btns-exam-type {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }
-.add-exam-section .container  .exam-accordion .date-picker .dates{
-display: flex;
-align-items: center;
-margin-top: 1rem;
+
+.add-exam-section .container .exam-options .exam-type .radio-group-btns-exam-type label,
+.add-exam-section .container .exam-options .exam-visibility .radio-group-btns-exam-type label {
+    margin: 0;
+}
+
+.add-exam-section .container .exam-options .date-picker {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--mainColor);
+    padding: .2rem;
+    width: fit-content;
+    color: var(--mainFontColor);
+}
+
+.add-exam-section .container .exam-options .date-picker input {
+    border: none;
+    cursor: pointer;
+}
+
+.add-exam-section .container .exam-options .date-picker .react-datepicker__input-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.add-exam-section .container .exam-options .total-grades .total-grades-input{
 }
