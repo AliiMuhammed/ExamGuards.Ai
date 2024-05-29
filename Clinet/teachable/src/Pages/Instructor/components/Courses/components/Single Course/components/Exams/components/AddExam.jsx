@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export const AddExam = () => {
   return (
-    <div>AddExam</div>
-  )
-}
+    <section className="add-exam-section">
+      <div className="container">AddExam</div>
+    </section>
+  );
+};

@@ -107,7 +107,7 @@ const CourseExams = () => {
                 {exams.data.map((exam) => (
                   <div className="exam-card" key={exam._id}>
                     <div className="exam-img">
-                      <img src={examImg} alt="exam" />
+                      <img src={examImg} loading="lazy" alt="exam" />
                     </div>
                     <h3>
                       {exam.title}
