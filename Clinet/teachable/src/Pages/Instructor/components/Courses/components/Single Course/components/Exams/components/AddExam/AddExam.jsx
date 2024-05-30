@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import AddQuestions from "./components/AddQuestions";
 import ShowQuestions from "./components/ShowQuestions";
@@ -30,12 +30,27 @@ export const AddExam = () => {
     loading: false,
     errorMsg: "",
   });
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = "All data will be lost and you will not be able to recover it if you refresh.";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   const handleExamOptionChange = (field, value) => {
     setExamOptions((prevOptions) => ({
       ...prevOptions,
       [field]: value,
     }));
   };
+
   const handleSubmit = () => {
     if (questions.length === 0) {
       setShowError("Please add at least one question");
@@ -71,6 +86,7 @@ export const AddExam = () => {
         });
     }
   };
+
   return (
     <section className="add-exam-section">
       <div className="container">

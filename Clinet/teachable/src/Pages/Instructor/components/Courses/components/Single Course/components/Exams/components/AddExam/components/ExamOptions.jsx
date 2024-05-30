@@ -246,9 +246,9 @@ const ExamOptions = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" onClick={() => setOpen(false)}>
+          <button type="button" className="main-btn sm" variant="contained" onClick={() => setOpen(false)}>
             Cancel
-          </Button>
+          </button>
           <Button
             onClick={() => {
               navigate(`/instructor/course/${id}/exams`);
