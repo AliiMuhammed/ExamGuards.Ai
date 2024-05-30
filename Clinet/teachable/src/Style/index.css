@@ -117,7 +117,6 @@ a {
   font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
-  margin-left: .5rem;
   transition: var(--main-transition);
   -webkit-transition: var(--main-transition);
   -moz-transition: var(--main-transition);

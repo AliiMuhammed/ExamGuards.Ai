@@ -8,12 +8,28 @@ import TextField from "@mui/material/TextField";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
+import CircularProgress from "@mui/material/CircularProgress";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
 import "../style/examOptions.css";
-const ExamOptions = ({ examOptions, handleExamOptionChange, handleSubmit }) => {
+import { useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
+const ExamOptions = ({
+  examOptions,
+  handleExamOptionChange,
+  handleSubmit,
+  loading,
+}) => {
   const { title, ExamType, startedAt, expiredAt, totalpoints, visiable } =
     examOptions;
   const [errors, setErrors] = useState({});
-
+  const [open, setOpen] = useState(false);
+  const id = useParams().id;
+  const navigate = useNavigate();
   const parseDate = (date) => {
     return date ? new Date(date) : null;
   };
@@ -196,11 +212,54 @@ const ExamOptions = ({ examOptions, handleExamOptionChange, handleSubmit }) => {
         </FormControl>
       </div>
       <div className="exam-btns">
-        <button onClick={handleFormSubmit} className="add-exam-btn main-btn sm">
-          Create Exam
+        <button
+          onClick={handleFormSubmit}
+          disabled={loading}
+          className="add-exam-btn main-btn sm"
+        >
+          {loading ? (
+            <CircularProgress size={20} color="inherit" />
+          ) : (
+            "Create Exam"
+          )}
         </button>
-        <button className="cancel-exam-btn main-btn sm">Cancel</button>
+        <button
+          className="cancel-exam-btn main-btn sm"
+          onClick={() => setOpen(true)}
+        >
+          Cancel
+        </button>
       </div>
+      <Dialog
+        fullWidth
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Do you want to delete this course?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you don't need to create this exam? All data will be
+            lost and you will not be able to recover it.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              navigate(`/instructor/course/${id}/exams`);
+            }}
+            variant="contained"
+            color="error"
+          >
+            Yes, I am sure
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

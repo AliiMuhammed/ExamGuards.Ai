@@ -9,6 +9,7 @@ import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../../../../../../../../../Redux/Slices/toastSlice";
 import Alert from "@mui/material/Alert";
+import http from "./../../../../../../../../../../Helper/http";
 
 export const AddExam = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,10 @@ export const AddExam = () => {
   });
   const [questions, setQuestions] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
-
+  const [addExam, setAddExam] = useState({
+    loading: false,
+    errorMsg: "",
+  });
   const handleExamOptionChange = (field, value) => {
     setExamOptions((prevOptions) => ({
       ...prevOptions,
@@ -35,16 +39,38 @@ export const AddExam = () => {
   const handleSubmit = () => {
     if (questions.length === 0) {
       setShowError("Please add at least one question");
-      dispatch(
-        openToast({
-          msg: "something went wrong",
-          type: "error",
+    } else {
+      setAddExam({ loading: true, errorMsg: "" });
+      const Exam = {
+        ...examOptions,
+        Questions: questions,
+      };
+      http
+        .POST("exams", Exam)
+        .then((res) => {
+          setAddExam({ loading: false, errorMsg: "" });
+          setExamOptions({
+            ExamType: "",
+            course: id,
+            startedAt: "",
+            expiredAt: "",
+            title: "",
+            totalpoints: 0,
+            visiable: null,
+          });
+          setQuestions([]);
+          dispatch(
+            openToast({
+              msg: "Exam Created successfully",
+              type: "success",
+            })
+          );
         })
-      );
+        .catch((err) => {
+          setAddExam({ loading: false, errorMsg: "Something went wrong" });
+        });
     }
-    console.log(examOptions);
   };
-  console.log(questions)
   return (
     <section className="add-exam-section">
       <div className="container">
@@ -60,7 +86,12 @@ export const AddExam = () => {
             </button>
           </div>
           <div className="error-message">
-            {showError && questions.length === 0 && <Alert severity="error">{showError}</Alert>}
+            {showError && questions.length === 0 && (
+              <Alert severity="error">{showError}</Alert>
+            )}
+            {addExam.errorMsg !== "" && (
+              <Alert severity="error">{addExam.errorMsg}</Alert>
+            )}
           </div>
           <div className="exam-questions">
             {questions.length === 0 ? (
@@ -81,6 +112,7 @@ export const AddExam = () => {
           examOptions={examOptions}
           handleExamOptionChange={handleExamOptionChange}
           handleSubmit={handleSubmit}
+          loading={addExam.loading}
         />
       </div>
       <AddQuestions
