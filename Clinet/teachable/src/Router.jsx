@@ -19,15 +19,16 @@ import Guest from "./Middlewares/Guest";
 import GuestProfile from "./Middlewares/GuestProfile";
 import Role from "./Middlewares/Role";
 import TestDownload from "./Pages/Test/TestDownload";
-import { AddExam } from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AddExam";
 import CourseModules from "./Pages/Instructor/components/Courses/components/Single Course/components/Modules/CourseModules";
 import CouresLec from "./Pages/Instructor/components/Courses/components/Single Course/components/Lectures/CouresLec";
 import CourseAss from "./Pages/Instructor/components/Courses/components/Single Course/components/Assignments/CourseAss";
 import CourseExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/CourseExams";
 import SetGrades from "./Pages/Instructor/components/Courses/components/Single Course/components/Grades/SetGrades";
+import { AddExam } from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AddExam/AddExam";
 
 export const routes = createBrowserRouter([
   {
+    
     path: "/",
     element: <App />,
     children: [

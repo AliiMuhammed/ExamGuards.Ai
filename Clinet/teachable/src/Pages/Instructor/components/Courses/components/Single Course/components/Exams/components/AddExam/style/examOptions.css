@@ -1,0 +1,96 @@
+.exam-options {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 20px 6px;
+    padding: 1rem;
+    border-radius: 5px;
+    height: fit-content;
+}
+
+
+ .exam-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+ .exam-header .exam-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--mainFontColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ .exam-options label {
+    margin: 1rem 0;
+}
+
+ .exam-options .required-star {
+    color: var(--mainColor);
+    font-size: 1.3rem;
+}
+
+
+
+
+ .exam-options .exam-type .radio-group-btns-exam-type,
+ .exam-options .exam-visibility .radio-group-btns-exam-type {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+ .exam-options .exam-type .radio-group-btns-exam-type label,
+ .exam-options .exam-visibility .radio-group-btns-exam-type label {
+    margin: 0;
+}
+
+ .exam-options .date-picker {
+    display: flex;
+    align-items: center;
+    border: 1px solid #0000003b;
+    border-radius: 5px;
+    padding: .2rem;
+    width: fit-content;
+    color: var(--mainFontColor);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+ .exam-options .date-picker input {
+    border: none;
+    cursor: pointer;
+}
+
+ .exam-options .date-picker .react-datepicker__input-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+ .exam-options .exam-btns {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+
+}
+
+ .exam-options .exam-btns .add-exam-btn {
+    margin-right: 1rem;
+    width: 100%;
+}
+
+ .exam-options .exam-btns .cancel-exam-btn {
+    background-color: transparent;
+    color: var(--mainFontColor);
+    width: 100%;
+}
+
+ .exam-options .exam-btns .cancel-exam-btn:hover {
+    color: #fff;
+    background-color: var(--mainColor);
+}

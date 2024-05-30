@@ -35,6 +35,9 @@ const SingleCourse = () => {
       case "exams":
         setValue(3);
         break;
+      case "add":
+        setValue(3);
+        break;
       case "setGrades":
         setValue(4);
         break;

@@ -1,0 +1,54 @@
+.form-qusetions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+
+}
+
+.form-qusetions .error-message {
+    margin: 1rem 0;
+}
+
+
+.answer-option {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1rem;
+    margin: .5rem 0;
+    align-items: center;
+}
+
+.answer-keywords {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1rem;
+    margin: .5rem 0;
+    align-items: center;
+}
+
+.answer-keywords div:first-of-type {
+    margin-right: .5rem;
+}
+
+.answer-option .main-btn.sm.mark-btn {
+    margin-left: 1rem;
+    font-size: 1rem;
+
+}
+
+.main-btn.sm.add-more.update {
+    margin: 1rem 0;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.main-btn.sm.cancle-add {
+    background-color: transparent;
+    color: var(--mainFontColor);
+}
+
+.main-btn.sm.cancle-add:hover {
+    color: #fff;
+    background-color: var(--mainColor);
+}

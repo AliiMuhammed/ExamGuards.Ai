@@ -1,0 +1,44 @@
+.add-exam-section .container {
+    display: grid;
+    width: 95%;
+    grid-template-columns: 2fr .5fr;
+    gap: 2rem;
+}
+
+
+.add-exam-section .container .exam-content .exam-content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem
+}
+
+.add-exam-section .container .exam-content .exam-content-header .add-question-btn svg {
+    margin-right: .5rem;
+    font-size: 1rem;
+}
+
+.add-exam-section .container .exam-content .exam-questions {
+    padding: 1rem 0;
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-exam-section .container .exam-questions .no-question {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    width: 100%;
+    height: 50vh;
+}
+
+.add-exam-section .container .exam-questions .no-question svg {
+    color: var(--mainColor);
+}
+

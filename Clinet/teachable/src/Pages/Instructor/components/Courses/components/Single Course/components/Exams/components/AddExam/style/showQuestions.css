@@ -1,0 +1,104 @@
+.question-added {
+    width: 100%;
+}
+
+.question-added .question-container {
+    width: 100%;
+    margin: 1rem 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 20px 6px;
+    padding: 1.5rem;
+    border-radius: 5px;
+}
+
+.question-added .question-container .question-header {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.question-added .question-container .question-header .main-btn.sm.delete {
+    margin: 0;
+}
+
+.question-added .question-container .question-header .question-title {
+    font-size: 1.5rem;
+}
+
+.question-added .question-container .question {
+    width: 100%;
+    margin: 1rem 0;
+    background-color: #ebebeb73;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.question-added .answers-container {
+    width: 100%;
+    padding: 1rem;
+}
+
+.question-added .answers-container p {
+    margin-bottom: .5rem;
+    font-weight: 700;
+    word-break:break-word;
+}
+
+.question-added .answers-container ul {
+    list-style: upper-alpha;
+}
+
+.question-added .answers-container ul li {
+    display: flex;
+    align-items: center;
+}
+
+.question-added .answers-container ul li::before {
+    content: '';
+    border-radius: 50%;
+    background-color: var(--mainColor);
+    margin-right: .5rem;
+    width: 8px;
+    height: 8px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+
+.question-added .answers-container ul li svg {
+    color: var(--mainColor);
+    margin-left: .5rem;
+}
+
+.question-added .question-footer {
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid var(--mainColor);
+}
+
+.question-added .question-footer .question-type span {
+    font-weight: 700;
+}
+.question-added .question-footer .question-keywords{
+    margin-left: 1rem;
+}
+.question-added .question-footer .question-keywords span{
+    font-weight: 700;
+}
+.question-added .question-footer .question-keywords .keyword {
+    font-weight: 400;
+    margin-left: .5rem;
+    padding:0.3rem 1rem;
+    background-color: #fda266;
+    border: 1px solid var(--mainColor);
+    color: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
