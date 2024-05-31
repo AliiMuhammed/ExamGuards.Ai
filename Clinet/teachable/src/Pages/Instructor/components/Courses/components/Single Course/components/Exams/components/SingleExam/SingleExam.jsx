@@ -129,7 +129,7 @@ const SingleExam = () => {
           />
         )}
       <div className="container">
-        {questions.length > 0 &&
+        {
           showExam.errorMsg === "" &&
           showExam.loading === false && (
             <>
