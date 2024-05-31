@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import "../style/showQuestions.css";
+import EditQuestions from "./EditQuestions";
+
 const ShowQuestions = ({ questions, setQuestions }) => {
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [questionToEdit, setQuestionToEdit] = useState(null);
+
+  const handleOpenEditDialog = (question) => {
+    setQuestionToEdit(question);
+    setOpenEditDialog(true);
+  };
+  console.log(questions);
   return (
     <div className="question-added">
       {questions.map((question, index) => (
@@ -9,16 +19,24 @@ const ShowQuestions = ({ questions, setQuestions }) => {
           <div className="question-header">
             <h3 className="question-title">Question {index + 1}:</h3>
             <p className="points"> {question.Points} Points</p>
-            <button
-              className="main-btn sm delete"
-              onClick={() => {
-                const newQuestions = [...questions];
-                newQuestions.splice(index, 1);
-                setQuestions(newQuestions);
-              }}
-            >
-              Delete
-            </button>
+            <div className="questions-btns">
+              <button
+                className="main-btn sm delete"
+                onClick={() => {
+                  const newQuestions = [...questions];
+                  newQuestions.splice(index, 1);
+                  setQuestions(newQuestions);
+                }}
+              >
+                Delete
+              </button>
+              <button
+                className="main-btn sm update"
+                onClick={() => handleOpenEditDialog(question)}
+              >
+                Update
+              </button>
+            </div>
           </div>
           <p className="question"> {question.QuestionTitle}</p>
           {question.type === "ChooseQuestion" && (
@@ -59,6 +77,16 @@ const ShowQuestions = ({ questions, setQuestions }) => {
           </div>
         </div>
       ))}
+      {/* Edit dialog */}
+      {questionToEdit && (
+        <EditQuestions
+          open={openEditDialog}
+          setOpen={setOpenEditDialog}
+          questionToEdit={questionToEdit}
+          setQuestions={setQuestions}
+          questions={questions}
+        />
+      )}
     </div>
   );
 };

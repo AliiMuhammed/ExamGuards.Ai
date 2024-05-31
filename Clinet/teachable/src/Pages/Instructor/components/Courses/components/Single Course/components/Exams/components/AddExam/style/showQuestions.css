@@ -16,7 +16,11 @@
     align-items: center;
     justify-content: space-between;
 }
-
+.question-added .question-container .question-header .questions-btns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .question-added .question-container .question-header .main-btn.sm.delete {
     margin: 0;
 }

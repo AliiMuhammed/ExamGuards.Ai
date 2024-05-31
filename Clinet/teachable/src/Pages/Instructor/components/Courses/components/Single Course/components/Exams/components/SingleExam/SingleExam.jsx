@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const SingleExam = () => {
   return (
-    <div>SingleExam</div>
-  )
-}
+    <section className="single-exam-section">
+      <div className="container">SingleExam</div>
+    </section>
+  );
+};
 
-export default SingleExam
+export default SingleExam;
