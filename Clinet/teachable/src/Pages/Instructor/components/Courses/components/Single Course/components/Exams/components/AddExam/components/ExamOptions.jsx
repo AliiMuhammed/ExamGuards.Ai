@@ -16,27 +16,35 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import "../style/examOptions.css";
-import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import http from "../../../../../../../../../../../Helper/http";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../../../../../../../../Redux/Slices/toastSlice";
+
 const ExamOptions = ({
+  handleUpdate,
   examOptions,
   handleExamOptionChange,
   handleSubmit,
   loading,
+  details,
 }) => {
   const { title, ExamType, startedAt, expiredAt, totalpoints, visiable } =
     examOptions;
   const [errors, setErrors] = useState({});
-  const [open, setOpen] = useState(false);
-  const id = useParams().id;
-  const navigate = useNavigate();
-  const parseDate = (date) => {
-    return date ? new Date(date) : null;
-  };
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [deleteState, setDeleteState] = useState({
+    open: false,
+    loading: false,
+    errorMsg: "",
+  });
 
-  const formatDateForSave = (date) => {
-    return date ? date.toISOString() : "";
-  };
+  const dispatch = useDispatch();
+  const { id, Examid } = useParams();
+  const navigate = useNavigate();
+
+  const parseDate = (date) => (date ? new Date(date) : null);
+  const formatDateForSave = (date) => (date ? date.toISOString() : "");
 
   const validate = () => {
     let tempErrors = {};
@@ -61,8 +69,10 @@ const ExamOptions = ({
   };
 
   const handleFormSubmit = () => {
-    if (validate()) {
+    if (validate() && !details) {
       handleSubmit();
+    } else if (validate() && details) {
+      handleUpdate();
     } else {
       console.log("Form has errors.");
     }
@@ -70,6 +80,28 @@ const ExamOptions = ({
 
   const handleDateChange = (key, date) => {
     handleExamOptionChange(key, formatDateForSave(date));
+  };
+
+  const handleDelete = () => {
+    setDeleteState({ ...deleteState, loading: true });
+
+    http
+      .DELETE(`exams/${Examid}`)
+      .then((res) => {
+        dispatch(
+          openToast({ msg: "Exam deleted successfully", type: "success" })
+        );
+        setDeleteState({ open: false, loading: false, errorMsg: "" });
+        navigate(`/instructor/course/${id}/exams`);
+      })
+      .catch((err) => {
+        dispatch(openToast({ msg: "Something went wrong", type: "error" }));
+        setDeleteState({
+          ...deleteState,
+          loading: false,
+          errorMsg: "Something went wrong. Please try again.",
+        });
+      });
   };
 
   return (
@@ -212,32 +244,55 @@ const ExamOptions = ({
         </FormControl>
       </div>
       <div className="exam-btns">
-        <button
-          onClick={handleFormSubmit}
-          disabled={loading}
-          className="add-exam-btn main-btn sm"
-        >
-          {loading ? (
-            <CircularProgress size={20} color="inherit" />
-          ) : (
-            "Create Exam"
-          )}
-        </button>
+        {details ? (
+          <button
+            onClick={handleFormSubmit}
+            disabled={loading}
+            className="add-exam-btn main-btn sm"
+          >
+            {loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Update"
+            )}
+          </button>
+        ) : (
+          <button
+            onClick={handleFormSubmit}
+            disabled={loading}
+            className="add-exam-btn main-btn sm"
+          >
+            {loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Create"
+            )}
+          </button>
+        )}
         <button
           className="cancel-exam-btn main-btn sm"
-          onClick={() => setOpen(true)}
+          onClick={() => setConfirmDialogOpen(true)}
         >
           Cancel
         </button>
+        {details && (
+          <button
+            className="delete main-btn sm"
+            onClick={() => setDeleteState({ open: true })}
+          >
+            Delete
+          </button>
+        )}
       </div>
+      {/* confirm cancel dialog */}
       <Dialog
         fullWidth
-        open={open}
-        onClose={() => setOpen(false)}
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {"Do you want to delete this course?"}
+          {"Do you want to cancel?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -246,7 +301,12 @@ const ExamOptions = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <button type="button" className="main-btn sm" variant="contained" onClick={() => setOpen(false)}>
+          <button
+            type="button"
+            className="main-btn sm"
+            variant="contained"
+            onClick={() => setConfirmDialogOpen(false)}
+          >
             Cancel
           </button>
           <Button
@@ -257,6 +317,45 @@ const ExamOptions = ({
             color="error"
           >
             Yes, I am sure
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* confirm delete dialog */}
+      <Dialog
+        fullWidth
+        open={deleteState.open}
+        onClose={() => setDeleteState({ ...deleteState, open: false })}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Do you want to delete the exam?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this exam? All data will be lost and
+            you will not be able to recover it.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <button
+            type="button"
+            className="main-btn sm"
+            variant="contained"
+            onClick={() => setDeleteState({ ...deleteState, open: false })}
+          >
+            Cancel
+          </button>
+          <Button
+            onClick={handleDelete}
+            variant="contained"
+            color="error"
+            disabled={deleteState.loading}
+          >
+            {deleteState.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Yes, I am sure"
+            )}
           </Button>
         </DialogActions>
       </Dialog>

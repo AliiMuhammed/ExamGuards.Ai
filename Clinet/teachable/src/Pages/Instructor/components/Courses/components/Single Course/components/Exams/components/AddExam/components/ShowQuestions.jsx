@@ -2,16 +2,24 @@ import React, { useState } from "react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import "../style/showQuestions.css";
 import EditQuestions from "./EditQuestions";
-
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
 const ShowQuestions = ({ questions, setQuestions }) => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [questionToEdit, setQuestionToEdit] = useState(null);
+  const [open, setOpen] = useState({
+    open: false,
+    index: "",
+  });
 
   const handleOpenEditDialog = (question) => {
     setQuestionToEdit(question);
     setOpenEditDialog(true);
   };
-  console.log(questions);
   return (
     <div className="question-added">
       {questions.map((question, index) => (
@@ -23,9 +31,7 @@ const ShowQuestions = ({ questions, setQuestions }) => {
               <button
                 className="main-btn sm delete"
                 onClick={() => {
-                  const newQuestions = [...questions];
-                  newQuestions.splice(index, 1);
-                  setQuestions(newQuestions);
+                  setOpen({ open: true, index: index });
                 }}
               >
                 Delete
@@ -87,6 +93,43 @@ const ShowQuestions = ({ questions, setQuestions }) => {
           questions={questions}
         />
       )}
+      <Dialog
+        fullWidth
+        open={open.open}
+        onClose={() => setOpen({ open: false, index: "" })}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Do you want to delete this question?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you don't need to create this exam? All data will be
+            lost and you will not be able to recover it.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <button
+            type="button"
+            className="main-btn sm"
+            variant="contained"
+            onClick={() => setOpen({ open: false, index: "" })}
+          >
+            Cancel
+          </button>
+          <Button
+            onClick={() => {
+              const newQuestions = [...questions];
+              newQuestions.splice(open.index, 1);
+              setQuestions(newQuestions);
+            }}
+            variant="contained"
+            color="error"
+          >
+            Yes, I am sure
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

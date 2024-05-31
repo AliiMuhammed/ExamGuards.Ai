@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AddQuestions from "./components/AddQuestions";
 import ShowQuestions from "./components/ShowQuestions";
 import ExamOptions from "./components/ExamOptions";
@@ -15,6 +15,8 @@ export const AddExam = () => {
   const dispatch = useDispatch();
   const [showError, setShowError] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [examOptions, setExamOptions] = useState({
     ExamType: "",
     course: id,
@@ -34,7 +36,8 @@ export const AddExam = () => {
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      event.returnValue = "All data will be lost and you will not be able to recover it if you refresh.";
+      event.returnValue =
+        "All data will be lost and you will not be able to recover it if you refresh.";
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -80,6 +83,7 @@ export const AddExam = () => {
               type: "success",
             })
           );
+          navigate(`/instructor/course/${id}/exams`);
         })
         .catch((err) => {
           setAddExam({ loading: false, errorMsg: "Something went wrong" });
@@ -129,6 +133,7 @@ export const AddExam = () => {
           handleExamOptionChange={handleExamOptionChange}
           handleSubmit={handleSubmit}
           loading={addExam.loading}
+          details={false}
         />
       </div>
       <AddQuestions
