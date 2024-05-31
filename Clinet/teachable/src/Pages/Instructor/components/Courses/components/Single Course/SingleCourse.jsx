@@ -10,42 +10,26 @@ function LinkTab(props) {
 
 const SingleCourse = () => {
   const { id } = useParams();
-  const [value, setValue] = useState(0);
   const location = useLocation();
-  const [lastWord, setLastWord] = useState("");
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     const path = location.pathname;
-    const parts = path.split("/");
-    const lastPart = parts[parts.length - 1];
-    setLastWord(lastPart);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    switch (lastWord) {
-      case "modules":
-        setValue(0);
-        break;
-      case "lectures":
-        setValue(1);
-        break;
-      case "assignments":
-        setValue(2);
-        break;
-      case "exams":
-        setValue(3);
-        break;
-      case "add":
-        setValue(3);
-        break;
-      case "setGrades":
-        setValue(4);
-        break;
-      default:
-        setValue(0); // Default to the first tab if the last word doesn't match any case
-        break;
+    
+    if (path.includes("/modules")) {
+      setValue(0);
+    } else if (path.includes("/lectures")) {
+      setValue(1);
+    } else if (path.includes("/assignments")) {
+      setValue(2);
+    } else if (path.includes("/exams")) {
+      setValue(3);
+    } else if (path.includes("/setGrades")) {
+      setValue(4);
+    } else {
+      setValue(0); // Default to the first tab if no match is found
     }
-  }, [lastWord]);
+  }, [location.pathname]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

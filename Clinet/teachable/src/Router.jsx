@@ -25,10 +25,11 @@ import CourseAss from "./Pages/Instructor/components/Courses/components/Single C
 import CourseExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/CourseExams";
 import SetGrades from "./Pages/Instructor/components/Courses/components/Single Course/components/Grades/SetGrades";
 import { AddExam } from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AddExam/AddExam";
+import SingleExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/SingleExam";
+import AllExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AllExams/AllExams";
 
 export const routes = createBrowserRouter([
   {
-    
     path: "/",
     element: <App />,
     children: [
@@ -73,8 +74,19 @@ export const routes = createBrowserRouter([
                   { path: "lectures", element: <CouresLec /> },
                   { path: "assignments", element: <CourseAss /> },
                   { path: "setGrades", element: <SetGrades /> },
-                  { path: "exams", element: <CourseExams /> },
-                  { path: "exams/add", element: <AddExam /> },
+                  {
+                    path: "exams",
+                    element: <CourseExams />,
+                    children: [
+                      { path: "", element: <AllExams /> }, 
+                      { path: "add", element: <AddExam /> },
+                      {
+                        path: ":Examid",
+                        element: <SingleExam />,
+                      },
+                    ],
+                  }
+                  
                 ],
               },
             ],
