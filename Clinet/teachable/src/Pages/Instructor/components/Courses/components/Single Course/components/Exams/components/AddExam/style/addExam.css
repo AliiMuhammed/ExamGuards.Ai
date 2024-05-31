@@ -42,3 +42,9 @@
     color: var(--mainColor);
 }
 
+@media only screen and (max-width: 1247px) {
+    .add-exam-section .container {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}

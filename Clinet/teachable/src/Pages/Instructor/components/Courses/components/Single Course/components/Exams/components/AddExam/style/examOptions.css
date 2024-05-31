@@ -6,7 +6,7 @@
 }
 
 
- .exam-header {
+.exam-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -14,7 +14,7 @@
     margin-bottom: 1rem;
 }
 
- .exam-header .exam-title {
+.exam-header .exam-title {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--mainFontColor);
@@ -23,11 +23,11 @@
     justify-content: center;
 }
 
- .exam-options label {
+.exam-options label {
     margin: 1rem 0;
 }
 
- .exam-options .required-star {
+.exam-options .required-star {
     color: var(--mainColor);
     font-size: 1.3rem;
 }
@@ -35,19 +35,19 @@
 
 
 
- .exam-options .exam-type .radio-group-btns-exam-type,
- .exam-options .exam-visibility .radio-group-btns-exam-type {
+.exam-options .exam-type .radio-group-btns-exam-type,
+.exam-options .exam-visibility .radio-group-btns-exam-type {
     display: flex;
     align-items: center;
     flex-direction: row;
 }
 
- .exam-options .exam-type .radio-group-btns-exam-type label,
- .exam-options .exam-visibility .radio-group-btns-exam-type label {
+.exam-options .exam-type .radio-group-btns-exam-type label,
+.exam-options .exam-visibility .radio-group-btns-exam-type label {
     margin: 0;
 }
 
- .exam-options .date-picker {
+.exam-options .date-picker {
     display: flex;
     align-items: center;
     border: 1px solid #0000003b;
@@ -61,36 +61,43 @@
     -o-border-radius: 5px;
 }
 
- .exam-options .date-picker input {
+.exam-options .date-picker input {
     border: none;
     cursor: pointer;
 }
 
- .exam-options .date-picker .react-datepicker__input-container {
+.exam-options .date-picker .react-datepicker__input-container {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
- .exam-options .exam-btns {
+.exam-options .exam-btns {
     margin-top: 2rem;
     display: flex;
     align-items: center;
 
 }
 
- .exam-options .exam-btns .add-exam-btn {
+.exam-options .exam-btns .add-exam-btn {
     margin-right: 1rem;
     width: 100%;
 }
 
- .exam-options .exam-btns .cancel-exam-btn {
+.exam-options .exam-btns .cancel-exam-btn {
     background-color: transparent;
     color: var(--mainFontColor);
     width: 100%;
 }
 
- .exam-options .exam-btns .cancel-exam-btn:hover {
+.exam-options .exam-btns .cancel-exam-btn:hover {
     color: #fff;
     background-color: var(--mainColor);
+}
+
+@media only screen and (max-width: 1247px) {
+    .exam-options .date-picker {
+        width: 100%;
+        flex-direction: column;
+    }
 }
