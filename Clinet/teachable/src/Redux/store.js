@@ -1,11 +1,9 @@
 // store.js
 import { configureStore } from '@reduxjs/toolkit';
-import toastReducer from './Slices/toastSlice';
+import rootReducer from './index'; // Import the combined root reducer
 
 const store = configureStore({
-  reducer: {
-    toast: toastReducer,
-  },
+  reducer: rootReducer,
 });
 
 export default store;

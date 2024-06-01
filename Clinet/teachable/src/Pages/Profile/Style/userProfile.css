@@ -1,28 +1,28 @@
-.admin-profile-section {
+.user-profile-section {
     height: 100%;
 }
 
-.admin-profile-section .container {
+.user-profile-section .container {
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 2rem;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     margin-top: 5rem;
 
 
 }
 
-.admin-profile-section .admin-tabs {
+.user-profile-section .user-tabs {
     font-size: 1rem;
     color: var(--mainFontColor);
     font-weight: 600;
 }
 
-.admin-profile-section .admin-tabs.Mui-selected {
+.user-profile-section .user-tabs.Mui-selected {
     color: var(--mainColor);
 }
 
-.admin-profile-section .admin-tabs-contaienr .MuiTabs-indicator.css-10d9dml-MuiTabs-indicator {
+.user-profile-section .user-tabs-contaienr .MuiTabs-indicator.css-10d9dml-MuiTabs-indicator {
     background-color: var(--mainColor);
 }

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import "./Style/adminProfile.css";
+import "./Style/userProfile.css";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import AdminChangePassword from "./Components/Change Password/AdminChangePassword";
-import AdminEditProfile from "./Components/Edit Profile/AdminEditProfile";
-import AdminPersonalInfo from "./Components/Personal Info/AdminPersonalInfo";
+import ChangePassword from "./Components/Change Password/ChangePassword";
+import EditProfile from "./Components/Edit Profile/EditProfile";
+import PersonalInfo from "./Components/Personal Info/PersonalInfo";
 import { IoPerson } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 
-const AdminProfile = () => {
+const UserProfile = () => {
+  
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -17,42 +18,42 @@ const AdminProfile = () => {
   const renderTabContent = () => {
     switch (value) {
       case 0:
-        return <AdminPersonalInfo />;
+        return <PersonalInfo />;
       case 1:
-        return <AdminEditProfile />;
+        return <EditProfile  setValue={setValue} />;
       case 2:
-        return <AdminChangePassword />;
+        return <ChangePassword  setValue={setValue} />;
       default:
         return null;
     }
   };
   return (
-    <section className="admin-profile-section">
+    <section className="user-profile-section">
       <div className="container">
         <div className="left">
           <Tabs
             value={value}
             onChange={handleChange}
-            className="admin-tabs-contaienr"
+            className="user-tabs-contaienr"
             orientation="vertical"
           >
             <Tab
               icon={<IoPerson />}
               iconPosition="start"
               label="Personal info"
-              className="admin-tabs"
+              className="user-tabs"
             />
             <Tab
               label="edit profile"
               icon={<MdEdit />}
               iconPosition="start"
-              className="admin-tabs"
+              className="user-tabs"
             />
             <Tab
               label="change password"
               icon={<RiLockPasswordFill />}
               iconPosition="start"
-              className="admin-tabs"
+              className="user-tabs"
             />
           </Tabs>
         </div>
@@ -62,4 +63,4 @@ const AdminProfile = () => {
   );
 };
 
-export default AdminProfile;
+export default UserProfile;

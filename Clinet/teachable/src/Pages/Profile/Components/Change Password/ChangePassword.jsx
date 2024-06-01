@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import "./style/adminChangePassword.css";
+import "./style/changePassword.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { setAuthUser } from "../../../../../../Helper/Storage";
-import http from "./../../../../../../Helper/http";
+import { setAuthUser } from "../../../../Helper/Storage";
+import http from "../../../../Helper/http";
 import { TextField, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { openToast } from "../../../../../../Redux/Slices/toastSlice";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
+import { triggerRefresh } from "../../../../Redux/Slices/refreshSlice";
 
-const AdminChangePassword = () => {
+const ChangePassword = ({ setValue }) => {
   const dispatch = useDispatch();
   const [passChange, setPassChange] = useState({
     password: "",
@@ -56,6 +57,8 @@ const AdminChangePassword = () => {
           newPassword: "",
         });
         setAuthUser(res, res.data?.data?.user?.rememberMe);
+        dispatch(triggerRefresh());
+        setValue(0);
       })
       .catch((err) => {
         setPass({
@@ -128,4 +131,4 @@ const AdminChangePassword = () => {
   );
 };
 
-export default AdminChangePassword;
+export default ChangePassword;

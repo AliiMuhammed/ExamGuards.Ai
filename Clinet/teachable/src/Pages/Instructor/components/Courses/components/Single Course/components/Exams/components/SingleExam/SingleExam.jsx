@@ -10,10 +10,14 @@ import AddQuestions from "../AddExam/components/AddQuestions";
 import ShowQuestions from "../AddExam/components/ShowQuestions";
 import http from "../../../../../../../../../../Helper/http";
 import { openToast } from "../../../../../../../../../../Redux/Slices/toastSlice";
+import { triggerRefresh } from "../../../../../../../../../../Redux/Slices/refreshSlice";
 import ExamOptions from "../AddExam/components/ExamOptions";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useSelector } from "react-redux";
 
 const SingleExam = () => {
+  const refresh = useSelector(state => state.refresh); 
+
   const dispatch = useDispatch();
   const [showError, setShowError] = useState("");
   const { Examid } = useParams();
@@ -69,7 +73,7 @@ const SingleExam = () => {
       .catch((err) => {
         setShowExam({ loading: false, errorMsg: "Something went wrong" });
       });
-  }, []);
+  }, [refresh]);
   const handleExamOptionChange = (field, value) => {
     setExamOptions((prevOptions) => ({
       ...prevOptions,
@@ -96,6 +100,7 @@ const SingleExam = () => {
               type: "success",
             })
           );
+          dispatch(triggerRefresh())
         })
         .catch((err) => {
           setShowExam({ loading: false, errorMsg: "Something went wrong" });

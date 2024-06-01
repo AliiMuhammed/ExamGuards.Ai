@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import "../Style/nav.css";
 import { Link, useNavigate } from "react-router-dom";
 import userImg from "../../Assets/Images/user.png";
@@ -8,8 +8,10 @@ import { IoNotifications, IoClose } from "react-icons/io5";
 import Tooltip from "@mui/material/Tooltip";
 import Drawer from "@mui/material/Drawer";
 import { FaRegClock } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 const Nav = () => {
+  const refresh = useSelector(state => state.refresh); 
   const [show, setShow] = useState(false);
   const [showNot, setShowNot] = useState(false);
   const handleClose = () => setShow(false);
@@ -17,9 +19,12 @@ const Nav = () => {
     setShow(true);
     setShowNot(true);
   };
-  const user = getAuthUser();
+  const [User, setUser] = useState(getAuthUser()?.data?.data?.user);
+  useEffect(() => {
+    setUser(getAuthUser()?.data?.data?.user);
+  }, [refresh]);
   const naviagate = useNavigate();
-  const role = user?.data?.data?.user?.role;
+  const role = User?.role;
   const handleLogOut = () => {
     naviagate("/");
     removeAuthUser();
@@ -29,12 +34,12 @@ const Nav = () => {
       <Tooltip title="Profile">
         <Link
           to={`/${role === "super admin" ? "admin" : role}/profile/${
-            user?.data?.data?.user?._id
+            User?._id
           }`}
           className="user-profile"
           style={{
             backgroundImage: `url(${
-              user ? user?.data?.data?.user?.file : userImg
+              User ? User?.file : userImg
             })`,
           }}
         ></Link>

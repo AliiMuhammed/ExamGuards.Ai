@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { TextField, Button, FormHelperText } from "@mui/material";
-import "./style/adminEditProfile.css";
-import http from "./../../../../../../Helper/http";
-import { getAuthUser, setAuthUser } from "../../../../../../Helper/Storage";
+import "./style/editProfile.css";
+import http from "../../../../Helper/http";
+import { getAuthUser, setAuthUser } from "../../../../Helper/Storage";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { useDispatch } from "react-redux";
-import { openToast } from "../../../../../../Redux/Slices/toastSlice";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
+import { triggerRefresh } from "../../../../Redux/Slices/refreshSlice";
 
-const AdminEditProfile = () => {
+const EditProfile = ({ setValue }) => {
+  
   const Admin = getAuthUser()?.data;
   const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -68,6 +71,7 @@ const AdminEditProfile = () => {
             type: "success",
           })
         );
+
         // res.token = Admin.token;
         let dataWithToken = res.data;
         dataWithToken.token = Admin.token;
@@ -78,6 +82,8 @@ const AdminEditProfile = () => {
           lastName: "",
           file: null,
         });
+        dispatch(triggerRefresh());
+        setValue(0);
       })
       .catch((err) => {
         setUpdateAmdin({
@@ -161,4 +167,4 @@ const AdminEditProfile = () => {
   );
 };
 
-export default AdminEditProfile;
+export default EditProfile;

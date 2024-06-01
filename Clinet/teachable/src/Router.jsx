@@ -6,9 +6,9 @@ import AdminHome from "./Pages/Admin/Components/Home/AdminHome";
 import AdminStudents from "./Pages/Admin/Components/Students/AdminStudents";
 import Login from "./Pages/Login/Login";
 import AdminInstructors from "./Pages/Admin/Components/Instructors/AdminInstructors";
-import Admins from "./Pages/Admin/Components/ِAdmins/Admins";
+import Admins from "./Pages/Admin/Components/Admins/Admins";
 import AdminCourses from "./Pages/Admin/Components/Courses/AdminCourses";
-import AdminProfile from "./Pages/Admin/Components/Profile/AdminProfile";
+import UserProfile from "./Pages/Profile/UserProfile";
 import RestPass from "./Pages/Login/components/RestPassword/RestPass";
 import ForgetPassword from "./Pages/Login/components/ForgetPassword/ForgetPassword";
 import Register from "./Pages/Register/Register";
@@ -27,6 +27,7 @@ import SetGrades from "./Pages/Instructor/components/Courses/components/Single C
 import { AddExam } from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AddExam/AddExam";
 import SingleExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/SingleExam";
 import AllExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AllExams/AllExams";
+import VisibilityChangeComponent from "./Pages/VisibilityChangeComponent";
 
 export const routes = createBrowserRouter([
   {
@@ -56,7 +57,7 @@ export const routes = createBrowserRouter([
               { path: "courses", element: <AdminCourses /> },
               {
                 element: <GuestProfile />,
-                children: [{ path: "profile/:id", element: <AdminProfile /> }],
+                children: [{ path: "profile/:id", element: <UserProfile /> }],
               },
             ],
           },
@@ -87,6 +88,14 @@ export const routes = createBrowserRouter([
                     ],
                   },
                 ],
+              },
+              {
+                element: <GuestProfile />,
+                children: [{ path: "profile/:id", element: <UserProfile /> }],
+              },
+              {
+                path: "test",
+                element: <VisibilityChangeComponent />,
               },
             ],
           },
