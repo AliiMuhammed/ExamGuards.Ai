@@ -17,6 +17,7 @@ const SingleExam = () => {
   const dispatch = useDispatch();
   const [showError, setShowError] = useState("");
   const { Examid } = useParams();
+  const [lastUpdate, setLastUpdate] = useState("");
   const [examOptions, setExamOptions] = useState({
     ExamType: "",
     course: "",
@@ -61,6 +62,7 @@ const SingleExam = () => {
           totalpoints: res.data.data.data.totalpoints,
           visiable: res.data.data.data.visiable,
         });
+        setLastUpdate(res.data.data.data.updatedAt);
         setQuestions(res.data.data.data.Questions);
         setShowExam({ loading: false, errorMsg: "" });
       })
@@ -129,53 +131,52 @@ const SingleExam = () => {
           />
         )}
       <div className="container">
-        {
-          showExam.errorMsg === "" &&
-          showExam.loading === false && (
-            <>
-              <div className="exam-content">
-                <div className="exam-content-header">
-                  <h1>{examOptions.title}</h1>
-                  <button
-                    className="add-question-btn main-btn sm"
-                    onClick={() => setOpenAdd(true)}
-                  >
-                    <FaPlus />
-                    Add Question
-                  </button>
-                </div>
-                <div className="error-message">
-                  {showError && questions.length === 0 && (
-                    <Alert severity="error">{showError}</Alert>
-                  )}
-                  {showExam.errorMsg !== "" && (
-                    <Alert severity="error">{showExam.errorMsg}</Alert>
-                  )}
-                </div>
-                <div className="exam-questions">
-                  {questions.length === 0 ? (
-                    <div className="no-question">
-                      <p>No questions added</p>
-                      <HiOutlineArchiveBoxXMark />
-                    </div>
-                  ) : (
-                    <ShowQuestions
-                      questions={questions}
-                      setQuestions={setQuestions}
-                    />
-                  )}
-                </div>
+        {showExam.errorMsg === "" && showExam.loading === false && (
+          <>
+            <div className="exam-content">
+              <div className="exam-content-header">
+                <h1>{examOptions.title}</h1>
+                <button
+                  className="add-question-btn main-btn sm"
+                  onClick={() => setOpenAdd(true)}
+                >
+                  <FaPlus />
+                  Add Question
+                </button>
               </div>
+              <div className="error-message">
+                {showError && questions.length === 0 && (
+                  <Alert severity="error">{showError}</Alert>
+                )}
+                {showExam.errorMsg !== "" && (
+                  <Alert severity="error">{showExam.errorMsg}</Alert>
+                )}
+              </div>
+              <div className="exam-questions">
+                {questions.length === 0 ? (
+                  <div className="no-question">
+                    <p>No questions added</p>
+                    <HiOutlineArchiveBoxXMark />
+                  </div>
+                ) : (
+                  <ShowQuestions
+                    questions={questions}
+                    setQuestions={setQuestions}
+                  />
+                )}
+              </div>
+            </div>
 
-              <ExamOptions
-                examOptions={examOptions}
-                handleExamOptionChange={handleExamOptionChange}
-                handleUpdate={handleUpdate}
-                loading={showExam.loading}
-                details={true}
-              />
-            </>
-          )}
+            <ExamOptions
+              examOptions={examOptions}
+              handleExamOptionChange={handleExamOptionChange}
+              handleUpdate={handleUpdate}
+              loading={showExam.loading}
+              details={true}
+              lastUpdate={lastUpdate}
+            />
+          </>
+        )}
       </div>
       <AddQuestions
         open={openAdd}

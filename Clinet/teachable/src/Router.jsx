@@ -78,15 +78,14 @@ export const routes = createBrowserRouter([
                     path: "exams",
                     element: <CourseExams />,
                     children: [
-                      { path: "", element: <AllExams /> }, 
+                      { path: "", element: <AllExams /> },
                       { path: "add", element: <AddExam /> },
                       {
                         path: ":Examid",
                         element: <SingleExam />,
                       },
                     ],
-                  }
-                  
+                  },
                 ],
               },
             ],

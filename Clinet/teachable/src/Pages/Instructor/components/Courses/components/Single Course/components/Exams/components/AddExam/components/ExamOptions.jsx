@@ -28,6 +28,7 @@ const ExamOptions = ({
   handleSubmit,
   loading,
   details,
+  lastUpdate,
 }) => {
   const { title, ExamType, startedAt, expiredAt, totalpoints, visiable } =
     examOptions;
@@ -103,11 +104,29 @@ const ExamOptions = ({
         });
       });
   };
+  const formatDateToNormal = (isoDate) => {
+    const date = new Date(isoDate);
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true, // This will format the time in 12-hour AM/PM format
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
 
   return (
     <div className="exam-options">
       <div className="exam-header">
         <div className="exam-title">Exam Options</div>
+        {details && (
+          <div className="delete-exam-btn">
+            <span>Last updated at: </span>
+            {formatDateToNormal(lastUpdate)}
+          </div>
+        )}
       </div>
       <div className="exam-title">
         <FormControl fullWidth>

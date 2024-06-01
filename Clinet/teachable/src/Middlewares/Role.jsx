@@ -6,7 +6,7 @@ const Role = () => {
   const auth = getAuthUser();
   const location = useLocation();
 
-  if (!auth) {
+  if (!auth || !auth.data || !auth.data.data || !auth.data.data.user) {
     return <Navigate to={"/"} />;
   }
 
@@ -19,6 +19,10 @@ const Role = () => {
 
   // Redirect based on the user's role
   if (role === "admin" || role === "super admin") {
+    // Check if the user is already on an admin-related path
+    if (location.pathname.startsWith("/admin")) {
+      return <Outlet />;
+    }
     return <Navigate to={"/admin"} />;
   } else if (role === "instructor") {
     return <Navigate to={"/instructor"} />;
