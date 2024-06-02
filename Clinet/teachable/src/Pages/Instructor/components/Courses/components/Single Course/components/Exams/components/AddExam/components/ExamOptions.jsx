@@ -53,21 +53,22 @@ const ExamOptions = ({
     if (!ExamType) tempErrors.ExamType = "Exam type is required.";
     if (!startedAt) tempErrors.startedAt = "Start date and time are required.";
     if (!expiredAt) tempErrors.expiredAt = "End date and time are required.";
-    if (startedAt && expiredAt && new Date(expiredAt) < new Date(startedAt))
-      tempErrors.date =
-        "End date and time cannot be before start date and time.";
+    if (startedAt && expiredAt && new Date(expiredAt) < new Date(startedAt)) {
+      tempErrors.date = "End date and time cannot be before start date and time.";
+    }
     if (!totalpoints) {
       tempErrors.totalpoints = "Total grades are required.";
     }
     if (isNaN(totalpoints) || totalpoints < 0 || totalpoints > 100) {
-      tempErrors.totalpoints =
-        "Total grades must be a number between 0 and 100.";
-    } else if (visiable === undefined || visiable === null) {
+      tempErrors.totalpoints = "Total grades must be a number between 0 and 100.";
+    }
+    if (visiable === undefined || visiable === null) {
       tempErrors.visiable = "Exam visibility is required.";
     }
+    console.log(tempErrors);
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
-  };
+  };  
 
   const handleFormSubmit = () => {
     if (validate() && !details) {
@@ -80,9 +81,9 @@ const ExamOptions = ({
   };
 
   const handleDateChange = (key, date) => {
-    handleExamOptionChange(key, formatDateForSave(date));
+    handleExamOptionChange(key, date ? formatDateForSave(date) : "");
   };
-
+  
   const handleDelete = () => {
     setDeleteState({ ...deleteState, loading: true });
 
@@ -104,18 +105,18 @@ const ExamOptions = ({
         });
       });
   };
-  const formatDateToNormal = (isoDate) => {
-    const date = new Date(isoDate);
-    const options = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true, // This will format the time in 12-hour AM/PM format
-    };
-    return date.toLocaleDateString("en-US", options);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+    const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+  
+    return `${day}/${month}/${year}, ${hours}:${minutes} ${ampm}`;
   };
+  
 
   return (
     <div className="exam-options">
@@ -124,7 +125,7 @@ const ExamOptions = ({
         {details && (
           <div className="delete-exam-btn">
             <span>Last updated at: </span>
-            {formatDateToNormal(lastUpdate)}
+            {formatDate(lastUpdate)}
           </div>
         )}
       </div>
@@ -213,6 +214,16 @@ const ExamOptions = ({
         <div className="css-k4qjio-MuiFormHelperText-root Mui-error error-message">
           {errors.date}
         </div>
+      )}
+      {errors.startedAt && (
+        <span className="css-k4qjio-MuiFormHelperText-root Mui-error error-message">
+          {errors.startedAt}
+        </span>
+      )}
+      {errors.expiredAt && (
+        <span className="css-k4qjio-MuiFormHelperText-root Mui-error error-message">
+          {errors.expiredAt}
+        </span>
       )}
       <div className="exam-visibility">
         <FormControl fullWidth>

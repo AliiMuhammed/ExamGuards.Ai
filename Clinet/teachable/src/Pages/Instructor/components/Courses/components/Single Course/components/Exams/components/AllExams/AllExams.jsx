@@ -36,14 +36,17 @@ const AllExams = () => {
   // Function to format the date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleString("en-US", {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+    const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+  
+    return `${day}/${month}/${year}, ${hours}:${minutes} ${ampm}`;
   };
+  
+  
   return (
     <section className="course-exams-section">
       <div className="container">
@@ -118,14 +121,17 @@ const AllExams = () => {
                     <div className="exam-img">
                       <img src={examImg} loading="lazy" alt="exam" />
                     </div>
-                    <h3>
+                    <h2>
                       {exam.title}
-                      <span>{formatDate(exam.createdAt)}</span>
-                    </h3>
+                     
+                    </h2>
                     <p>
                       <span>Type:</span>
                       {exam.ExamType}
                     </p>
+                    <p>
+                      <span>Created At:</span>
+                      {formatDate(exam.createdAt)}                   </p>
                     <p>
                       <span>Status:</span>
                       {exam.status}

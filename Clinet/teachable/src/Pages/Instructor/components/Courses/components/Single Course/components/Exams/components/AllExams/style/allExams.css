@@ -63,10 +63,7 @@
     
 }
 
-.course-exams-section .container .exams-cards .exam-card h3 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.course-exams-section .container .exams-cards .exam-card h2 {
     margin-bottom: 1rem;
     text-transform: capitalize;
 }
@@ -78,6 +75,7 @@
 
 .course-exams-section .container .exams-cards .exam-card p span {
     padding-right: .2rem;
+    font-weight:700 ;
 }
 
 .course-exams-section .container .exams-cards .exam-card button {

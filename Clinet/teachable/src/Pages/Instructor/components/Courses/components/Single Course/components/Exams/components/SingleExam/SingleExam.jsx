@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import "./style/singleExam.css";
 import { useDispatch } from "react-redux";
 import Alert from "@mui/material/Alert";
@@ -15,7 +15,7 @@ const SingleExam = () => {
   const dispatch = useDispatch();
 
   const { Examid } = useParams();
-
+const {id} = useParams();
   const [exam, setExam] = useState({
     Exam: [],
     loading: false,
@@ -33,14 +33,15 @@ const SingleExam = () => {
         setExam({ loading: false, errorMsg: "Something went wrong" });
       });
   }, [refresh]);
-  console.log(exam.Exam);
 
   return <section className="single-exam-section">
 <div className="container">
   <div className="single-exam-header">
     exam detials
+    <Link to={`/instructor/course/${id}/exams/${Examid}/update`}>exam udate</Link>
   </div>
 </div>
+    <Outlet/>
   </section>;
 };
 
