@@ -29,6 +29,7 @@ const UpdateExam = () => {
     startedAt: "",
     expiredAt: "",
     title: "",
+    duration: "",
     totalpoints: 0,
     visiable: null,
   });
@@ -65,6 +66,7 @@ const UpdateExam = () => {
           expiredAt: res.data.data.data.expiredAt,
           title: res.data.data.data.title,
           totalpoints: res.data.data.data.totalpoints,
+          duration: res.data.data.data.duration,
           visiable: res.data.data.data.visiable,
         });
         setLastUpdate(res.data.data.data.updatedAt);

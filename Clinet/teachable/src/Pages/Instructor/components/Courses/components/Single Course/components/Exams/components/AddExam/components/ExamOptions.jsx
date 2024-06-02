@@ -30,8 +30,15 @@ const ExamOptions = ({
   details,
   lastUpdate,
 }) => {
-  const { title, ExamType, startedAt, expiredAt, totalpoints, visiable } =
-    examOptions;
+  const {
+    title,
+    ExamType,
+    startedAt,
+    expiredAt,
+    totalpoints,
+    visiable,
+    duration,
+  } = examOptions;
   const [errors, setErrors] = useState({});
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [deleteState, setDeleteState] = useState({
@@ -39,6 +46,7 @@ const ExamOptions = ({
     loading: false,
     errorMsg: "",
   });
+  const [examDuration, setExamDuration] = useState(duration || ""); // State for duration
 
   const dispatch = useDispatch();
   const { id, Examid } = useParams();
@@ -54,21 +62,28 @@ const ExamOptions = ({
     if (!startedAt) tempErrors.startedAt = "Start date and time are required.";
     if (!expiredAt) tempErrors.expiredAt = "End date and time are required.";
     if (startedAt && expiredAt && new Date(expiredAt) < new Date(startedAt)) {
-      tempErrors.date = "End date and time cannot be before start date and time.";
+      tempErrors.date =
+        "End date and time cannot be before start date and time.";
     }
     if (!totalpoints) {
       tempErrors.totalpoints = "Total grades are required.";
     }
     if (isNaN(totalpoints) || totalpoints < 0 || totalpoints > 100) {
-      tempErrors.totalpoints = "Total grades must be a number between 0 and 100.";
+      tempErrors.totalpoints =
+        "Total grades must be a number between 0 and 100.";
     }
     if (visiable === undefined || visiable === null) {
       tempErrors.visiable = "Exam visibility is required.";
     }
-    console.log(tempErrors);
+    if (!duration) {
+      tempErrors.duration = "Exam duration is required.";
+    } else if (isNaN(duration) || duration <= 0 || duration > 120) {
+      tempErrors.duration =
+        "Exam duration must be a number between 1 and 120 minutes.";
+    }
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
-  };  
+  };
 
   const handleFormSubmit = () => {
     if (validate() && !details) {
@@ -83,7 +98,7 @@ const ExamOptions = ({
   const handleDateChange = (key, date) => {
     handleExamOptionChange(key, date ? formatDateForSave(date) : "");
   };
-  
+
   const handleDelete = () => {
     setDeleteState({ ...deleteState, loading: true });
 
@@ -107,16 +122,15 @@ const ExamOptions = ({
   };
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
     const year = date.getFullYear();
     const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
-  
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const ampm = date.getHours() >= 12 ? "PM" : "AM";
+
     return `${day}/${month}/${year}, ${hours}:${minutes} ${ampm}`;
   };
-  
 
   return (
     <div className="exam-options">
@@ -270,6 +284,26 @@ const ExamOptions = ({
             size="small"
             error={!!errors.totalpoints}
             helperText={errors.totalpoints}
+          />
+        </FormControl>
+      </div>
+      <div className="exam-duration">
+        <FormControl fullWidth>
+          <FormLabel>
+            <span className="required-star">*</span>Exam Duration (minutes)
+          </FormLabel>
+          <TextField
+            id="exam-duration"
+            onChange={(e) =>
+              handleExamOptionChange("duration", e.target.value)
+            }
+            value={duration}
+            variant="outlined"
+            className="exam-duration-input"
+            placeholder="Enter exam duration"
+            size="small"
+            error={!!errors.duration}
+            helperText={errors.duration}
           />
         </FormControl>
       </div>

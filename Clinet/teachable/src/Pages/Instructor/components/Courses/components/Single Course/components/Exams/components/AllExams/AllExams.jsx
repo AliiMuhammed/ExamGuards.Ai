@@ -36,17 +36,16 @@ const AllExams = () => {
   // Function to format the date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
     const year = date.getFullYear();
     const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
-  
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const ampm = date.getHours() >= 12 ? "PM" : "AM";
+
     return `${day}/${month}/${year}, ${hours}:${minutes} ${ampm}`;
   };
-  
-  
+
   return (
     <section className="course-exams-section">
       <div className="container">
@@ -121,17 +120,19 @@ const AllExams = () => {
                     <div className="exam-img">
                       <img src={examImg} loading="lazy" alt="exam" />
                     </div>
-                    <h2>
-                      {exam.title}
-                     
-                    </h2>
+                    <h2>{exam.title}</h2>
                     <p>
                       <span>Type:</span>
                       {exam.ExamType}
                     </p>
                     <p>
+                      <span>Duration:</span>
+                      {exam.duration} minutes
+                    </p>
+                    <p>
                       <span>Created At:</span>
-                      {formatDate(exam.createdAt)}                   </p>
+                      {formatDate(exam.createdAt)}
+                    </p>
                     <p>
                       <span>Status:</span>
                       {exam.status}
@@ -141,9 +142,7 @@ const AllExams = () => {
                       {exam.visiable ? "Public" : "Private"}
                     </p>
                     <Link
-                      to={
-                        "/instructor/course/" + id + "/exams/" + exam._id
-                      }
+                      to={"/instructor/course/" + id + "/exams/" + exam._id}
                       className="delete-btn main-btn sm"
                     >
                       More Details

@@ -22,6 +22,7 @@ export const AddExam = () => {
     course: id,
     startedAt: "",
     expiredAt: "",
+    duration: "",
     title: "",
     totalpoints: 0,
     visiable: null,
@@ -55,6 +56,7 @@ export const AddExam = () => {
   };
 
   const handleSubmit = () => {
+    console.log(examOptions)
     if (questions.length === 0) {
       setShowError("Please add at least one question");
     } else {

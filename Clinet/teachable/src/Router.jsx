@@ -29,6 +29,7 @@ import AllExams from "./Pages/Instructor/components/Courses/components/Single Co
 import VisibilityChangeComponent from "./Pages/VisibilityChangeComponent";
 import SingleExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/SingleExam";
 import UpdateExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/UpdateExam/UpdateExam";
+import MoreDetails from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/MoreDetails/MoreDetails";
 
 export const routes = createBrowserRouter([
   {
@@ -85,7 +86,13 @@ export const routes = createBrowserRouter([
                       {
                         path: ":Examid",
                         element: <SingleExam />,
-                        children: [{ path: "update", element: <UpdateExam /> }],
+                        children: [
+                          {
+                            path: "",
+                            element: <MoreDetails />,
+                          },
+                          { path: "update", element: <UpdateExam /> },
+                        ],
                       },
                     ],
                   },

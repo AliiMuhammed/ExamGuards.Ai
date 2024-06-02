@@ -37,8 +37,7 @@ const {id} = useParams();
   return <section className="single-exam-section">
 <div className="container">
   <div className="single-exam-header">
-    exam detials
-    <Link to={`/instructor/course/${id}/exams/${Examid}/update`}>exam udate</Link>
+    
   </div>
 </div>
     <Outlet/>
