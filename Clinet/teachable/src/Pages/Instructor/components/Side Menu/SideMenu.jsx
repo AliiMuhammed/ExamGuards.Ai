@@ -50,10 +50,15 @@ const SideMenu = ({ toggled, setToggled }) => {
           </button>
         </div>
         <Menu closeOnClick={true}>
-          <MenuItem component={<NavLink to="/admin/home" />} icon={<FaHome />}>
+          <MenuItem
+            onClick={() => setToggled(false)}
+            component={<NavLink to="/admin/home" />}
+            icon={<FaHome />}
+          >
             Home
           </MenuItem>
           <MenuItem
+            onClick={() => setToggled(false)}
             component={<NavLink to="/instructor/courses" />}
             icon={<FaBook />}
           >
@@ -61,18 +66,21 @@ const SideMenu = ({ toggled, setToggled }) => {
           </MenuItem>
           <SubMenu icon={<IoPerson />} label="Users">
             <MenuItem
+              onClick={() => setToggled(false)}
               component={<NavLink to="/admin/students" />}
               className="submenu-link"
             >
               Students
             </MenuItem>
             <MenuItem
+              onClick={() => setToggled(false)}
               component={<NavLink to="/admin/instructors" />}
               className="submenu-link"
             >
               Instructors
             </MenuItem>
             <MenuItem
+              onClick={() => setToggled(false)}
               component={<NavLink to="/admin/admins" />}
               className="submenu-link"
             >
@@ -80,11 +88,25 @@ const SideMenu = ({ toggled, setToggled }) => {
             </MenuItem>
           </SubMenu>
           <SubMenu icon={<IoPieChartSharp />} label="Charts">
-            <MenuItem className="submenu-link"> Pie charts </MenuItem>
-            <MenuItem className="submenu-link"> Line charts </MenuItem>
+            <MenuItem
+              onClick={() => setToggled(false)}
+              className="submenu-link"
+            >
+              Pie charts
+            </MenuItem>
+            <MenuItem
+              onClick={() => setToggled(false)}
+              className="submenu-link"
+            >
+              Line charts
+            </MenuItem>
           </SubMenu>
-          <MenuItem icon={<BiSolidReport />}> Reports </MenuItem>
-          <MenuItem icon={<IoIosArchive />}> Archive </MenuItem>
+          <MenuItem onClick={() => setToggled(false)} icon={<BiSolidReport />}>
+            Reports
+          </MenuItem>
+          <MenuItem onClick={() => setToggled(false)} icon={<IoIosArchive />}>
+            Archive
+          </MenuItem>
         </Menu>
       </Sidebar>
     </div>
