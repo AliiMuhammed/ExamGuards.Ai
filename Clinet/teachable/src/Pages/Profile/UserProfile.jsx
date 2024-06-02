@@ -8,25 +8,31 @@ import PersonalInfo from "./Components/Personal Info/PersonalInfo";
 import { IoPerson } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const UserProfile = () => {
-  
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const theme = useTheme();
+  const isSmallOrMedium = useMediaQuery(theme.breakpoints.down("md"));
+
   const renderTabContent = () => {
     switch (value) {
       case 0:
         return <PersonalInfo />;
       case 1:
-        return <EditProfile  setValue={setValue} />;
+        return <EditProfile setValue={setValue} />;
       case 2:
-        return <ChangePassword  setValue={setValue} />;
+        return <ChangePassword setValue={setValue} />;
       default:
         return null;
     }
   };
+
   return (
     <section className="user-profile-section">
       <div className="container">
@@ -35,7 +41,16 @@ const UserProfile = () => {
             value={value}
             onChange={handleChange}
             className="user-tabs-contaienr"
-            orientation="vertical"
+            orientation={isSmallOrMedium ? "horizontal" : "vertical"}
+            variant="scrollable"
+            scrollButtons={"auto"}
+            aria-label="scrollable auto tabs example"
+            allowScrollButtonsMobile
+            role="navigation"
+            centered={true}
+            sx={{
+              width: "100%",
+            }}
           >
             <Tab
               icon={<IoPerson />}

@@ -43,3 +43,31 @@
 .right .align-data .status {
     margin-left: 1rem;
 }
+
+@media only screen and (max-width: 991px) {
+    .admin-personal-info {
+        width: 100%;
+        grid-template-columns: 1fr
+    }
+
+    .admin-personal-info .left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .admin-personal-info .left .image {
+        width: 11rem;
+        height: 11rem;
+    }
+   
+}
+
+@media only screen and (max-width: 767px) {
+    .admin-personal-info .left .image {
+        width: 9rem;
+        height: 9rem;
+    }
+    .admin-personal-info .right p {
+        font-size: 1.2rem;
+    }
+}

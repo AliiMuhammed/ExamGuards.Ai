@@ -4,7 +4,7 @@
     min-height: 100vh;
 }
 
-.instructor-section .left {
+.instructor-section > .left {
     flex-grow: 0;
     max-width: 300px;
     transition: var(--main-transition);
@@ -42,7 +42,7 @@
     color: var(--mainColor);
 }
 
-.instructor-section .right {
+.instructor-section > .right {
     flex-grow: 1;
     transition: var(--main-transition);
     -webkit-transition: var(--main-transition);

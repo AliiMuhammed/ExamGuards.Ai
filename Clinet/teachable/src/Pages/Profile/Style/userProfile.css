@@ -26,3 +26,20 @@
 .user-profile-section .user-tabs-contaienr .MuiTabs-indicator.css-10d9dml-MuiTabs-indicator {
     background-color: var(--mainColor);
 }
+
+
+
+/* Medium screens (768px - 991px) */
+@media only screen and (max-width: 991px) {
+
+    .user-profile-section .container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        width: 95%;
+    }
+    .user-profile-section .container .left,.user-profile-section .container .right{
+        width: 100%;
+    }
+}
