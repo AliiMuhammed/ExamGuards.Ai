@@ -135,7 +135,9 @@ const AllExams = () => {
                       {exam.visiable ? "Public" : "Private"}
                     </p>
                     <Link
-                      to={"/instructor/course/" + id + "/exams/" + exam._id}
+                      to={
+                        "/instructor/course/" + id + "/exams/" + exam._id
+                      }
                       className="delete-btn main-btn sm"
                     >
                       More Details

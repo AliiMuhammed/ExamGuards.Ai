@@ -25,9 +25,10 @@ import CourseAss from "./Pages/Instructor/components/Courses/components/Single C
 import CourseExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/CourseExams";
 import SetGrades from "./Pages/Instructor/components/Courses/components/Single Course/components/Grades/SetGrades";
 import { AddExam } from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AddExam/AddExam";
-import SingleExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/SingleExam";
 import AllExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AllExams/AllExams";
 import VisibilityChangeComponent from "./Pages/VisibilityChangeComponent";
+import SingleExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/SingleExam";
+import UpdateExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/UpdateExam/UpdateExam";
 
 export const routes = createBrowserRouter([
   {
@@ -84,6 +85,7 @@ export const routes = createBrowserRouter([
                       {
                         path: ":Examid",
                         element: <SingleExam />,
+                        children: [{ path: "update", element: <UpdateExam /> }],
                       },
                     ],
                   },

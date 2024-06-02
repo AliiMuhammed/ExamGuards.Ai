@@ -22,7 +22,7 @@
 
 .course-exams-section .container .exams-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 3rem 1rem;
     margin-top: 2rem;
 
@@ -59,6 +59,8 @@
 
 .course-exams-section .container .exams-cards .exam-card .exam-img img {
     width: 100%;
+    
+    
 }
 
 .course-exams-section .container .exams-cards .exam-card h3 {
