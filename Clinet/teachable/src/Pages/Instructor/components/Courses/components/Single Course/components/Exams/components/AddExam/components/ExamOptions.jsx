@@ -46,7 +46,6 @@ const ExamOptions = ({
     loading: false,
     errorMsg: "",
   });
-  const [examDuration, setExamDuration] = useState(duration || ""); // State for duration
 
   const dispatch = useDispatch();
   const { id, Examid } = useParams();
