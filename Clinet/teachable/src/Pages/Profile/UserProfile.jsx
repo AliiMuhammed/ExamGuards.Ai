@@ -47,7 +47,7 @@ const UserProfile = () => {
             aria-label="scrollable auto tabs example"
             allowScrollButtonsMobile
             role="navigation"
-            centered={true}
+            
             sx={{
               width: "100%",
             }}

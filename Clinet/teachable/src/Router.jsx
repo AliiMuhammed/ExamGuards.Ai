@@ -30,6 +30,9 @@ import VisibilityChangeComponent from "./Pages/VisibilityChangeComponent";
 import SingleExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/SingleExam";
 import UpdateExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/UpdateExam/UpdateExam";
 import MoreDetails from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/MoreDetails/MoreDetails";
+import Student from "./Pages/Student/Student";
+import StudentHome from "./Pages/Student/components/Home/StudentHome";
+import StudentCourses from "./Pages/Student/components/Courses/StudentCourses";
 
 export const routes = createBrowserRouter([
   {
@@ -105,6 +108,21 @@ export const routes = createBrowserRouter([
               {
                 path: "test",
                 element: <VisibilityChangeComponent />,
+              },
+            ],
+          },
+          {
+            path: "/student",
+            element: <Student />,
+            children: [
+              { path: "home", element: <StudentHome /> },
+              {
+                path: "courses",
+                element: <StudentCourses />,
+              },
+              {
+                element: <GuestProfile />,
+                children: [{ path: "profile/:id", element: <UserProfile /> }],
               },
             ],
           },

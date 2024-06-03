@@ -10,7 +10,6 @@ import { openToast } from "../../../../Redux/Slices/toastSlice";
 import { triggerRefresh } from "../../../../Redux/Slices/refreshSlice";
 
 const EditProfile = ({ setValue }) => {
-  
   const Admin = getAuthUser()?.data;
   const dispatch = useDispatch();
 
@@ -99,7 +98,7 @@ const EditProfile = ({ setValue }) => {
         );
       });
   };
-
+console.log("test :role" ,Admin.data.user.role !== "student")
   return (
     <div>
       {updateAdmin.errorMsg !== "" && (
@@ -131,15 +130,20 @@ const EditProfile = ({ setValue }) => {
           fullWidth
           margin="normal"
         />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          style={{ margin: "1rem 0" }}
-        />
-        <FormHelperText sx={{ margin: "0" }}>
-          Choose an image for your profile
-        </FormHelperText>
+        {Admin.data.user.role !== "student" && (
+          <>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ margin: "1rem 0" }}
+            />
+            <FormHelperText sx={{ margin: "0" }}>
+              Choose an image for your profile
+            </FormHelperText>
+          </>
+        )}
+
         <Button
           type="submit"
           size="large"

@@ -1,0 +1,64 @@
+.student-section {
+    margin-top: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+.student-section > .left {
+    flex-grow: 0;
+    max-width: 300px;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.student-section .right .toggle-container {
+    height: 80px;
+    position: fixed;
+    top: 0;
+    padding: 1rem;
+    display: none;
+    z-index: 99;
+}
+
+.student-section .right .toggle-btn {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.student-section .right .toggle-btn:hover {
+    color: var(--mainColor);
+}
+
+.student-section > .right {
+    flex-grow: 1;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+    .student-section .right .toggle-container {
+        display: flex;
+    }
+
+}
