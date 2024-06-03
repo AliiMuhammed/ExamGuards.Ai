@@ -1,6 +1,5 @@
-import * as React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,7 +18,16 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import DownloadIcon from "@mui/icons-material/Download";
 import { visuallyHidden } from "@mui/utils";
 import { saveAs } from "file-saver";
-import TextField from "@mui/material/TextField";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Button,
+  DialogActions,
+} from "@mui/material";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,6 +70,7 @@ const headCells = [
   { id: "email", numeric: false, disablePadding: false, label: "Email" },
   { id: "grade", numeric: true, disablePadding: false, label: "Grade" },
   { id: "status", numeric: false, disablePadding: false, label: "Status" },
+  { id: "actions", numeric: false, disablePadding: false, label: "Actions" },
 ];
 
 function EnhancedTableHead(props) {
@@ -73,7 +82,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox"></TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -108,7 +116,6 @@ EnhancedTableHead.propTypes = {
 
 function EnhancedTableToolbar(props) {
   const {
-    numSelected,
     onDownload,
     filters,
     onFilterChange,
@@ -121,61 +128,42 @@ function EnhancedTableToolbar(props) {
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
       }}
     >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Students in this Exam
-        </Typography>
-      )}
-
+      <Typography
+        sx={{ flex: "1 1 100%" }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        Students in this Exam
+      </Typography>
       {showFilters && (
         <>
           <TextField
             label="First Name"
-            variant="standard"
+            variant="outlined"
             value={filters.firstName}
             onChange={(e) => onFilterChange("firstName", e.target.value)}
             sx={{ mr: 2 }}
           />
           <TextField
             label="Last Name"
-            variant="standard"
+            variant="outlined"
             value={filters.lastName}
             onChange={(e) => onFilterChange("lastName", e.target.value)}
             sx={{ mr: 2 }}
           />
           <TextField
             label="Email"
-            variant="standard"
+            variant="outlined"
             value={filters.email}
             onChange={(e) => onFilterChange("email", e.target.value)}
             sx={{ mr: 2 }}
           />
           <TextField
             label="Status"
-            variant="standard"
+            variant="outlined"
             value={filters.status}
             onChange={(e) => onFilterChange("status", e.target.value)}
             sx={{ mr: 2 }}
@@ -197,7 +185,6 @@ function EnhancedTableToolbar(props) {
 }
 
 EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onDownload: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
   onFilterChange: PropTypes.func.isRequired,
@@ -205,53 +192,57 @@ EnhancedTableToolbar.propTypes = {
   onFilterIconClick: PropTypes.func.isRequired,
 };
 
-export default function EnhancedTable({ data = [] }) {
-  data = data || [];
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [filters, setFilters] = React.useState({
+export default function EnhancedTable({ data = [], examTotalGrades = 0 }) {
+  const [grade, setGrade] = useState({
+    grade: "",
+    loading: false,
+    errorMsg: "",
+  });
+  const [open, setOpen] = useState({
+    open: false,
+    id: "",
+  });
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [filters, setFilters] = useState({
     firstName: "",
     lastName: "",
     email: "",
     status: "",
   });
-  const [showFilters, setShowFilters] = React.useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+
+  const handleGradeChange = (event) => {
+    const value = event.target.value;
+    if (!isNaN(value) && value >= 0 && value <= 100) {
+      setGrade((prevGrade) => ({
+        ...prevGrade,
+        grade: value,
+      }));
+    }
+  };
+
+  const handleUpdate = () => {
+    if (
+      isNaN(grade.grade) ||
+      grade.grade < 0 ||
+      grade.grade > examTotalGrades
+    ) {
+      setGrade((prevGrade) => ({
+        ...prevGrade,
+        errorMsg: `Grade must be a number between 0 and ${examTotalGrades}`,
+      }));
+      return;
+    }
+    console.log(grade);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -302,6 +293,7 @@ export default function EnhancedTable({ data = [] }) {
     email: item.student.email || "",
     grade: item.grade !== undefined ? item.grade : "",
     status: item.status || "",
+    stuID: item.student._id,
   }));
 
   const filteredRows = rows.filter((row) => {
@@ -325,11 +317,15 @@ export default function EnhancedTable({ data = [] }) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredRows.length) : 0;
 
+  const handleDialogClose = () => {
+    setGrade({ ...grade, grade: "", loading: false, errorMsg: "" });
+    setOpen({ ...open, open: false, id: "" });
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
-          numSelected={selected.length}
           onDownload={handleDownloadCSV}
           filters={filters}
           onFilterChange={handleFilterChange}
@@ -343,27 +339,16 @@ export default function EnhancedTable({ data = [] }) {
             size={"medium"}
           >
             <EnhancedTableHead
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={filteredRows.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.id)}
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row.id}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox"></TableCell>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     <TableCell
                       component="th"
                       id={labelId}
@@ -396,6 +381,15 @@ export default function EnhancedTable({ data = [] }) {
                         {row.status}
                       </div>
                     </TableCell>
+                    <TableCell align="left">
+                      <button
+                        className="main-btn sm"
+                        // onClick={() => handleGrade(row.stuID)}
+                        onClick={() => setOpen({ open: true, id: row.id })}
+                      >
+                        Update Grade
+                      </button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -421,9 +415,59 @@ export default function EnhancedTable({ data = [] }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      {/* update grade */}
+
+      <Dialog open={open.open} onClose={handleDialogClose} fullWidth>
+        <DialogTitle>Update Admin</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="grade"
+            name="firstName"
+            label="First Name"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={grade.grade}
+            onChange={handleGradeChange}
+            error={
+              isNaN(grade.grade) ||
+              grade.grade < 0 ||
+              grade.grade > examTotalGrades
+            }
+            helperText={grade.errorMsg}
+          />
+        </DialogContent>
+        <DialogActions>
+          <button
+            type="button"
+            className="main-btn sm update"
+            onClick={handleDialogClose}
+          >
+            Cancel
+          </button>
+          <button
+            className="main-btn sm"
+            type="submit"
+            disabled={grade.loading}
+            onClick={handleUpdate}
+          >
+            {grade.loading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Update"
+            )}
+          </button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
+
+EnhancedTable.defaultProps = {
+  data: [],
+};
 
 EnhancedTable.propTypes = {
   data: PropTypes.array.isRequired,

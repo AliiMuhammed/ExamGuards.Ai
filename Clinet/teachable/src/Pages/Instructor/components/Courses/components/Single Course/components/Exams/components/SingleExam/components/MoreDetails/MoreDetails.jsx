@@ -222,9 +222,14 @@ const MoreDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="all-students-exam">
-              <MainTable data={students.data} />
-            </div>
+            {students.data !== null && (
+              <div className="all-students-exam">
+                <MainTable
+                  data={students.data}
+                  examTotalGrades={exam.data.totalpoints}
+                />
+              </div>
+            )}
           </>
         )}
       </div>

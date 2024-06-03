@@ -19,7 +19,7 @@ const AddModule = ({ open, setOpen, reload }) => {
     errorMsg: "",
   });
   const close = () => {
-    setOpen({ ...open, open: false});
+    setOpen({ ...open, open: false });
     setNewModule({ ...newModule, errorMsg: "" });
   };
 
@@ -93,7 +93,7 @@ const AddModule = ({ open, setOpen, reload }) => {
           label="Title"
           type="text"
           fullWidth
-          variant="standard"
+          variant="outlined"
         />
       </DialogContent>
       <DialogActions>

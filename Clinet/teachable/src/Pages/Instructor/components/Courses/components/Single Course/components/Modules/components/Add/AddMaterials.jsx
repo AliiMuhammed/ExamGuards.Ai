@@ -126,12 +126,12 @@ const AddMaterials = ({ open, setOpen, reload }) => {
           label="Video URL"
           type="text"
           fullWidth
-          variant="standard"
+          variant="outlined"
         />
         <FormControl fullWidth sx={{ marginTop: "1.5rem" }}>
           <Input
             id="file-input"
-            variant="standard"
+            variant="outlined"
             name="file"
             type="file"
             accept=".pdf"
@@ -151,7 +151,6 @@ const AddMaterials = ({ open, setOpen, reload }) => {
           type="submit"
           color="success"
           disabled={addMaterials.loading}
-          
         >
           {addMaterials.loading ? (
             <CircularProgress size={20} color="inherit" />

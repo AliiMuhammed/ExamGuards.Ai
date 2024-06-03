@@ -1,0 +1,108 @@
+.allcourses-section {
+    margin-top: 2rem;
+    height: 100%;
+}
+
+.allcourses-section .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.allcourses-section .container .courses-content {
+    width: 100%;
+}
+
+.allcourses-section .container .no-courses {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    width: 100%;
+    height: 100%;
+}
+
+.allcourses-section .container .no-courses svg {
+    color: var(--mainColor);
+}
+
+.allcourses-section .container .all-courses {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 3rem 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.allcourses-section .container .all-courses .one-course {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 20px 6px;
+    padding: 1rem;
+    border-radius: 5px;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.allcourses-section .container .all-courses .one-course .view-course {
+    background-color: var(--mainColor);
+    border: none;
+    padding: 1rem 2rem;
+    width: 100%;
+    display: block;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+    font-size: 1rem;
+    font-weight: 600;
+}
+.allcourses-section .container .all-courses .one-course .view-course:active {
+    background-color: var(--mainFontColor);
+}
+.allcourses-section .container .all-courses .one-course .view-course:hover {
+    background-color: var(--secondaryColor);
+}
+
+.allcourses-section .container .all-courses .one-course .course-img {
+    background-size: cover;
+    background-position: center;
+    height: 15rem;
+    width: 100%;
+}
+
+.allcourses-section .container .all-courses .one-course h3 {
+    font-size: 1.5rem;
+    width: 100%;
+    text-transform: capitalize;
+}
+
+.allcourses-section .container .all-courses .one-course p {
+    width: 100%;
+    margin: 1rem 0;
+    word-wrap: break-word;
+}
+.allcourses-section .container .all-courses .one-course:hover {
+    box-shadow: rgb(237, 107, 23, .3) 0px 0px 20px 6px;
+    transform: translateY(-5px);
+    -webkit-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    -o-transform: translateY(-5px);
+    cursor: pointer;
+}

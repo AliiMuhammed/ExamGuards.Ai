@@ -627,7 +627,7 @@ const AdminCourses = () => {
             label="Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             id="outlined-multiline-static"
@@ -636,7 +636,7 @@ const AdminCourses = () => {
             name="description"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -645,12 +645,12 @@ const AdminCourses = () => {
             label="Duration Hours"
             type="number"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <FormControl fullWidth sx={{ marginTop: "1.5rem" }}>
             <Input
               id="file-input"
-              variant="standard"
+              variant="outlined"
               name="photo"
               type="file"
               accept="image/*"
@@ -716,7 +716,7 @@ const AdminCourses = () => {
             label="Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             id="outlined-multiline-static"
@@ -725,7 +725,7 @@ const AdminCourses = () => {
             name="description"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
             required
           />
           <TextField
@@ -736,13 +736,13 @@ const AdminCourses = () => {
             label="Duration Hours"
             type="number"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <FormControl fullWidth sx={{ marginTop: "1.5rem" }}>
             <Input
               required
               id="file-input"
-              variant="standard"
+              variant="outlined"
               name="photo"
               type="file"
               accept="image/*"

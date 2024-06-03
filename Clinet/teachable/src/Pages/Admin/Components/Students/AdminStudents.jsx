@@ -369,7 +369,7 @@ function AdminStudents() {
             label="First Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -378,7 +378,7 @@ function AdminStudents() {
             label="Last Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -387,7 +387,7 @@ function AdminStudents() {
             label="Email Address"
             type="email"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -396,7 +396,7 @@ function AdminStudents() {
             label="Phone Number"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <FormControl fullWidth variant="standard" margin="dense">
             <InputLabel htmlFor="role">Role</InputLabel>

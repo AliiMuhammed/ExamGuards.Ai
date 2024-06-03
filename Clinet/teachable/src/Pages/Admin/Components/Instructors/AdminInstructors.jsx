@@ -439,7 +439,7 @@ function AdminInstructors() {
             label="First Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -448,7 +448,7 @@ function AdminInstructors() {
             label="Last Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -457,7 +457,7 @@ function AdminInstructors() {
             label="Email Address"
             type="email"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -466,7 +466,7 @@ function AdminInstructors() {
             label="Phone Number"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <FormControl fullWidth variant="standard" margin="dense">
             <InputLabel htmlFor="role">Role</InputLabel>
@@ -543,7 +543,7 @@ function AdminInstructors() {
             label="First Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -552,7 +552,7 @@ function AdminInstructors() {
             label="Last Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -561,7 +561,7 @@ function AdminInstructors() {
             label="Email Address"
             type="email"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -570,7 +570,7 @@ function AdminInstructors() {
             label="Phone Number"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -579,7 +579,7 @@ function AdminInstructors() {
             label="Password"
             type="password"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -588,7 +588,7 @@ function AdminInstructors() {
             label="Confirm Password"
             type="password"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
         </DialogContent>
         <DialogActions>

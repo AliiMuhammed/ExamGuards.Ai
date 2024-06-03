@@ -16,8 +16,8 @@ const SideMenu = ({ toggled, setToggled }) => {
     setCollapsed(false);
     setToggled(false);
   };
-  const user = getAuthUser()
-  console.log(user.data.data.user.role)
+  const user = getAuthUser();
+  console.log(user.data.data.user.role);
   return (
     <div className="custom-side">
       <Sidebar
@@ -59,13 +59,22 @@ const SideMenu = ({ toggled, setToggled }) => {
           >
             Home
           </MenuItem>
-          <MenuItem
-            onClick={() => setToggled(false)}
-            component={<NavLink to="/student/courses" />}
-            icon={<FaBook />}
-          >
-            Courses
-          </MenuItem>
+          <SubMenu icon={<FaBook />} label="My Learning">
+            <MenuItem
+              onClick={() => setToggled(false)}
+              component={<NavLink to="/student/myCourses" />}
+              className="submenu-link"
+            >
+              My Courses
+            </MenuItem>
+            <MenuItem
+              onClick={() => setToggled(false)}
+              component={<NavLink to="/student/allCourses" />}
+              className="submenu-link"
+            >
+              All Courses
+            </MenuItem>
+          </SubMenu>
           <MenuItem onClick={() => setToggled(false)} icon={<BiSolidReport />}>
             Reports
           </MenuItem>

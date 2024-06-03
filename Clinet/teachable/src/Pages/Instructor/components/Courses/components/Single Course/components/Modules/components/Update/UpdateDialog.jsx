@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import http from "../../../../../../../../../../Helper/http";
 import { openToast } from "../../../../../../../../../../Redux/Slices/toastSlice";
 
-const UpdateDialog = ({ open, setOpen, reload  }) => {
+const UpdateDialog = ({ open, setOpen, reload }) => {
   const dispatch = useDispatch();
   const [UpdateMaterials, setUpdateMaterials] = useState({
     loading: false,
@@ -127,12 +127,12 @@ const UpdateDialog = ({ open, setOpen, reload  }) => {
           label="Video URL"
           type="text"
           fullWidth
-          variant="standard"
+          variant="outlined"
         />
         <FormControl fullWidth sx={{ marginTop: "1.5rem" }}>
           <Input
             id="file-input"
-            variant="standard"
+            variant="outlined"
             name="file"
             type="file"
             accept=".pdf"

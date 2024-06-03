@@ -459,7 +459,7 @@ const Admins = () => {
             label="First Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -468,7 +468,7 @@ const Admins = () => {
             label="Last Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -477,7 +477,7 @@ const Admins = () => {
             label="Phone Number"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <FormControl fullWidth variant="standard" margin="dense">
             <InputLabel htmlFor="role">Role</InputLabel>
@@ -554,7 +554,7 @@ const Admins = () => {
             label="First Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -563,7 +563,7 @@ const Admins = () => {
             label="Last Name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -572,7 +572,7 @@ const Admins = () => {
             label="Email Address"
             type="email"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -581,7 +581,7 @@ const Admins = () => {
             label="Phone Number"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -590,7 +590,7 @@ const Admins = () => {
             label="Password"
             type="password"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             margin="dense"
@@ -599,7 +599,7 @@ const Admins = () => {
             label="Confirm Password"
             type="password"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
         </DialogContent>
         <DialogActions>

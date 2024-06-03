@@ -32,7 +32,9 @@ import UpdateExam from "./Pages/Instructor/components/Courses/components/Single 
 import MoreDetails from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/MoreDetails/MoreDetails";
 import Student from "./Pages/Student/Student";
 import StudentHome from "./Pages/Student/components/Home/StudentHome";
-import StudentCourses from "./Pages/Student/components/Courses/StudentCourses";
+import Mycourses from "./Pages/Student/components/MyCourses/Mycourses";
+import Allcourses from "./Pages/Student/components/AllCourses/Allcourses";
+import InsttructorHome from "./Pages/Instructor/components/Home/InsttructorHome";
 
 export const routes = createBrowserRouter([
   {
@@ -70,6 +72,7 @@ export const routes = createBrowserRouter([
             path: "instructor",
             element: <Instructor />,
             children: [
+              { path: "home", element: <InsttructorHome /> },
               { path: "courses", element: <Courses /> },
               {
                 path: "course/:id",
@@ -117,8 +120,12 @@ export const routes = createBrowserRouter([
             children: [
               { path: "home", element: <StudentHome /> },
               {
-                path: "courses",
-                element: <StudentCourses />,
+                path: "myCourses",
+                element: <Mycourses />,
+              },
+              {
+                path: "allCourses",
+                element: <Allcourses />,
               },
               {
                 element: <GuestProfile />,
