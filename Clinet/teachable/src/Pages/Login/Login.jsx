@@ -31,7 +31,6 @@ const Login = () => {
       });
       return;
     }
-    console.log(email, password, rememberMe);
     http
       .POST(`users/login`, {
         email: email,
@@ -42,10 +41,10 @@ const Login = () => {
         setAuthUser(res, rememberMe);
         const role = res.data.data.user.role;
         if (role === "admin" || role === "super admin") {
-          navigate("/admin");
+          navigate("/admin/home");
         } else if (role === "student") {
-          navigate("/student");
-        } else navigate("/instructor");
+          navigate("/student/home");
+        } else navigate("/instructor/home");
         setLogin({ ...login, loading: false, errorMsg: "" });
       })
       .catch((err) => {
