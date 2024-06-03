@@ -4,8 +4,15 @@ import Alert from "@mui/material/Alert";
 import http from "./../../../../Helper/http";
 import CircularProgress from "@mui/material/CircularProgress";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../Redux/Slices/toastSlice";
+import { useSelector } from "react-redux";
+import { triggerRefresh } from "../../../../Redux/Slices/refreshSlice";
 
 const Allcourses = () => {
+  const refresh = useSelector((state) => state.refresh);
+
+  const dispatch = useDispatch();
   const [courses, setCourses] = useState({
     data: [],
     loading: false,
@@ -21,9 +28,36 @@ const Allcourses = () => {
         setCourses({ ...courses, loading: false, data: res.data.data.courses });
       })
       .catch((err) => {
-        setCourses({ ...courses, loading: false, errorMsg: err.message });
+        setCourses({
+          ...courses,
+          loading: false,
+          errorMsg: "Something went wrong",
+        });
       });
-  }, []);
+  }, [refresh]);
+
+  const handleRegisterCourse = (CourseId) => {
+    setCourses({ ...courses, loading: true });
+    http
+      .POST(`courses/register/${CourseId}`)
+      .then((res) => {
+        setCourses({ ...courses, loading: false });
+        dispatch(
+          openToast({
+            msg: "Course registered successfully",
+            type: "success",
+          })
+        );
+        dispatch(triggerRefresh());
+      })
+      .catch((err) => {
+        setCourses({
+          ...courses,
+          loading: false,
+          errorMsg: "Something went wrong",
+        });
+      });
+  };
   return (
     <section className="allcourses-section">
       <div className="container">
@@ -56,7 +90,7 @@ const Allcourses = () => {
         {/* if data empty and not loading */}
         {!courses.loading && courses.data.length === 0 && (
           <div className="no-courses">
-            <span>No courses available now</span>
+            <span>No courses available now you can register to</span>
             <HiOutlineArchiveBoxXMark />
           </div>
         )}
@@ -82,7 +116,9 @@ const Allcourses = () => {
                     </p>
 
                     <button
-                      to={`/instructor/course/${course._id}`}
+                      onClick={() => {
+                        handleRegisterCourse(course._id);
+                      }}
                       className="view-course"
                     >
                       Register

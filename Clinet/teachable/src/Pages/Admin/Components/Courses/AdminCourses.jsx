@@ -377,10 +377,6 @@ const AdminCourses = () => {
       name: "duration",
     },
     {
-      name: "durationWeeks",
-      label: "lectures",
-    },
-    {
       name: "active",
       options: {
         customBodyRender: (value, tableMeta) => {

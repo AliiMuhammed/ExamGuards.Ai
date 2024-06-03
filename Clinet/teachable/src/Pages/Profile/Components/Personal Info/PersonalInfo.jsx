@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { getAuthUser } from "../../../../Helper/Storage";
 const PersonalInfo = () => {
   const refresh = useSelector((state) => state.refresh); // Accessing the refresh state from Redux
-  console.log(refresh);
   const convertTime = (time) => {
     const date = new Date(time);
     // Format the date to a readable format
