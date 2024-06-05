@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -10,31 +10,41 @@ import Alert from "@mui/material/Alert";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../../../../../../../../../../Redux/Slices/toastSlice";
 import "../style/addQuestions.css";
+
 const AddQuestions = ({ open, setOpen, questions, setQuestions }) => {
   const dispatch = useDispatch();
+
+  const getNextQuestionNumber = () => questions.length + 1;
+
   const [newQuestion, setNewQuestion] = useState({
     type: "ChooseQuestion",
     QuestionTitle: "",
-    numberOfQuestion: questions.length + 1,
     Points: "",
+    numberOfQuestion: getNextQuestionNumber(),
     Answers: [{ body: "", correct: false }],
     Keywords: [{ keyword: "", weight: "" }],
     Answer: "",
   });
+
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (open) {
+      setNewQuestion({
+        type: "ChooseQuestion",
+        QuestionTitle: "",
+        Points: "",
+        numberOfQuestion: getNextQuestionNumber(),
+        Answers: [{ body: "", correct: false }],
+        Keywords: [{ keyword: "", weight: "" }],
+        Answer: "",
+      });
+      setErrorMsg("");
+    }
+  }, [open, questions]);
 
   const close = () => {
     setOpen(false);
-    setNewQuestion({
-      type: "ChooseQuestion",
-      QuestionTitle: "",
-      numberOfQuestion: questions.length + 1,
-      Points: "",
-      Answers: [{ body: "", correct: false }],
-      Keywords: [{ keyword: "", weight: "" }],
-      Answer: "",
-    });
-    setErrorMsg("");
   };
 
   const handleAddQuestion = () => {

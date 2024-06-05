@@ -20,9 +20,12 @@ import UpdateDialog from "./components/Update/UpdateDialog";
 import AddMaterials from "./components/Add/AddMaterials";
 import DeleteDialog from "./components/Delete/DeleteDialog";
 import AddModule from "./components/Add Module/AddModule";
+import { getAuthUser } from "../../../../../../../../Helper/Storage";
 
 const CourseModules = () => {
   const { id } = useParams();
+  const user = getAuthUser().data?.data?.user?.role;
+
   const [openAdd, setOpenAdd] = useState({
     open: false,
     id: id,
@@ -90,12 +93,14 @@ const CourseModules = () => {
             <>
               <div className="header">
                 <h3>Course Modules</h3>
-                <button
-                  className="add-modules-btn main-btn sm"
-                  onClick={() => setOpenAdd({ ...openAdd, open: true })}
-                >
-                  Add Modules
-                </button>
+                {user === "instructor" && (
+                  <button
+                    className="add-modules-btn main-btn sm"
+                    onClick={() => setOpenAdd({ ...openAdd, open: true })}
+                  >
+                    Add Modules
+                  </button>
+                )}
               </div>
               <div className="no-modules">
                 <span>No Modules</span>
@@ -136,12 +141,14 @@ const CourseModules = () => {
             <>
               <div className="header">
                 <h3>Course Modules</h3>
-                <button
-                  className="add-modules-btn main-btn sm"
-                  onClick={() => setOpenAdd({ ...openAdd, open: true })}
-                >
-                  Add Modules
-                </button>
+                {user === "instructor" && (
+                  <button
+                    className="add-modules-btn main-btn sm"
+                    onClick={() => setOpenAdd({ ...openAdd, open: true })}
+                  >
+                    Add Modules
+                  </button>
+                )}
               </div>
               <div className="modules">
                 {modules.data.map((module) => (
@@ -174,49 +181,51 @@ const CourseModules = () => {
                           </div>
                         </div>
                       )}
-                      <div className="module-btns">
-                        {module.file === "" && module.video === "" && (
-                          <button
-                            onClick={() =>
-                              setOpenAddMaterials({
-                                ...OpenAddMaterials,
-                                open: true,
-                                id: module._id,
-                              })
-                            }
-                            className="main-btn update sm"
-                          >
-                            Add Materials <IoAdd />
-                          </button>
-                        )}
-                        {module.file !== "" && module.video !== "" && (
-                          <button
-                            onClick={() =>
-                              setOpenUpdateMaterials({
-                                ...OpenUpdateMaterials,
-                                id: module._id,
-                                open: true,
-                              })
-                            }
-                            className="main-btn update sm"
-                          >
-                            Edit <CiEdit />
-                          </button>
-                        )}
+                      {user === "instructor" && (
+                        <div className="module-btns">
+                          {module.file === "" && module.video === "" && (
+                            <button
+                              onClick={() =>
+                                setOpenAddMaterials({
+                                  ...OpenAddMaterials,
+                                  open: true,
+                                  id: module._id,
+                                })
+                              }
+                              className="main-btn update sm"
+                            >
+                              Add Materials <IoAdd />
+                            </button>
+                          )}
+                          {module.file !== "" && module.video !== "" && (
+                            <button
+                              onClick={() =>
+                                setOpenUpdateMaterials({
+                                  ...OpenUpdateMaterials,
+                                  id: module._id,
+                                  open: true,
+                                })
+                              }
+                              className="main-btn update sm"
+                            >
+                              Edit <CiEdit />
+                            </button>
+                          )}
 
-                        <button
-                          onClick={() =>
-                            setOpenDelete({
-                              ...openDelete,
-                              open: true,
-                              id: module._id,
-                            })
-                          }
-                          className="main-btn delete sm"
-                        >
-                          Delete <MdDelete />
-                        </button>
-                      </div>
+                          <button
+                            onClick={() =>
+                              setOpenDelete({
+                                ...openDelete,
+                                open: true,
+                                id: module._id,
+                              })
+                            }
+                            className="main-btn delete sm"
+                          >
+                            Delete <MdDelete />
+                          </button>
+                        </div>
+                      )}
                     </AccordionDetails>
                   </Accordion>
                 ))}

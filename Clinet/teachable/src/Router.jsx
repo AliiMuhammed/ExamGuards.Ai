@@ -34,7 +34,9 @@ import StudentHome from "./Pages/Student/components/Home/StudentHome";
 import Mycourses from "./Pages/Student/components/MyCourses/Mycourses";
 import Allcourses from "./Pages/Student/components/AllCourses/Allcourses";
 import InsttructorHome from "./Pages/Instructor/components/Home/InsttructorHome";
-import StudentPendingCourses from './Pages/Student/components/StudentPendingCourses/StudentPendingCourses';
+import StudentPendingCourses from "./Pages/Student/components/StudentPendingCourses/StudentPendingCourses";
+import StudentSingleCourse from "./Pages/Student/components/SingleCourse/StudentSingleCourse";
+import StudentExams from "./Pages/Student/components/SingleCourse/components/StudentExams/StudentExams";
 
 export const routes = createBrowserRouter([
   {
@@ -119,8 +121,19 @@ export const routes = createBrowserRouter([
                 element: <Mycourses />,
               },
               {
+                path: ":name/:id",
+                element: <StudentSingleCourse />,
+                children: [
+                  { path: "", element: <Navigate to="modules" /> }, // Default redirect
+                  { path: "modules", element: <CourseModules /> },
+                  { path: "lectures", element: <CouresLec /> },
+                  { path: "assignments", element: <CourseAss /> },
+                  { path: "exams", element: <StudentExams /> },
+                ],
+              },
+              {
                 path: "pending",
-                element: <StudentPendingCourses/>
+                element: <StudentPendingCourses />,
               },
               {
                 path: "allCourses",

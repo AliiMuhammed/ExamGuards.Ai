@@ -14,6 +14,7 @@ import http from "./../../../../../../../../../../Helper/http";
 export const AddExam = () => {
   const dispatch = useDispatch();
   const [showError, setShowError] = useState("");
+  const [showErrorTotal, setShowErrorTotal] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -48,6 +49,16 @@ export const AddExam = () => {
     };
   }, []);
 
+  // Validation function to check if total points equal summation of all question points
+  const validateTotalPoints = () => {
+    const totalPoints = questions.reduce(
+      (acc, question) => acc + parseInt(question.Points),
+      0
+    );
+    console.log(totalPoints, examOptions.totalpoints);
+    return totalPoints == examOptions.totalpoints;
+  };
+
   const handleExamOptionChange = (field, value) => {
     setExamOptions((prevOptions) => ({
       ...prevOptions,
@@ -56,9 +67,13 @@ export const AddExam = () => {
   };
 
   const handleSubmit = () => {
-    console.log(examOptions)
     if (questions.length === 0) {
       setShowError("Please add at least one question");
+    } else if (!validateTotalPoints()) {
+      console.log("test")
+      setShowErrorTotal(
+        "Total points in exam options must equal the summation of all question points"
+      );
     } else {
       setAddExam({ loading: true, errorMsg: "" });
       const Exam = {
@@ -111,6 +126,7 @@ export const AddExam = () => {
             {showError && questions.length === 0 && (
               <Alert severity="error">{showError}</Alert>
             )}
+            {showErrorTotal && <Alert severity="error">{showErrorTotal}</Alert>}
             {addExam.errorMsg !== "" && (
               <Alert severity="error">{addExam.errorMsg}</Alert>
             )}

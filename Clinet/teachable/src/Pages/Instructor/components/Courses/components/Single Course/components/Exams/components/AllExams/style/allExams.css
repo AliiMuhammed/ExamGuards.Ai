@@ -59,13 +59,34 @@
 
 .course-exams-section .container .exams-cards .exam-card .exam-img img {
     width: 100%;
-    
-    
+
+
 }
 
 .course-exams-section .container .exams-cards .exam-card h2 {
     margin-bottom: 1rem;
     text-transform: capitalize;
+}
+
+.course-exams-section .container .exams-cards .exam-card .exam-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-direction: row;
+}
+
+.course-exams-section .container .exams-cards .exam-card .exam-header a {
+    color: var(--mainColor);
+    transition: var(--main-transition);
+    -webkit-transition: var(--main-transition);
+    -moz-transition: var(--main-transition);
+    -ms-transition: var(--main-transition);
+    -o-transition: var(--main-transition);
+}
+
+.course-exams-section .container .exams-cards .exam-card .exam-header a:hover {
+    color: var(--mainFontColor);
 }
 
 .course-exams-section .container .exams-cards .exam-card p {
@@ -75,9 +96,18 @@
 
 .course-exams-section .container .exams-cards .exam-card p span {
     padding-right: .2rem;
-    font-weight:700 ;
+    font-weight: 700;
 }
 
 .course-exams-section .container .exams-cards .exam-card button {
     margin-top: .5rem;
+}
+
+.course-exams-section .container .exams-cards .exam-card button:disabled {
+    background-color: var(--disabledColor);
+    border-color: var(--disabledColor);
+}
+
+.course-exams-section .container .exams-cards .exam-card button:disabled:hover {
+    color: #fff;
 }

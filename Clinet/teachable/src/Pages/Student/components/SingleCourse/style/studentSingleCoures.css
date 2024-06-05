@@ -1,0 +1,46 @@
+.student-single-course-section {
+    height: 100%;
+}
+
+.student-single-course-section .container {
+    height: 100%;
+
+}
+
+.student-single-course-section .Tabs {
+    margin-top: 1.5rem;
+    margin-bottom: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.student-single-course-section .Tabs .course-tabs {
+    font-size: 1rem;
+    color: var(--mainFontColor);
+    font-weight: 600;
+}
+
+.student-single-course-section .Tabs .course-tabs.Mui-selected {
+    color: var(--mainColor);
+}
+
+.student-single-course-section .Tabs .course-tabs-contaienr .MuiTabs-indicator.css-10d9dml-MuiTabs-indicator {
+    background-color: var(--mainColor);
+}
+
+.student-single-course-section .container .course-content {
+    width: 100%;
+}
+
+
+
+/* Small screens (up to 767px) */
+@media only screen and (max-width: 767px) {
+
+    .student-single-course-section .Tabs {
+        width: 100%;
+    }
+}
+
+/* Medium screens (768px - 991px) */

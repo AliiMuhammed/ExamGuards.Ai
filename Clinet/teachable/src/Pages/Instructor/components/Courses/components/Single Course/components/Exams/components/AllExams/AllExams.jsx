@@ -8,6 +8,8 @@ import Alert from "@mui/material/Alert";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import http from "../../../../../../../../../../Helper/http";
+import { FiEdit } from "react-icons/fi";
+import Tooltip from "@mui/material/Tooltip";
 
 const AllExams = () => {
   const id = useParams().id;
@@ -121,7 +123,17 @@ const AllExams = () => {
                     <div className="exam-img">
                       <img src={examImg} loading="lazy" alt="exam" />
                     </div>
-                    <h2>{exam.title}</h2>
+                    <div className="exam-header">
+                      <h2>{exam.title} </h2>
+
+                      <Tooltip title="Edit Exam">
+                        <Link
+                          to={`/instructor/course/${id}/exams/${exam._id}/update`}
+                        >
+                          <FiEdit />
+                        </Link>
+                      </Tooltip>
+                    </div>
                     <p>
                       <span>Type:</span>
                       {exam.ExamType}
@@ -142,12 +154,24 @@ const AllExams = () => {
                       <span>Visibility:</span>
                       {exam.visiable ? "Public" : "Private"}
                     </p>
-                    <Link
-                      to={"/instructor/course/" + id + "/exams/" + exam._id}
-                      className="delete-btn main-btn sm"
-                    >
-                      More Details
-                    </Link>
+                    {exam.status === "coming-soon" && (
+                      <button disabled className="delete-btn main-btn sm">
+                        Exam Not started yet
+                      </button>
+                    )}
+                    {exam.status === "open" && (
+                      <button disabled className="delete-btn main-btn sm">
+                        Exam is open
+                      </button>
+                    )}
+                    {exam.status === "ended" && (
+                      <Link
+                        to={"/instructor/course/" + id + "/exams/" + exam._id}
+                        className="delete-btn main-btn sm"
+                      >
+                        More Details
+                      </Link>
+                    )}
                   </div>
                 ))}
               </div>

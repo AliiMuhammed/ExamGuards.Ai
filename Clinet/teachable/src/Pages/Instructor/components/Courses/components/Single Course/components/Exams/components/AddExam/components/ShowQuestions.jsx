@@ -15,7 +15,7 @@ const ShowQuestions = ({ questions, setQuestions }) => {
     open: false,
     index: "",
   });
-
+  console.log(questions);
   const handleOpenEditDialog = (question) => {
     setQuestionToEdit(question);
     setOpenEditDialog(true);
@@ -122,7 +122,7 @@ const ShowQuestions = ({ questions, setQuestions }) => {
               const newQuestions = [...questions];
               newQuestions.splice(open.index, 1);
               setQuestions(newQuestions);
-              setOpen({ open: false, index: "" })
+              setOpen({ open: false, index: "" });
             }}
             variant="contained"
             color="error"
