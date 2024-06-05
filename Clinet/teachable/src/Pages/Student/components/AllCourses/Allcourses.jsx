@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./style/allcourses.css";
 import Alert from "@mui/material/Alert";
@@ -25,7 +26,12 @@ const Allcourses = () => {
       .GET(`courses/coursesForStudent`)
       .then((res) => {
         console.log(res);
-        setCourses({ ...courses, loading: false, data: res.data.data.courses });
+        setCourses({
+          ...courses,
+          loading: false,
+          data: res.data.data.courses,
+          errorMsg: "",
+        });
       })
       .catch((err) => {
         setCourses({
@@ -61,6 +67,9 @@ const Allcourses = () => {
   return (
     <section className="allcourses-section">
       <div className="container">
+        <div className="header">
+          <h1>All Courses</h1>
+        </div>
         {/* handelErrors */}
         {courses.errorMsg !== "" && (
           <Alert severity="error">{courses.errorMsg}</Alert>
@@ -97,9 +106,6 @@ const Allcourses = () => {
         {/* if data is not empty and not loading */}
         {courses.data.length !== 0 && !courses.loading && (
           <div className="courses-content">
-            <div className="header">
-              <h1>All Courses</h1>
-            </div>
             <div className="all-courses">
               {courses.data.map((course) => (
                 <div className="one-course" key={course._id}>

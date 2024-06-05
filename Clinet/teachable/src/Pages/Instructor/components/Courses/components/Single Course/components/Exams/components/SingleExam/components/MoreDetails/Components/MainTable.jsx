@@ -18,16 +18,19 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import DownloadIcon from "@mui/icons-material/Download";
 import { visuallyHidden } from "@mui/utils";
 import { saveAs } from "file-saver";
-import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   TextField,
-  Button,
   DialogActions,
 } from "@mui/material";
+import http from "../../../../../../../../../../../../../Helper/http";
+import { useParams } from "react-router";
+import { useDispatch } from "react-redux";
+import { openToast } from "../../../../../../../../../../../../../Redux/Slices/toastSlice";
+import { triggerRefresh } from "../../../../../../../../../../../../../Redux/Slices/refreshSlice";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -216,14 +219,15 @@ export default function EnhancedTable({ data = [], examTotalGrades = 0 }) {
 
   const handleGradeChange = (event) => {
     const value = event.target.value;
-    if (!isNaN(value) && value >= 0 && value <= 100) {
-      setGrade((prevGrade) => ({
-        ...prevGrade,
-        grade: value,
-      }));
-    }
+    setGrade((prevGrade) => ({
+      ...prevGrade,
+      grade: value,
+    }));
   };
 
+  const { Examid } = useParams();
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const handleUpdate = () => {
     if (
       isNaN(grade.grade) ||
@@ -236,7 +240,48 @@ export default function EnhancedTable({ data = [], examTotalGrades = 0 }) {
       }));
       return;
     }
-    console.log(grade);
+    setGrade((prevGrade) => ({
+      ...prevGrade,
+      loading: true,
+    }));
+    const newGrade = {
+      grade: grade.grade,
+    };
+
+    http
+      .PATCH(`grades/addGrade/${id}/${open.id}/${Examid}`, newGrade)
+      .then((response) => {
+        setGrade((prevGrade) => ({
+          ...prevGrade,
+          loading: false,
+          errorMsg: "",
+        }));
+        dispatch(
+          openToast({
+            msg: "Grade added successfully",
+            type: "success",
+          })
+        );
+        setOpen((prevOpen) => ({
+          ...prevOpen,
+          open: false,
+          id: "",
+        }));
+        dispatch(triggerRefresh());
+      })
+      .catch((error) => {
+        setGrade((prevGrade) => ({
+          ...prevGrade,
+          loading: false,
+          errorMsg: "something went wrong",
+        }));
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
+      });
   };
 
   const handleRequestSort = (event, property) => {
@@ -385,7 +430,7 @@ export default function EnhancedTable({ data = [], examTotalGrades = 0 }) {
                       <button
                         className="main-btn sm"
                         // onClick={() => handleGrade(row.stuID)}
-                        onClick={() => setOpen({ open: true, id: row.id })}
+                        onClick={() => setOpen({ open: true, id: row.stuID })}
                       >
                         Update Grade
                       </button>
@@ -431,11 +476,7 @@ export default function EnhancedTable({ data = [], examTotalGrades = 0 }) {
             variant="outlined"
             value={grade.grade}
             onChange={handleGradeChange}
-            error={
-              isNaN(grade.grade) ||
-              grade.grade < 0 ||
-              grade.grade > examTotalGrades
-            }
+            error={grade.errorMsg !== ""}
             helperText={grade.errorMsg}
           />
         </DialogContent>

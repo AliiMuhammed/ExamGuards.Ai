@@ -26,7 +26,7 @@ const Courses = () => {
         `courses?instructors=${instructorID}&active=true&page=${page}&limit=6`
       )
       .then((response) => {
-        response.data.totalDocs > 6 && response.data.results === 6            
+        response.data.totalDocs > 6 && response.data.results === 6
           ? setShowPagination(true)
           : setShowPagination(false);
         setTotalPages(response.data?.totalPages);
@@ -89,10 +89,14 @@ const Courses = () => {
               color="inherit"
             />
           )}
+
         {courses.data.length > 0 &&
           courses.errorMsg === "" &&
           courses.loading === false && (
             <>
+              <div className="header">
+                <h1>All Courses</h1>
+              </div>
               <div className="all-assigned-courses">
                 {courses.data.map((course) => {
                   return (

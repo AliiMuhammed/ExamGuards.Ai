@@ -23,7 +23,6 @@ import CourseModules from "./Pages/Instructor/components/Courses/components/Sing
 import CouresLec from "./Pages/Instructor/components/Courses/components/Single Course/components/Lectures/CouresLec";
 import CourseAss from "./Pages/Instructor/components/Courses/components/Single Course/components/Assignments/CourseAss";
 import CourseExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/CourseExams";
-import SetGrades from "./Pages/Instructor/components/Courses/components/Single Course/components/Grades/SetGrades";
 import { AddExam } from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AddExam/AddExam";
 import AllExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AllExams/AllExams";
 import VisibilityChangeComponent from "./Pages/VisibilityChangeComponent";
@@ -35,6 +34,7 @@ import StudentHome from "./Pages/Student/components/Home/StudentHome";
 import Mycourses from "./Pages/Student/components/MyCourses/Mycourses";
 import Allcourses from "./Pages/Student/components/AllCourses/Allcourses";
 import InsttructorHome from "./Pages/Instructor/components/Home/InsttructorHome";
+import StudentPendingCourses from './Pages/Student/components/StudentPendingCourses/StudentPendingCourses';
 
 export const routes = createBrowserRouter([
   {
@@ -82,7 +82,6 @@ export const routes = createBrowserRouter([
                   { path: "modules", element: <CourseModules /> },
                   { path: "lectures", element: <CouresLec /> },
                   { path: "assignments", element: <CourseAss /> },
-                  { path: "setGrades", element: <SetGrades /> },
                   {
                     path: "exams",
                     element: <CourseExams />,
@@ -108,10 +107,6 @@ export const routes = createBrowserRouter([
                 element: <GuestProfile />,
                 children: [{ path: "profile/:id", element: <UserProfile /> }],
               },
-              {
-                path: "test",
-                element: <VisibilityChangeComponent />,
-              },
             ],
           },
           {
@@ -122,6 +117,10 @@ export const routes = createBrowserRouter([
               {
                 path: "myCourses",
                 element: <Mycourses />,
+              },
+              {
+                path: "pending",
+                element: <StudentPendingCourses/>
               },
               {
                 path: "allCourses",

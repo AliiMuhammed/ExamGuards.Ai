@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import "./style/myCourses.css";
 import { Link } from "react-router-dom";
 import http from "./../../../../Helper/http";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
-
-const Mycourses = () => {
+import "./style/studentPendingCourses.css";
+const StudentPendingCourses = () => {
   const [myCourses, setMyCourses] = useState({
     courses: [],
     loading: false,
     errorMsg: "",
   });
-
   useEffect(() => {
     setMyCourses({ ...myCourses, loading: true });
     http
@@ -32,22 +30,22 @@ const Mycourses = () => {
         });
       });
   }, []);
-
-  const allCoursesInactive = myCourses.courses.every(course => !course.status);
+  const allCoursesInactive = myCourses.courses.every(
+    (course) => !course.status
+  );
+  console.log(myCourses.courses);
 
   return (
-    <section className="mycourses-section">
+    <section className="studentPendingCourses-section">
       <div className="container">
-        <div className="mycourses-header">
-          <h1>My Courses</h1>
-          <Link to={"/student/pending"} className="main-btn sm">
-            Pending Courses
-          </Link>
+        <div className="pendingCourses-header">
+          <h1>My Pending Courses</h1>
         </div>
         {myCourses.errorMsg !== "" && (
           <Alert severity="error">{myCourses.errorMsg}</Alert>
         )}
-        {myCourses.loading && (
+        {/* if data is not empty and loading true */}
+        {myCourses.courses.length !== 0 && myCourses.loading && (
           <CircularProgress
             sx={{
               margin: "auto",
@@ -57,19 +55,39 @@ const Mycourses = () => {
             color="inherit"
           />
         )}
-        {!myCourses.loading && (
+        {/* if data is empty and loading  true*/}
+        {myCourses.courses.length === 0 && myCourses.loading && (
+          <CircularProgress
+            sx={{
+              margin: "auto",
+              display: "block",
+            }}
+            size={60}
+            color="inherit"
+          />
+        )}
+        {/* if data empty and not loading */}
+        {!myCourses.loading && myCourses.courses.length === 0 && (
+          <div className="no-courses">
+            <span>You are not registered for any course</span>
+            <HiOutlineArchiveBoxXMark />
+          </div>
+        )}
+        {/* if data is not empty and not loading */}
+        {myCourses.courses.length !== 0 && !myCourses.loading && (
           <div className="courses-content">
             {allCoursesInactive ? (
               <div className="no-courses">
                 <span>
-                  You are not registered for any course or there is some courses are pending
+                  You are not registered for any course or there is some courses
+                  are pending
                 </span>
                 <HiOutlineArchiveBoxXMark />
               </div>
             ) : (
-              <div className="my-courses">
-                {myCourses.courses.map((course) => (
-                  course.status ? (
+              <div className="pending-courses">
+                {myCourses.courses.map((course) =>
+                  !course.status ? (
                     <div className="one-course" key={course._id}>
                       <div
                         style={{ backgroundImage: `url(${course.file})` }}
@@ -86,13 +104,13 @@ const Mycourses = () => {
                           <div className="name">Instructor: Ali Muhammed</div>
                           <div className="duration">45hr</div>
                         </div>
-                        <Link to={""} className="view-course">
-                          Show
-                        </Link>
+                        <button disabled className="view-course">
+                          Pending
+                        </button>
                       </div>
                     </div>
                   ) : null
-                ))}
+                )}
               </div>
             )}
           </div>
@@ -102,4 +120,4 @@ const Mycourses = () => {
   );
 };
 
-export default Mycourses;
+export default StudentPendingCourses;

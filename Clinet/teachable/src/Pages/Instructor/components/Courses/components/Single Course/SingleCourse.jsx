@@ -24,8 +24,6 @@ const SingleCourse = () => {
       setValue(2);
     } else if (path.includes("/exams")) {
       setValue(3);
-    } else if (path.includes("/setGrades")) {
-      setValue(4);
     } else {
       setValue(0); // Default to the first tab if no match is found
     }
@@ -67,11 +65,6 @@ const SingleCourse = () => {
             className="course-tabs"
             label="Exams"
             href={`/instructor/course/${id}/exams`}
-          />
-          <LinkTab
-            className="course-tabs"
-            label="Set Grades"
-            href={`/instructor/course/${id}/setGrades`}
           />
         </Tabs>
       </div>

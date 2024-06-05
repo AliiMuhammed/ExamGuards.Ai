@@ -1,23 +1,33 @@
-.allcourses-section {
+.mycourses-section {
     margin-top: 2rem;
     height: 100%;
 }
 
-.allcourses-section .container {
-    height: 100%;
+.mycourses-section .container {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
-.allcourses-section .container .header {
+.mycourses-section .container .no-courses {
+    text-align: center;
+}
+
+.mycourses-section .container .courses-content {
+    height: 100%;
+
+}
+
+
+
+.mycourses-section .container .mycourses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
 }
 
-.allcourses-section .container .courses-content {
-    width: 100%;
-}
-
-.allcourses-section .container .no-courses {
+.mycourses-section .container .no-courses {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,11 +37,12 @@
     height: 100%;
 }
 
-.allcourses-section .container .no-courses svg {
+.mycourses-section .container .no-courses svg {
     color: var(--mainColor);
 }
 
-.allcourses-section .container .all-courses {
+
+.mycourses-section .container .my-courses {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 3rem 1rem;
@@ -39,7 +50,7 @@
     width: 100%;
 }
 
-.allcourses-section .container .all-courses .one-course {
+.mycourses-section .container .my-courses .one-course {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -54,7 +65,7 @@
     -o-transition: var(--main-transition);
 }
 
-.allcourses-section .container .all-courses .one-course .view-course {
+.mycourses-section .container .my-courses .one-course .view-course {
     background-color: var(--mainColor);
     border: none;
     padding: 1rem 2rem;
@@ -77,34 +88,34 @@
     font-weight: 600;
 }
 
-.allcourses-section .container .all-courses .one-course .view-course:active {
+.mycourses-section .container .my-courses .one-course .view-course:active {
     background-color: var(--mainFontColor);
 }
 
-.allcourses-section .container .all-courses .one-course .view-course:hover {
+.mycourses-section .container .my-courses .one-course .view-course:hover {
     background-color: var(--secondaryColor);
 }
 
-.allcourses-section .container .all-courses .one-course .course-img {
+.mycourses-section .container .my-courses .one-course .course-img {
     background-size: cover;
     background-position: center;
     height: 15rem;
     width: 100%;
 }
 
-.allcourses-section .container .all-courses .one-course h3 {
+.mycourses-section .container .my-courses .one-course h3 {
     font-size: 1.5rem;
     width: 100%;
     text-transform: capitalize;
 }
 
-.allcourses-section .container .all-courses .one-course p {
+.mycourses-section .container .my-courses .one-course p {
     width: 100%;
     margin: 1rem 0;
     word-wrap: break-word;
 }
 
-.allcourses-section .container .all-courses .one-course:hover {
+.mycourses-section .container .my-courses .one-course:hover {
     box-shadow: rgb(237, 107, 23, .3) 0px 0px 20px 6px;
     transform: translateY(-5px);
     -webkit-transform: translateY(-5px);
@@ -112,4 +123,12 @@
     -ms-transform: translateY(-5px);
     -o-transform: translateY(-5px);
     cursor: pointer;
+}
+
+.mycourses-section .container .my-courses .one-course .name-and-duration {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+
 }

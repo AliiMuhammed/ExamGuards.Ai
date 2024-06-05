@@ -17,8 +17,11 @@ import {
 import { IoFlagOutline } from "react-icons/io5";
 import MainTable from "./Components/MainTable";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const MoreDetails = () => {
+  const refresh = useSelector((state) => state.refresh);
+
   const { Examid } = useParams();
   const { id } = useParams();
   const [examInfo, setExamInfo] = useState({
@@ -55,7 +58,7 @@ const MoreDetails = () => {
           errorMsg: "Something went wrong",
         });
       });
-  }, [Examid]);
+  }, [refresh]);
   // get sudents  data
   useEffect(() => {
     setStudents({ ...students, loading: true, errorMsg: "" });
@@ -75,8 +78,7 @@ const MoreDetails = () => {
           errorMsg: "Something went wrong",
         });
       });
-  }, [Examid]);
-  console.log(students.data);
+  }, [refresh]);
   // get exam info
   useEffect(() => {
     setExamInfo({ ...examInfo, loading: true, errorMsg: "" });
@@ -96,7 +98,7 @@ const MoreDetails = () => {
           errorMsg: "Something went wrong",
         });
       });
-  }, [Examid]);
+  }, [refresh]);
   // formate the dates
   const formatDate = (dateString) => {
     const date = new Date(dateString);
