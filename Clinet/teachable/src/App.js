@@ -11,7 +11,6 @@ function App() {
       <Suspense fallback={<Backdrop />}>
         <Outlet />
       </Suspense>
-      <Link to={"/login"}>Login</Link>
       <MyToast />
       <MovetoTop />
     </>

@@ -21,7 +21,7 @@
 }
 
 .notfound .container .back-home {
-    background-color: var(--mainColor);
+    background-color: var(--mainFontColor);
     padding: .8rem 2rem;
     color: #fff;
     border-radius: 10px;
@@ -46,6 +46,7 @@
     .notfound .container .notFound-img img {
         width: 100%;
     }
+
     .notfound .container .back-home {
         background-color: var(--mainColor);
         padding: .6rem 2rem;

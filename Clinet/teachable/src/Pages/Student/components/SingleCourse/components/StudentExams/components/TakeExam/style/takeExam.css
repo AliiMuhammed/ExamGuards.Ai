@@ -1,0 +1,111 @@
+.takeExam-section .container.blur {
+    filter: blur(10px);
+    pointer-events: none;
+    -webkit-filter: blur(10px);
+}
+
+.takeExam-section {
+    margin: 3rem 0;
+}
+
+.takeExam-section>.container {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    margin-top: 2rem;
+    margin-inline: auto;
+    gap: 0 2rem;
+    width: 90%;
+}
+
+
+.takeExam-section .container .left {
+    position: relative;
+    min-height: 100vh;
+}
+
+.takeExam-section .container .left .camera-and-timer {
+    position: sticky;
+    top: 1rem;
+}
+
+.takeExam-section .container .left .exam-video {
+    width: 100%;
+    border: 3px solid var(--mainColor);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.takeExam-section .container .right {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 20px 6px;
+    padding: 1.5rem;
+    border-radius: 5px;
+}
+
+.takeExam-section .container .right>.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #ed6b1773;
+    padding-bottom: 1rem;
+    margin: 2rem 0;
+}
+
+.takeExam-section .container .right .header h1 {
+    font-size: 2rem;
+}
+
+.takeExam-section .container .right .questions {}
+
+.takeExam-section .container .right .questions .question {}
+
+.takeExam-section .container .right .questions .question .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.takeExam-section .container .right .questions .question {
+    border-bottom: 2px solid #ed6b1773;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.takeExam-section .container .right .questions .question .answers-container {
+    width: 100%;
+    padding: 1rem;
+}
+
+
+.takeExam-section .container .right .questions .question .question-title {
+    width: 100%;
+    margin: 1rem 0;
+    background-color: #ebebeb73;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+
+.takeExam-section .container .right .questions .question .answers-container ul {
+    list-style: upper-alpha;
+}
+
+.takeExam-section .container .right .questions .question .answers-container ul li {
+    display: flex;
+    align-items: center;
+}
+
+.takeExam-section .container .right .questions .question .answers-container ul li label {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.takeExam-section .container .right .questions .question .answers-container ul li label input {
+    margin-right: .5rem;
+    accent-color: var(--mainColor);
+}

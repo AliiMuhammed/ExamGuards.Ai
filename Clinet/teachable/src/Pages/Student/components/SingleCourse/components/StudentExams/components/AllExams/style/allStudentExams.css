@@ -1,4 +1,4 @@
-.course-exams-section .no-exams {
+.allStudentExams-section .no-exams {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,17 +8,17 @@
     height: 50vh;
 }
 
-.course-exams-section .no-exams svg {
+.allStudentExams-section .no-exams svg {
     color: var(--mainColor);
 }
 
-.course-exams-section .container .header {
+.allStudentExams-section .container .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.course-exams-section .container .exams-cards {
+.allStudentExams-section .container .exams-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 3rem 1rem;
@@ -26,7 +26,7 @@
 
 }
 
-.course-exams-section .container .exams-cards .exam-card {
+.allStudentExams-section .container .exams-cards .exam-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -39,9 +39,10 @@
     -moz-transition: var(--main-transition);
     -ms-transition: var(--main-transition);
     -o-transition: var(--main-transition);
+    text-transform: capitalize;
 }
 
-.course-exams-section .container .exams-cards .exam-card:hover {
+.allStudentExams-section .container .exams-cards .exam-card:hover {
     box-shadow: rgb(237, 107, 23, .3) 0px 0px 20px 6px;
     transform: translateY(-5px);
     -webkit-transform: translateY(-5px);
@@ -51,24 +52,22 @@
     cursor: pointer;
 }
 
-.course-exams-section .container .exams-cards .exam-card .exam-img {
+.allStudentExams-section .container .exams-cards .exam-card .exam-img {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center
 }
 
-.course-exams-section .container .exams-cards .exam-card .exam-img img {
+.allStudentExams-section .container .exams-cards .exam-card .exam-img img {
     width: 80%;
-
-
 }
 
-.course-exams-section .container .exams-cards .exam-card h2 {
+.allStudentExams-section .container .exams-cards .exam-card h2 {
     text-transform: capitalize;
 }
 
-.course-exams-section .container .exams-cards .exam-card .exam-header {
+.allStudentExams-section .container .exams-cards .exam-card .exam-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -76,7 +75,31 @@
     flex-direction: row;
 }
 
-.course-exams-section .container .exams-cards .exam-card .exam-header a {
+.allStudentExams-section .container .exams-cards .exam-card .exam-header .tag {
+    padding: .2rem 1rem;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.allStudentExams-section .container .exams-cards .exam-card .exam-header .tag.open {
+    background-color: green;
+}
+
+.allStudentExams-section .container .exams-cards .exam-card .exam-header .tag.ended {
+    background-color: red;
+}
+
+.allStudentExams-section .container .exams-cards .exam-card .exam-header .tag.coming-soon {
+    background-color: var(--mainColor);
+}
+
+.allStudentExams-section .container .exams-cards .exam-card .exam-header a {
     color: var(--mainColor);
     transition: var(--main-transition);
     -webkit-transition: var(--main-transition);
@@ -85,29 +108,29 @@
     -o-transition: var(--main-transition);
 }
 
-.course-exams-section .container .exams-cards .exam-card .exam-header a:hover {
+.allStudentExams-section .container .exams-cards .exam-card .exam-header a:hover {
     color: var(--mainFontColor);
 }
 
-.course-exams-section .container .exams-cards .exam-card p {
+.allStudentExams-section .container .exams-cards .exam-card p {
     margin-bottom: .5rem;
 
 }
 
-.course-exams-section .container .exams-cards .exam-card p span {
+.allStudentExams-section .container .exams-cards .exam-card p span {
     padding-right: .2rem;
     font-weight: 700;
 }
 
-.course-exams-section .container .exams-cards .exam-card button {
+.allStudentExams-section .container .exams-cards .exam-card button {
     margin-top: .5rem;
 }
 
-.course-exams-section .container .exams-cards .exam-card button:disabled {
+.allStudentExams-section .container .exams-cards .exam-card button:disabled {
     background-color: var(--disabledColor);
     border-color: var(--disabledColor);
 }
 
-.course-exams-section .container .exams-cards .exam-card button:disabled:hover {
+.allStudentExams-section .container .exams-cards .exam-card button:disabled:hover {
     color: #fff;
 }

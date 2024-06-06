@@ -1,33 +1,40 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
-import "./style/allExams.css";
-import { useParams } from "react-router";
-import examImg from "../../../../../../../../../../Assets/Images/Exams/exam-img.png";
+import React, { useEffect, useState } from "react";
+import "./style/allStudentExams.css";
+import http from "./../../../../../../../../Helper/http";
+import { useNavigate, useParams } from "react-router";
+import examImg from "../../../../../../../../Assets/Images/Exams/exam-img.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { Link } from "react-router-dom";
-import http from "../../../../../../../../../../Helper/http";
-import { FiEdit } from "react-icons/fi";
-import Tooltip from "@mui/material/Tooltip";
-
-const AllExams = () => {
-  const id = useParams().id;
+import { openToast } from "../../../../../../../../Redux/Slices/toastSlice";
+import { useDispatch } from "react-redux";
+const AllStudentExams = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [exams, setExams] = useState({
     loading: false,
     data: [],
     errorMsg: "",
   });
-  // call all exams
-
+  const [check, setCheck] = useState({
+    loading: false,
+    errorMsg: "",
+  });
+  const { id } = useParams();
   useEffect(() => {
-    setExams({ ...exams, loading: true });
+    setExams({ ...exams, loading: true, errorMsg: "" });
     http
-      .GET(`/courses/${id}/exams`)
-      .then((res) => {
-        setExams({ ...exams, loading: false, data: res.data.data.data });
+      .GET(`courses/${id}/exams`)
+      .then((response) => {
+        setExams({
+          ...exams,
+          loading: false,
+          data: response.data.data.data,
+          errorMsg: "",
+        });
       })
-      .catch((err) => {
+      .catch((error) => {
         setExams({
           ...exams,
           loading: false,
@@ -35,8 +42,6 @@ const AllExams = () => {
         });
       });
   }, []);
-
-  // Function to format the date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
@@ -48,9 +53,38 @@ const AllExams = () => {
 
     return `${day}/${month}/${year}, ${hours}:${minutes} ${ampm}`;
   };
+  const handelCheck = (Examid) => {
+    setCheck({ ...check, loading: true, errorMsg: "" });
+    http
+      .POST(`exams/check/${Examid}`)
+      .then((response) => {
+        setCheck({
+          ...check,
+          loading: false,
+          errorMsg: "",
+        });
+
+        if (response.data.massage === false) {
+          dispatch(
+            openToast({ type: "error", msg: "You Enterd this Exam before" })
+          );
+        } else {
+          navigate(`/${id}/${Examid}`);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setCheck({
+          ...check,
+          loading: false,
+          errorMsg: "Something went wrong",
+        });
+        dispatch(openToast({ type: "error", msg: "Something went wrong" }));
+      });
+  };
 
   return (
-    <section className="course-exams-section">
+    <section className="allStudentExams-section">
       <div className="container">
         {/* handelErrors */}
         {exams.errorMsg !== "" && (
@@ -63,12 +97,6 @@ const AllExams = () => {
             <>
               <div className="header">
                 <h3>Course Exams</h3>
-                <Link
-                  to={"/instructor/course/" + id + "/exams/add"}
-                  className="add-exam-btn main-btn sm"
-                >
-                  Add Exam
-                </Link>
               </div>
               <div className="no-exams">
                 <span>No Exams</span>
@@ -110,12 +138,6 @@ const AllExams = () => {
             <>
               <div className="header">
                 <h3>Course Exams</h3>
-                <Link
-                  to={"/instructor/course/" + id + "/exams/add"}
-                  className="add-exam-btn main-btn sm"
-                >
-                  Add Exam
-                </Link>
               </div>
               <div className="exams-cards">
                 {exams.data.map((exam) => (
@@ -125,14 +147,13 @@ const AllExams = () => {
                     </div>
                     <div className="exam-header">
                       <h2>{exam.title} </h2>
-
-                      <Tooltip title="Edit Exam">
-                        <Link
-                          to={`/instructor/course/${id}/exams/${exam._id}/update`}
-                        >
-                          <FiEdit />
-                        </Link>
-                      </Tooltip>
+                      <span className={`tag ${exam.status}`}>{`${
+                        exam.status === "open"
+                          ? "on going"
+                          : exam.status === "ended"
+                          ? "ended"
+                          : "coming soon"
+                      }`}</span>
                     </div>
                     <p>
                       <span>Type:</span>
@@ -148,22 +169,24 @@ const AllExams = () => {
                     <p>
                       <span>End Time: </span> {formatDate(exam.expiredAt)}
                     </p>
-                    <p>
-                      <span>Status:</span>
-                      {exam.status}
-                    </p>
-                    <p>
-                      <span>Visibility:</span>
-                      {exam.visiable ? "Public" : "Private"}
-                    </p>
-                    {exam.status === "coming-soon" && (
-                      <button disabled className="delete-btn main-btn sm">
-                        Exam Not started yet
-                      </button>
-                    )}
                     {exam.status === "open" && (
-                      <button disabled className="delete-btn main-btn sm">
-                        Exam is open
+                      <button
+                        onClick={() => handelCheck(exam._id)}
+                        className="delete-btn main-btn sm"
+                        disabled={check.loading}
+                      >
+                        {check.loading ? (
+                          <CircularProgress
+                            sx={{
+                              margin: "auto",
+                              display: "block",
+                            }}
+                            size={20}
+                            color="inherit"
+                          />
+                        ) : (
+                          "Take Exam"
+                        )}
                       </button>
                     )}
                     {exam.status === "ended" && (
@@ -184,4 +207,4 @@ const AllExams = () => {
   );
 };
 
-export default AllExams;
+export default AllStudentExams;

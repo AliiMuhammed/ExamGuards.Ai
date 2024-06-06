@@ -165,6 +165,10 @@ a {
   cursor: auto;
 }
 
+.main-btn.sm:disabled:hover svg {
+  background-color: transparent;
+
+}
 
 .main-btn.sm.update {
   background-color: var(--mainFontColor);

@@ -120,6 +120,23 @@ const Allcourses = () => {
                         ? `${course.description.slice(0, 90)}...`
                         : course.description}
                     </p>
+                    <div className="name-and-duration">
+                      {course.instructors.length > 0 && (
+                        <div className="name">
+                          {course.instructors.length > 1
+                            ? "Instructors: "
+                            : "Instructor: "}
+                          {course.instructors.map((instructor) => (
+                            <span>
+                              {instructor.firstName + " " + instructor.lastName}
+                              ,
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="duration">{course.duration} hr</div>
+                    </div>
 
                     <button
                       onClick={() => {

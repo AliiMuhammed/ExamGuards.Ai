@@ -1,0 +1,8 @@
+.list-instructions {
+    list-style: decimal;
+    padding: 1rem;
+}
+
+.list-instructions li {
+    margin-bottom: .5rem;
+}

@@ -100,8 +100,23 @@ const StudentPendingCourses = () => {
                             : course.description}
                         </p>
                         <div className="name-and-duration">
-                          <div className="name">Instructor: Ali Muhammed</div>
-                          <div className="duration">45hr</div>
+                          {course.instructors.length > 0 && (
+                            <div className="name">
+                              {course.instructors.length > 1
+                                ? "Instructors: "
+                                : "Instructor: "}
+                              {course.instructors.map((instructor) => (
+                                <span>
+                                  {instructor.firstName +
+                                    " " +
+                                    instructor.lastName}
+                                  ,
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          <div className="duration">{course.duration} hr</div>
                         </div>
                         <button disabled className="view-course">
                           Pending

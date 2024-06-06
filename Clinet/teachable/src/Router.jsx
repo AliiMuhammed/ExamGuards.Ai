@@ -37,6 +37,8 @@ import InsttructorHome from "./Pages/Instructor/components/Home/InsttructorHome"
 import StudentPendingCourses from "./Pages/Student/components/StudentPendingCourses/StudentPendingCourses";
 import StudentSingleCourse from "./Pages/Student/components/SingleCourse/StudentSingleCourse";
 import StudentExams from "./Pages/Student/components/SingleCourse/components/StudentExams/StudentExams";
+import AllStudentExams from "./Pages/Student/components/SingleCourse/components/StudentExams/components/AllExams/AllStudentExams";
+import TakeExam from "./Pages/Student/components/SingleCourse/components/StudentExams/components/TakeExam/TakeExam";
 
 export const routes = createBrowserRouter([
   {
@@ -128,7 +130,11 @@ export const routes = createBrowserRouter([
                   { path: "modules", element: <CourseModules /> },
                   { path: "lectures", element: <CouresLec /> },
                   { path: "assignments", element: <CourseAss /> },
-                  { path: "exams", element: <StudentExams /> },
+                  {
+                    path: "exams",
+                    element: <StudentExams />,
+                    children: [{ path: "", element: <AllStudentExams /> }],
+                  },
                 ],
               },
               {
@@ -147,6 +153,7 @@ export const routes = createBrowserRouter([
           },
         ],
       },
+      { path: ":id/:Examid", element: <TakeExam /> },
       { path: "test", element: <TestDownload /> },
     ],
     errorElement: <Notfound />,
