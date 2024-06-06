@@ -25,7 +25,6 @@ import CourseAss from "./Pages/Instructor/components/Courses/components/Single C
 import CourseExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/CourseExams";
 import { AddExam } from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AddExam/AddExam";
 import AllExams from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/AllExams/AllExams";
-import VisibilityChangeComponent from "./Pages/VisibilityChangeComponent";
 import SingleExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/SingleExam";
 import UpdateExam from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/UpdateExam/UpdateExam";
 import MoreDetails from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/MoreDetails/MoreDetails";
@@ -52,6 +51,7 @@ export const routes = createBrowserRouter([
           { path: "forgetPassword", element: <ForgetPassword /> },
           { path: "resetPassword/:token", element: <RestPass /> },
           { path: "register", element: <Register /> },
+          { path: "", element: <Navigate to="login" /> }, // Default redirect to login
         ],
       },
       {

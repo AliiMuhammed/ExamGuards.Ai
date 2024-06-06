@@ -4,11 +4,12 @@ import logo from "../../Assets/Images/Logos/exam white-01.png";
 import registerImg from "../../Assets/Images/Register/register-img.png";
 import { TextField, Button } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import { Link ,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import http from "./../../Helper/http";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../Redux/Slices/toastSlice";
 import CircularProgress from "@mui/material/CircularProgress";
+
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Register = () => {
     phone: "",
     password: "",
     passwordConfirm: "",
+    photo: null,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState({
@@ -28,33 +30,35 @@ const Register = () => {
     phone: false,
     password: false,
     passwordConfirm: false,
+    photo: false,
   });
   const [register, setRegister] = useState({
-    loading: false, //
+    loading: false,
     errorMsg: "",
   });
+
   const handleChange = (e) => {
+    const { name, value, files } = e.target;
+
     setError({
       ...error,
-      [e.target.name]: false,
+      [name]: false,
     });
 
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: files ? files[0] : value,
     });
 
-    // Email validation
-    if (e.target.name === "email") {
+    if (name === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const isValidEmail = emailRegex.test(e.target.value);
+      const isValidEmail = emailRegex.test(value);
       setError((prevError) => ({ ...prevError, email: !isValidEmail }));
     }
 
-    // Phone number validation
-    if (e.target.name === "phone") {
+    if (name === "phone") {
       const phoneRegex = /^\d{11}$/;
-      const isValidPhone = phoneRegex.test(e.target.value);
+      const isValidPhone = phoneRegex.test(value);
       setError((prevError) => ({ ...prevError, phone: !isValidPhone }));
     }
   };
@@ -62,7 +66,6 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation logic
     let hasError = false;
     const newErrorState = { ...error };
 
@@ -96,13 +99,27 @@ const Register = () => {
       hasError = true;
     }
 
+    if (!formData.photo) {
+      newErrorState.photo = true;
+      hasError = true;
+    }
+
     if (hasError) {
       setError(newErrorState);
       return;
     }
+
+    const formPayload = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formPayload.append(key, formData[key]);
+    });
+
     setRegister({ ...register, loading: true, errorMsg: "" });
+
     http
-      .POST("users/signup", formData)
+      .POST("users/signup", formPayload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => {
         console.log(res);
         setRegister({ ...register, loading: false, errorMsg: "" });
@@ -127,6 +144,7 @@ const Register = () => {
           })
         );
       });
+
     console.log("Form submitted:", formData);
   };
 
@@ -219,6 +237,15 @@ const Register = () => {
               className="register-input"
               margin="normal"
             />
+            <input
+              type="file"
+              name="photo"
+              onChange={handleChange}
+              accept="image/*"
+              className={error.photo ? "error" : ""}
+              style={{ display: 'block', margin: '20px 0' }}
+            />
+            {error.photo && <p className="error-text">Photo is required</p>}
             <div className="show-pass-login">
               <div className="show-pass">
                 <input

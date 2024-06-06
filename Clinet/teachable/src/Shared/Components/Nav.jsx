@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../Style/nav.css";
 import { Link, useNavigate } from "react-router-dom";
 import userImg from "../../Assets/Images/user.png";
@@ -11,7 +11,7 @@ import { FaRegClock } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 
 const Nav = () => {
-  const refresh = useSelector(state => state.refresh); 
+  const refresh = useSelector((state) => state.refresh);
   const [show, setShow] = useState(false);
   const [showNot, setShowNot] = useState(false);
   const handleClose = () => setShow(false);
@@ -26,7 +26,7 @@ const Nav = () => {
   const naviagate = useNavigate();
   const role = User?.role;
   const handleLogOut = () => {
-    naviagate("/");
+    naviagate("/login");
     removeAuthUser();
   };
   return (
@@ -38,9 +38,7 @@ const Nav = () => {
           }`}
           className="user-profile"
           style={{
-            backgroundImage: `url(${
-              User ? User?.file : userImg
-            })`,
+            backgroundImage: `url(${User ? User?.file : userImg})`,
           }}
         ></Link>
       </Tooltip>
