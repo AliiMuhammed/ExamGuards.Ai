@@ -16,15 +16,19 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../../../../../../../Redux/Slices/toastSlice";
+import FaceRegistrationDialog from "./components/FaceRegistration/FaceRegistration";
+
 const TakeExam = () => {
   const [permissions, setPermissions] = useState(() => {
     const savedPermissions = sessionStorage.getItem("permissions");
     return savedPermissions ? JSON.parse(savedPermissions) : {};
   });
+
   const dispatch = useDispatch();
   const [instructionOpen, setInstructionOpen] = useState(true);
   const [permissionDialogOpen, setPermissionDialogOpen] = useState(false);
   const [fullScreenDialogOpen, setFullScreenDialogOpen] = useState(false);
+  const [faceRegistrationOpen, setFaceRegistrationOpen] = useState(false);
   const [exam, setExam] = useState({
     loading: false,
     exam: null,
@@ -37,6 +41,7 @@ const TakeExam = () => {
   const [submitError, setSubmitError] = useState(""); // New state for submit error message
   const navigate = useNavigate(); // useNavigate hook from react-router
   const [open, setOpen] = useState(false);
+
   const handleInstructionsAgree = () => {
     setInstructionOpen(false);
     if (!permissions.camera || !permissions.microphone) {
@@ -49,6 +54,11 @@ const TakeExam = () => {
   const handlePermissionsGranted = () => {
     setPermissionDialogOpen(false);
     setFullScreenDialogOpen(true);
+  };
+
+  const handleFullScreenAccepted = () => {
+    setFullScreenDialogOpen(false);
+    setFaceRegistrationOpen(true);
   };
 
   useEffect(() => {
@@ -185,6 +195,7 @@ const TakeExam = () => {
       });
     // Submit the formatted exam
   };
+
   console.log(exam.exam);
 
   return (
@@ -209,6 +220,7 @@ const TakeExam = () => {
         {!instructionOpen &&
           !permissionDialogOpen &&
           !fullScreenDialogOpen &&
+          !faceRegistrationOpen &&
           exam.exam &&
           !exam.loading && (
             <>
@@ -317,6 +329,11 @@ const TakeExam = () => {
       <AskFullScreen
         open={fullScreenDialogOpen}
         setOpen={setFullScreenDialogOpen}
+        onFullScreenAccepted={handleFullScreenAccepted} // Add this line
+      />
+      <FaceRegistrationDialog
+        open={faceRegistrationOpen}
+        setOpen={setFaceRegistrationOpen}
       />
     </section>
   );

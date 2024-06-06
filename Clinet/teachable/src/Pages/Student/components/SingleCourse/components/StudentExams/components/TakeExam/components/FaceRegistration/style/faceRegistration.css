@@ -1,0 +1,12 @@
+.camera-registering {
+    width: 100%;
+}
+
+.camera-registering .exam-video {
+    width: 100%;
+}
+
+.errorMsg {
+    width: 100%;
+    color: red;
+}

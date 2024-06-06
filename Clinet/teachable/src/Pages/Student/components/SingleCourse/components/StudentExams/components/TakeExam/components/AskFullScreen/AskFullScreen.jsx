@@ -1,14 +1,14 @@
-import React, { useEffect, useState, forwardRef } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
 import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router";
 import "./style/askFullScreen.css";
-const AskFullScreen = ({ open, setOpen }) => {
+
+const AskFullScreen = ({ open, setOpen, onFullScreenAccepted }) => {
   const navigate = useNavigate();
 
   const [isFullScreen, setLocalFullScreen] = useState(false);
@@ -51,6 +51,9 @@ const AskFullScreen = ({ open, setOpen }) => {
 
   const handleContinue = () => {
     setOpen(false);
+    if (isFullScreen && onFullScreenAccepted) {
+      onFullScreenAccepted();
+    }
   };
 
   useEffect(() => {

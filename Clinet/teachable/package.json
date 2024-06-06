@@ -26,6 +26,7 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
+    "react-webcam": "^7.2.0",
     "redux": "^5.0.1",
     "web-vitals": "^2.1.4",
     "websocket": "^1.0.34",
