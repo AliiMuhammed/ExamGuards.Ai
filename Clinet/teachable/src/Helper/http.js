@@ -93,7 +93,8 @@ const http = {
   },
 };
 
-axios.defaults.baseURL = "https://teachable-58941829a392.herokuapp.com/";
+// axios.defaults.baseURL = "https://teachable-58941829a392.herokuapp.com/";
+axios.defaults.baseURL = "http://127.0.0.1:4000/";
 axios.defaults.withCredentials = true;
 
 export default http;

@@ -17,6 +17,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../../../../../../../Redux/Slices/toastSlice";
 import FaceRegistrationDialog from "./components/FaceRegistration/FaceRegistration";
+import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
+import ObjectDetecion from "./components/ObjectDetection/ObjectDetecion";
+import EyeGaze from "./components/EyeGaze/EyeGaze";
 
 const TakeExam = () => {
   const [permissions, setPermissions] = useState(() => {
@@ -224,6 +227,7 @@ const TakeExam = () => {
           exam.exam &&
           !exam.loading && (
             <>
+
               <div className="right">
                 {exam.errorMsg && (
                   <Alert severity="error">{exam.errorMsg}</Alert>
@@ -281,8 +285,12 @@ const TakeExam = () => {
                   </div>
                 </div>
               </div>
+              <FaceRecognition/>
+              <ObjectDetecion/>
+              <EyeGaze/>
             </>
           )}
+
       </div>
       <Dialog
         open={open}
@@ -330,7 +338,8 @@ const TakeExam = () => {
         open={fullScreenDialogOpen}
         setOpen={setFullScreenDialogOpen}
         onFullScreenAccepted={handleFullScreenAccepted} // Add this line
-      />
+        />
+        
       <FaceRegistrationDialog
         open={faceRegistrationOpen}
         setOpen={setFaceRegistrationOpen}
