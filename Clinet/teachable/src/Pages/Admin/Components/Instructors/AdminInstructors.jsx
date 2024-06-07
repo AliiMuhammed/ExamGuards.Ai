@@ -22,7 +22,7 @@ import Alert from "@mui/material/Alert";
 import { getAuthUser } from "../../../../Helper/Storage";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../../../Redux/Slices/toastSlice";
-
+import { userImage } from "../../../../Assets/Images/user.png";
 function AdminInstructors() {
   const user = getAuthUser();
   const dispatch = useDispatch();
@@ -30,6 +30,8 @@ function AdminInstructors() {
   const [open, setOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
   const [selectedRole, setSelectedRole] = useState("");
+  const [selectedFile, setSelectedFile] = useState(""); // State to hold the selected file name
+
   const [openDeleteDilog, setOpenDeleteDilog] = useState({
     open: false,
     id: "",
@@ -218,15 +220,64 @@ function AdminInstructors() {
       ...prevState,
       errorMsg: "",
     }));
+    setSelectedFile("");
   };
   //add new instructor
   const addInstructor = (data) => {
+    // Initialize error message
+    let errorMsg = "";
+
+    // Validate required fields
+    if (!data.firstName) {
+      errorMsg = "First name is required";
+    } else if (!data.lastName) {
+      errorMsg = "Last name is required";
+    } else if (!data.email) {
+      errorMsg = "Email is required";
+    } else if (!data.password) {
+      errorMsg = "Password is required";
+    } else if (!data.passwordConfirm) {
+      errorMsg = "Password confirmation is required";
+    } else if (data.password !== data.passwordConfirm) {
+      errorMsg = "Passwords do not match";
+    } else if (!data.role) {
+      errorMsg = "Role is required";
+    } else if (!data.photo[0] === "" || !(data.photo instanceof File)) {
+      errorMsg = "Photo is required and should be a valid file";
+    }
+
+    // If there are validation errors, set error message and return early
+    if (errorMsg) {
+      setNewInstructor({
+        ...newInstructor,
+        loading: false,
+        errorMsg: errorMsg,
+      });
+      return;
+    }
+
+    // Proceed with setting loading state and making the HTTP POST request
     setNewInstructor({ ...newInstructor, loading: true });
+    const formData = new FormData();
+    formData.append("firstName", data.firstName);
+    formData.append("lastName", data.lastName);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("passwordConfirm", data.passwordConfirm);
+    formData.append("role", data.role);
+    formData.append("photo", data.photo); // Append the photo file
+
     http
-      .POST("users/signup", data)
+      .POST("users/signup", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         setNewInstructor({ ...newInstructor, loading: false });
         setReloadData(true);
+        setSelectedFile("");
+
         handleClose();
         dispatch(
           openToast({
@@ -239,7 +290,7 @@ function AdminInstructors() {
         setNewInstructor({
           ...newInstructor,
           loading: false,
-          errorMsg: err?.response?.data?.message,
+          errorMsg: err?.response?.data?.message || "An error occurred",
         });
         dispatch(
           openToast({
@@ -249,6 +300,7 @@ function AdminInstructors() {
         );
       });
   };
+
   // table column and options
   const columns = [
     {
@@ -343,7 +395,9 @@ function AdminInstructors() {
     rowsPerPage: 7,
     rowsPerPageOptions: [7, 50, 100],
   };
-
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0].name); // Update selected file name when a new file is selected
+  };
   return (
     <section className="admin-instructors-section">
       <div className="container">
@@ -504,110 +558,116 @@ function AdminInstructors() {
         </DialogActions>
       </Dialog>
       {/* add dialog */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        fullWidth
-        PaperProps={{
-          component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const filteredObj = Object.fromEntries(
-              Object.entries(formJson).filter(([key, value]) => value !== "")
-            );
-            if (Object.keys(filteredObj).length === 0) {
-              setNewInstructor((prevState) => ({
-                ...prevState,
-                errorMsg: "You must enter data to add new instructor",
-              }));
-            } else {
-              newInstructor.errorMsg = "";
-              formJson.role = "instructor";
-              addInstructor(formJson);
-            }
-          },
-        }}
-      >
-        <DialogTitle>Add New Instructor</DialogTitle>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add new Instructor</DialogTitle>
+
         <DialogContent>
-          {newInstructor.errorMsg !== "" && (
+          {newInstructor.errorMsg && (
             <Alert severity="error">{newInstructor.errorMsg}</Alert>
           )}
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            name="firstName"
-            label="First Name"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            name="lastName"
-            label="Last Name"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            name="phone"
-            label="Phone Number"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            name="password"
-            label="Password"
-            type="password"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            name="passwordConfirm"
-            label="Confirm Password"
-            type="password"
-            fullWidth
-            variant="outlined"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button variant="contained" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            type="submit"
-            color="success"
-            disabled={newInstructor.loading}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const data = new FormData(e.currentTarget);
+              addInstructor({
+                firstName: data.get("firstName"),
+                lastName: data.get("lastName"),
+                email: data.get("email"),
+                password: data.get("password"),
+                passwordConfirm: data.get("passwordConfirm"),
+                role: "instructor",
+                photo: data.get("photo"), // Include the photo in the data sent
+              });
+            }}
           >
-            {newInstructor.loading ? (
-              <CircularProgress size={20} color="inherit" />
-            ) : (
-              "Add"
-            )}
-          </Button>
-        </DialogActions>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="firstName"
+              name="firstName"
+              label="First Name"
+              type="text"
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              margin="dense"
+              id="lastName"
+              name="lastName"
+              label="Last Name"
+              type="text"
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              margin="dense"
+              id="email"
+              name="email"
+              label="Email Address"
+              type="email"
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              margin="dense"
+              id="password"
+              name="password"
+              label="Password"
+              type="text"
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              margin="dense"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              label="Confirm Password"
+              type="text"
+              fullWidth
+              variant="outlined"
+            />
+            <input
+              accept="image/*"
+              style={{ display: "none" }}
+              id="photo"
+              name="photo"
+              type="file"
+              onChange={handleFileChange}
+            />
+            <label htmlFor="photo">
+              <Button
+                variant="contained"
+                size="small"
+                style={{ margin: "1rem 0", marginRight: "1rem" }}
+                component="span"
+              >
+                Upload Photo
+              </Button>
+            </label>
+            {selectedFile && <span>Selected file: {selectedFile}</span>}{" "}
+            {/* Display selected file name */}
+            <DialogActions>
+              <button
+                type="button"
+                className="main-btn sm delete"
+                onClick={handleClose}
+              >
+                Cancel
+              </button>
+              <button
+                className="main-btn sm update"
+                type="submit"
+                disabled={newInstructor.loading}
+              >
+                {newInstructor.loading ? (
+                  <CircularProgress size={24} />
+                ) : (
+                  "Add Instructor"
+                )}
+              </button>
+            </DialogActions>
+          </form>
+        </DialogContent>
       </Dialog>
       {/* confirm delete dialog */}
       <Dialog

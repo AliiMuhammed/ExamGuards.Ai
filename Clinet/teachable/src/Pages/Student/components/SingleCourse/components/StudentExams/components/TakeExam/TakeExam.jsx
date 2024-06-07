@@ -20,14 +20,19 @@ import FaceRegistrationDialog from "./components/FaceRegistration/FaceRegistrati
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import ObjectDetecion from "./components/ObjectDetection/ObjectDetecion";
 import EyeGaze from "./components/EyeGaze/EyeGaze";
+import VoiceDetection from "./components/VoiceDetection/VoiceDetection";
+import ChangeWindow from "./components/ChangeWindow/ChangeWindow";
 
 const TakeExam = () => {
   const [permissions, setPermissions] = useState(() => {
     const savedPermissions = sessionStorage.getItem("permissions");
     return savedPermissions ? JSON.parse(savedPermissions) : {};
   });
-
+  const [changeWindow, SetChangeWindow] = useState(false);
+  const [closeFullScreen, SetCloseFullScreen] = useState(false);
   const dispatch = useDispatch();
+  const { Examid } = useParams();
+  const { id } = useParams();
   const [instructionOpen, setInstructionOpen] = useState(true);
   const [permissionDialogOpen, setPermissionDialogOpen] = useState(false);
   const [fullScreenDialogOpen, setFullScreenDialogOpen] = useState(false);
@@ -38,13 +43,14 @@ const TakeExam = () => {
     errorMsg: "",
   });
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const { Examid } = useParams();
-  const { id } = useParams();
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [submitError, setSubmitError] = useState(""); // New state for submit error message
   const navigate = useNavigate(); // useNavigate hook from react-router
   const [open, setOpen] = useState(false);
-
+  const [check, setCheck] = useState({
+    loading: false,
+    errorMsg: "",
+  });
   const handleInstructionsAgree = () => {
     setInstructionOpen(false);
     if (!permissions.camera || !permissions.microphone) {
@@ -145,7 +151,47 @@ const TakeExam = () => {
       [questionIndex]: answerIndex,
     }));
   };
-
+  const handelSetCheatingDetails = (condition) => {
+    http
+      .POST(`detect/addCheating/${Examid}`, {
+        cheatingDetalis: condition,
+      })
+      .then((response) => {})
+      .catch((error) => {
+        setCheck({
+          loading: false,
+          errorMsg: "Something went wrong",
+        });
+      });
+  };
+  const handelIlligelActionTriggered = () => {
+    setLoadingSubmit(true);
+    http
+      .POST(`exams/autoGrade/${Examid}`, {
+        title: exam.exam.title,
+        course: id,
+        Questions: [],
+      })
+      .then((response) => {
+        handelSetCheatingDetails(
+          changeWindow ? "Change Window" : "close Full Screen"
+        );
+        setLoadingSubmit(false);
+        setOpen(false);
+        setSubmitError("");
+      })
+      .catch((error) => {
+        dispatch(
+          openToast({
+            msg: "Something went wrong, please try again later.",
+            type: "error",
+          })
+        );
+        setLoadingSubmit(false);
+        setOpen(false);
+        setSubmitError("Something went wrong, please try again later.");
+      });
+  };
   const handleSubmit = () => {
     setLoadingSubmit(true);
     setSubmitError(""); // Clear any previous submit errors
@@ -198,9 +244,43 @@ const TakeExam = () => {
       });
     // Submit the formatted exam
   };
+  useEffect(() => {
+    if (changeWindow || closeFullScreen) {
+      handelIlligelActionTriggered();
+    }
+  }, [changeWindow, closeFullScreen]);
 
-  console.log(exam.exam);
+  const handelCheck = (Examid) => {
+    setCheck({ ...check, loading: true, errorMsg: "" });
+    http
+      .POST(`exams/check/${Examid}`)
+      .then((response) => {
+        setCheck({
+          ...check,
+          loading: false,
+          errorMsg: "",
+        });
 
+        if (response.data.massage === false) {
+          dispatch(
+            openToast({ type: "error", msg: "You Enterd this Exam before" })
+          );
+          navigate(`/student/home`);
+        }
+      })
+      .catch((error) => {
+        setCheck({
+          ...check,
+          loading: false,
+          errorMsg: "Something went wrong",
+        });
+        dispatch(openToast({ type: "error", msg: "Something went wrong" }));
+      });
+  };
+
+  useEffect(() => {
+    handelCheck();
+  }, []);
   return (
     <section className="takeExam-section">
       {exam.loading && (
@@ -227,7 +307,6 @@ const TakeExam = () => {
           exam.exam &&
           !exam.loading && (
             <>
-
               <div className="right">
                 {exam.errorMsg && (
                   <Alert severity="error">{exam.errorMsg}</Alert>
@@ -285,12 +364,16 @@ const TakeExam = () => {
                   </div>
                 </div>
               </div>
-              <FaceRecognition/>
-              <ObjectDetecion/>
-              <EyeGaze/>
+              {!changeWindow && !closeFullScreen && (
+                <>
+                  <FaceRecognition />
+                  <ObjectDetecion />
+                  <EyeGaze />
+                  <VoiceDetection />
+                </>
+              )}
             </>
           )}
-
       </div>
       <Dialog
         open={open}
@@ -338,12 +421,14 @@ const TakeExam = () => {
         open={fullScreenDialogOpen}
         setOpen={setFullScreenDialogOpen}
         onFullScreenAccepted={handleFullScreenAccepted} // Add this line
-        />
-        
+        SetCloseFullScreen={SetCloseFullScreen}
+      />
+
       <FaceRegistrationDialog
         open={faceRegistrationOpen}
         setOpen={setFaceRegistrationOpen}
       />
+      <ChangeWindow SetChangeWindow={SetChangeWindow} />
     </section>
   );
 };

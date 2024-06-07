@@ -18,12 +18,14 @@ const MyToast = () => {
       open={open}
       autoHideDuration={3000}
       onClose={handleClose}
-      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      sx={{ width:"30%" }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
       <Alert
         onClose={handleClose}
         severity={type}
         sx={{ width: "100%" }}
+        variant="filled"
       >
         {msg}
       </Alert>

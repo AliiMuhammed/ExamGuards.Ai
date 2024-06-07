@@ -15,15 +15,13 @@ const SingleCourse = () => {
 
   useEffect(() => {
     const path = location.pathname;
-    
+
     if (path.includes("/modules")) {
       setValue(0);
     } else if (path.includes("/lectures")) {
       setValue(1);
-    } else if (path.includes("/assignments")) {
-      setValue(2);
     } else if (path.includes("/exams")) {
-      setValue(3);
+      setValue(2);
     } else {
       setValue(0); // Default to the first tab if no match is found
     }
@@ -55,11 +53,6 @@ const SingleCourse = () => {
             className="course-tabs"
             label="Lectures"
             href={`/instructor/course/${id}/lectures`}
-          />
-          <LinkTab
-            className="course-tabs"
-            label="Assignments"
-            href={`/instructor/course/${id}/assignments`}
           />
           <LinkTab
             className="course-tabs"

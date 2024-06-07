@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import http from '../../../../../../../../../../Helper/http'; // Adjust the path as per your project structure
 import { useParams } from 'react-router';
-import { getAuthUser } from '../../../../../../../../../../Helper/Storage';
 import { openToast } from '../../../../../../../../../../Redux/Slices/toastSlice';
 import { useDispatch } from 'react-redux';
 
@@ -9,7 +8,6 @@ const EyeGaze = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const { Examid } = useParams();
-  const userImage = getAuthUser().data.data.user.file;
   const [capturedImage, setCapturedImage] = useState(null);
   const dispatch = useDispatch();
 
@@ -90,7 +88,7 @@ const EyeGaze = () => {
           console.log('Response from server:', response.data);
 
           // Handle response
-          if (response.data.message !== "No Cheating detected") {
+          if (response.data.message !== "No cheating detected") {
             dispatch(openToast({
               msg: "Eye gaze detected",
               type: "error",

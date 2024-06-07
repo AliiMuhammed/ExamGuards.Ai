@@ -8,7 +8,12 @@ import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router";
 import "./style/askFullScreen.css";
 
-const AskFullScreen = ({ open, setOpen, onFullScreenAccepted }) => {
+const AskFullScreen = ({
+  open,
+  setOpen,
+  onFullScreenAccepted,
+  SetCloseFullScreen,
+}) => {
   const navigate = useNavigate();
 
   const [isFullScreen, setLocalFullScreen] = useState(false);
@@ -61,6 +66,7 @@ const AskFullScreen = ({ open, setOpen, onFullScreenAccepted }) => {
       setLocalFullScreen(!!document.fullscreenElement);
       if (!document.fullscreenElement) {
         setExamCanceled(true);
+        SetCloseFullScreen(true);
         setShowFullScreenDialog(false);
       }
     };

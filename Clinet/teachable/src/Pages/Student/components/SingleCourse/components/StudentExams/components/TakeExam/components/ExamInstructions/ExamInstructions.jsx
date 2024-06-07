@@ -24,35 +24,34 @@ const ExamInstructions = ({ open, setOpen, onAgree }) => {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <div>
-              <ul className="list-instructions">
-                <li>
-                  Students are required to keep their webcam and microphone on
-                  all the time throughout the examination.
-                </li>
-                <li>
-                  The student’s front side needs to be visible in front of the
-                  camera.
-                </li>
-                <li>
-                  The students are advised to not move their head or eye without
-                  necessity. (looking center most of the time)
-                </li>
-                <li>
-                  During the exam, no talking is allowed, that is reading
-                  questions out loud is not allowed.
-                </li>
-                <li>
-                  Objects like phones, smartwatches, sunglasses, masks,
-                  headphones, hats, books are not allowed.
-                </li>
-                <li>
-                  Multiple faces on the screen are not allowed, and if there’s
-                  no face detected too.
-                </li>
-                <li>
-                  Screenshots and changing windows are blocked during the exam.
-                </li>
-              </ul>
+              <div>
+                <span>1.</span> Students are required to keep their webcam and
+                microphone on all the time throughout the examination.
+              </div>
+              <div>
+                <span>2.</span> The student’s front side needs to be visible in
+                front of the camera.
+              </div>
+              <div>
+                <span>3.</span> The students are advised to not move their head
+                or eye without necessity. (looking center most of the time)
+              </div>
+              <div>
+                <span>4.</span> During the exam, no talking is allowed, that is
+                reading questions out loud is not allowed.
+              </div>
+              <div>
+                <span>5.</span> Objects like phones, smartwatches, sunglasses,
+                masks, headphones, hats, books are not allowed.
+              </div>
+              <div>
+                <span>6.</span> Multiple faces on the screen are not allowed,
+                and if there’s no face detected too.
+              </div>
+              <div>
+                <span>7.</span> Changing windows or Close full screen are
+                blocked during the exam.
+              </div>
             </div>
           </DialogContentText>
         </DialogContent>

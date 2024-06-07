@@ -75,9 +75,6 @@ const SideMenu = ({ toggled, setToggled }) => {
               All Courses
             </MenuItem>
           </SubMenu>
-          <MenuItem onClick={() => setToggled(false)} icon={<BiSolidReport />}>
-            Reports
-          </MenuItem>
           <MenuItem onClick={() => setToggled(false)} icon={<IoIosArchive />}>
             Archive
           </MenuItem>

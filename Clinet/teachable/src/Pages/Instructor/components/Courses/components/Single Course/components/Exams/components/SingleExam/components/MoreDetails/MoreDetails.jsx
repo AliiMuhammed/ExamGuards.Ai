@@ -65,6 +65,7 @@ const MoreDetails = () => {
     http
       .GET(`grades/oneExam/${id}/${Examid}`)
       .then((res) => {
+        console.log(res.data.data.grades)
         setStudents({
           data: res.data.data.grades,
           loading: false,

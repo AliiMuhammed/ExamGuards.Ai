@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink, Outlet, useParams, useLocation } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import "./style/studentSingleCoures.css"
+import "./style/studentSingleCoures.css";
 function LinkTab(props) {
   return <Tab component={NavLink} to={props.href} {...props} />;
 }
@@ -19,10 +19,8 @@ const StudentSingleCourse = () => {
       setValue(0);
     } else if (path.includes("/lectures")) {
       setValue(1);
-    } else if (path.includes("/assignments")) {
-      setValue(2);
     } else if (path.includes("/exams")) {
-      setValue(3);
+      setValue(2);
     } else {
       setValue(0); // Default to the first tab if no match is found
     }
@@ -32,7 +30,6 @@ const StudentSingleCourse = () => {
   };
   return (
     <section className="student-single-course-section">
-
       <div className="Tabs">
         <Tabs
           value={value}
@@ -54,11 +51,7 @@ const StudentSingleCourse = () => {
             label="Lectures"
             href={`/student/${name}/${id}/lectures`}
           />
-          <LinkTab
-            className="course-tabs"
-            label="Assignments"
-            href={`/student/${name}/${id}/assignments`}
-          />
+         
           <LinkTab
             className="course-tabs"
             label="Exams"
