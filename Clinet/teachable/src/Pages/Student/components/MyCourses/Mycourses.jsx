@@ -92,7 +92,7 @@ const Mycourses = () => {
                                 ? "Instructors: "
                                 : "Instructor: "}
                               {course.instructors.map((instructor) => (
-                                <span>
+                                <span key={instructor}>
                                   {instructor.firstName +
                                     " " +
                                     instructor.lastName}

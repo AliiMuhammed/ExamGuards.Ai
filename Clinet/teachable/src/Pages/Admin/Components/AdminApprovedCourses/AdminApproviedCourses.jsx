@@ -52,7 +52,9 @@ const AdminApprovedCourses = () => {
           newSet.delete(id);
           return newSet;
         });
-        dispatch(openToast({ msg: "Course approved successfully", type: "success" }));
+        dispatch(
+          openToast({ msg: "Course approved successfully", type: "success" })
+        );
         dispatch(triggerRefresh());
       })
       .catch((err) => {
@@ -70,47 +72,64 @@ const AdminApprovedCourses = () => {
       <div className="container">
         {courses.errorMsg && <Alert severity="error">{courses.errorMsg}</Alert>}
         {courses.loading ? (
-          <CircularProgress sx={{ margin: "auto", display: "block" }} size={60} color="inherit" />
+          <CircularProgress
+            sx={{ margin: "auto", display: "block" }}
+            size={60}
+            color="inherit"
+          />
         ) : (
           <>
-            <div className="header">
-              <h3>Approved Courses</h3>
-            </div>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Course Name</TableCell>
-                    <TableCell>Student Name</TableCell>
-                    <TableCell>Student Email</TableCell>
-                    <TableCell>Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {courses.data.map((row) => (
-                    <TableRow key={row.courseId + row.studentId}>
-                      <TableCell>{row.courseName}</TableCell>
-                      <TableCell>{row.studentName}</TableCell>
-                      <TableCell>{row.studentEmail}</TableCell>
-                      <TableCell>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handleApprove(row.courseId, row.studentId)}
-                          disabled={loadingIds.has(`${row.courseId}-${row.studentId}`)}
-                        >
-                          {loadingIds.has(`${row.courseId}-${row.studentId}`) ? (
-                            <CircularProgress size={20} color="inherit" />
-                          ) : (
-                            "Approve"
-                          )}
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            {courses.data.length === 0 ? (
+              <Alert severity="info">No courses found</Alert>
+            ) : (
+              <>
+                <div className="header">
+                  <h1>Approved Courses</h1>
+                </div>
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Course Name</TableCell>
+                        <TableCell>Student Name</TableCell>
+                        <TableCell>Student Email</TableCell>
+                        <TableCell>Action</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {courses.data.map((row) => (
+                        <TableRow key={row.courseId + row.studentId}>
+                          <TableCell>{row.courseName}</TableCell>
+                          <TableCell>{row.studentName}</TableCell>
+                          <TableCell>{row.studentEmail}</TableCell>
+                          <TableCell>
+                            <button
+                              className="main-btn sm"
+                              variant="contained"
+                              color="primary"
+                              onClick={() =>
+                                handleApprove(row.courseId, row.studentId)
+                              }
+                              disabled={loadingIds.has(
+                                `${row.courseId}-${row.studentId}`
+                              )}
+                            >
+                              {loadingIds.has(
+                                `${row.courseId}-${row.studentId}`
+                              ) ? (
+                                <CircularProgress size={20} color="inherit" />
+                              ) : (
+                                "Approve"
+                              )}
+                            </button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </>
+            )}
           </>
         )}
       </div>

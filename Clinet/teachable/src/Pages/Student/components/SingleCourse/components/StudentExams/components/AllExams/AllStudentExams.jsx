@@ -20,6 +20,7 @@ const AllStudentExams = () => {
   const [check, setCheck] = useState({
     loading: false,
     errorMsg: "",
+    value: null,
   });
   const { id } = useParams();
   const { name } = useParams();
@@ -63,6 +64,7 @@ const AllStudentExams = () => {
           ...check,
           loading: false,
           errorMsg: "",
+          value: response.data.massage,
         });
 
         if (response.data.massage === false) {
@@ -77,6 +79,7 @@ const AllStudentExams = () => {
         console.log(error);
         setCheck({
           ...check,
+          value: null,
           loading: false,
           errorMsg: "Something went wrong",
         });

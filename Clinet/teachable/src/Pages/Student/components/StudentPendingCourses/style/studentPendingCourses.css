@@ -9,7 +9,10 @@
     flex-direction: column;
     height: 100%;
 }
-
+.studentPendingCourses-section .container .courses-content
+{
+    height: 100%;
+}
 .studentPendingCourses-section .container .pendingCourses-header {
     display: flex;
     justify-content: space-between;

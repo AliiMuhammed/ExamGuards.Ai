@@ -40,6 +40,8 @@ import AllStudentExams from "./Pages/Student/components/SingleCourse/components/
 import TakeExam from "./Pages/Student/components/SingleCourse/components/StudentExams/components/TakeExam/TakeExam";
 import ExamResults from "./Pages/Student/components/SingleCourse/components/StudentExams/components/ExamResults/ExamResults";
 import AdminApproviedCourses from "./Pages/Admin/Components/AdminApprovedCourses/AdminApproviedCourses";
+import Reports from "./Pages/Reports/Reports";
+import PrintReport from "./Pages/Instructor/components/Courses/components/Single Course/components/Exams/components/SingleExam/components/MoreDetails/Components/PrintReport";
 
 export const routes = createBrowserRouter([
   {
@@ -111,6 +113,10 @@ export const routes = createBrowserRouter([
                 ],
               },
               {
+                path: "reports",
+                element: <Reports />,
+              },
+              {
                 element: <GuestProfile />,
                 children: [{ path: "profile/:id", element: <UserProfile /> }],
               },
@@ -159,6 +165,7 @@ export const routes = createBrowserRouter([
           },
         ],
       },
+      { path: ":Examid/cheatingReport/:stuID", element: <PrintReport /> },
       { path: ":id/:Examid", element: <TakeExam /> },
       { path: "test", element: <TestDownload /> },
     ],

@@ -125,3 +125,12 @@
 .more-details-exam .container .all-students-exam .status.fail {
     color: red;
 }
+
+.more-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    width: 100%;
+}

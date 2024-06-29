@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import http from "./../../../../Helper/http";
+import http from "../../../../Helper/http";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import "./style/studentPendingCourses.css";
+
 const StudentPendingCourses = () => {
   const [myCourses, setMyCourses] = useState({
     courses: [],
     loading: false,
     errorMsg: "",
   });
+
   useEffect(() => {
     setMyCourses({ ...myCourses, loading: true });
     http
@@ -20,6 +22,7 @@ const StudentPendingCourses = () => {
           loading: false,
           errorMsg: "",
         });
+        console.log("Fetched courses:", res.data.data.courses); // Debug log for fetched data
       })
       .catch((err) => {
         setMyCourses({
@@ -29,10 +32,12 @@ const StudentPendingCourses = () => {
         });
       });
   }, []);
-  const allCoursesInactive = myCourses.courses.every(
+
+  // Check if all courses are inactive
+  const allCoursesInactive = myCourses.courses.some(
     (course) => !course.status
   );
-  console.log(myCourses.courses);
+  console.log("All courses inactive:", allCoursesInactive); // Debug log for allCoursesInactive
 
   return (
     <section className="studentPendingCourses-section">
@@ -40,11 +45,12 @@ const StudentPendingCourses = () => {
         <div className="pendingCourses-header">
           <h1>My Pending Courses</h1>
         </div>
-        {myCourses.errorMsg !== "" && (
+        
+        {myCourses.errorMsg && (
           <Alert severity="error">{myCourses.errorMsg}</Alert>
         )}
-        {/* if data is not empty and loading true */}
-        {myCourses.courses.length !== 0 && myCourses.loading && (
+
+        {myCourses.loading && (
           <CircularProgress
             sx={{
               margin: "auto",
@@ -54,32 +60,20 @@ const StudentPendingCourses = () => {
             color="inherit"
           />
         )}
-        {/* if data is empty and loading  true*/}
-        {myCourses.courses.length === 0 && myCourses.loading && (
-          <CircularProgress
-            sx={{
-              margin: "auto",
-              display: "block",
-            }}
-            size={60}
-            color="inherit"
-          />
-        )}
-        {/* if data empty and not loading */}
+
         {!myCourses.loading && myCourses.courses.length === 0 && (
           <div className="no-courses">
             <span>You are not registered for any course</span>
             <HiOutlineArchiveBoxXMark />
           </div>
         )}
-        {/* if data is not empty and not loading */}
-        {myCourses.courses.length !== 0 && !myCourses.loading && (
+
+        {!myCourses.loading && myCourses.courses.length > 0 && (
           <div className="courses-content">
-            {allCoursesInactive ? (
+            {!allCoursesInactive ? (
               <div className="no-courses">
                 <span>
-                  You are not registered for any course or there is some courses
-                  are pending
+                  You are not registered for any course or there are some courses pending
                 </span>
                 <HiOutlineArchiveBoxXMark />
               </div>
@@ -106,7 +100,7 @@ const StudentPendingCourses = () => {
                                 ? "Instructors: "
                                 : "Instructor: "}
                               {course.instructors.map((instructor) => (
-                                <span>
+                                <span key={instructor._id}>
                                   {instructor.firstName +
                                     " " +
                                     instructor.lastName}
@@ -115,7 +109,6 @@ const StudentPendingCourses = () => {
                               ))}
                             </div>
                           )}
-
                           <div className="duration">{course.duration} hr</div>
                         </div>
                         <button disabled className="view-course">

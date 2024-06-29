@@ -51,7 +51,7 @@ const EyeGaze = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       captureImage();
-    }, 2000);
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, [captureImage]);

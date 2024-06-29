@@ -53,7 +53,7 @@ const ObjectDetection = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       captureImage();
-    }, 1000);
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, [captureImage]);

@@ -27,10 +27,12 @@ import {
   DialogActions,
 } from "@mui/material";
 import http from "../../../../../../../../../../../../../Helper/http";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { openToast } from "../../../../../../../../../../../../../Redux/Slices/toastSlice";
 import { triggerRefresh } from "../../../../../../../../../../../../../Redux/Slices/refreshSlice";
+import PrintReport from "./PrintReport";
+import { Link } from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -367,6 +369,8 @@ export default function EnhancedTable({ data = [], examTotalGrades = 0 }) {
     setOpen({ ...open, open: false, id: "" });
   };
 
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -427,13 +431,23 @@ export default function EnhancedTable({ data = [], examTotalGrades = 0 }) {
                       </div>
                     </TableCell>
                     <TableCell align="left">
-                      <button
-                        className="main-btn sm"
-                        // onClick={() => handleGrade(row.stuID)}
-                        onClick={() => setOpen({ open: true, id: row.stuID })}
-                      >
-                        Update Grade
-                      </button>
+                      <div className="more-btns">
+                        <button
+                          className="main-btn sm"
+                          // onClick={() => handleGrade(row.stuID)}
+                          onClick={() => setOpen({ open: true, id: row.stuID })}
+                        >
+                          Update Grade
+                        </button>
+                        <Link
+                          className="main-btn sm"
+                          // onClick={() => handleGrade(row.stuID)}
+                          // onClick={() => handelCheatingReport(row.stuID)}
+                          to={`/${Examid}/cheatingReport/${row.stuID}`}
+                        >
+                          Cheating Report
+                        </Link>
+                      </div>
                     </TableCell>
                   </TableRow>
                 );
