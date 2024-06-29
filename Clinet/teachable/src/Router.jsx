@@ -38,6 +38,8 @@ import StudentSingleCourse from "./Pages/Student/components/SingleCourse/Student
 import StudentExams from "./Pages/Student/components/SingleCourse/components/StudentExams/StudentExams";
 import AllStudentExams from "./Pages/Student/components/SingleCourse/components/StudentExams/components/AllExams/AllStudentExams";
 import TakeExam from "./Pages/Student/components/SingleCourse/components/StudentExams/components/TakeExam/TakeExam";
+import ExamResults from "./Pages/Student/components/SingleCourse/components/StudentExams/components/ExamResults/ExamResults";
+import AdminApproviedCourses from "./Pages/Admin/Components/AdminApprovedCourses/AdminApproviedCourses";
 
 export const routes = createBrowserRouter([
   {
@@ -66,6 +68,7 @@ export const routes = createBrowserRouter([
               { path: "instructors", element: <AdminInstructors /> },
               { path: "admins", element: <Admins /> },
               { path: "courses", element: <AdminCourses /> },
+              { path: "approvedCourses", element: <AdminApproviedCourses /> },
               {
                 element: <GuestProfile />,
                 children: [{ path: "profile/:id", element: <UserProfile /> }],
@@ -133,7 +136,10 @@ export const routes = createBrowserRouter([
                   {
                     path: "exams",
                     element: <StudentExams />,
-                    children: [{ path: "", element: <AllStudentExams /> }],
+                    children: [
+                      { path: "", element: <AllStudentExams /> },
+                      { path: ":Examid", element: <ExamResults /> },
+                    ],
                   },
                 ],
               },

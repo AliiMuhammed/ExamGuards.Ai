@@ -7,11 +7,9 @@ import "./Style/sideMenu.css";
 import { FaHome } from "react-icons/fa";
 import { IoPerson, IoPieChartSharp } from "react-icons/io5";
 import { BiSolidReport } from "react-icons/bi";
-import {
-  IoIosArrowBack,
-  IoIosArchive,
-} from "react-icons/io";
+import { IoIosArrowBack, IoIosArchive } from "react-icons/io";
 import { FaBook } from "react-icons/fa6";
+import { FaCheckSquare } from "react-icons/fa";
 
 function SideMenu() {
   const [sideMenuToggle, setSideMenuToggle] = useState(false);
@@ -31,7 +29,11 @@ function SideMenu() {
           <img src={logo} loading="lazy" alt="logo" />
         </div>
         <button onClick={handleToggle} className="toggle">
-          {sideMenuToggle ? <img src={iconW} className="open-icon" alt="icon" /> : <IoIosArrowBack />}
+          {sideMenuToggle ? (
+            <img src={iconW} className="open-icon" alt="icon" />
+          ) : (
+            <IoIosArrowBack />
+          )}
         </button>
       </div>
       <Menu closeOnClick={true}>
@@ -64,6 +66,12 @@ function SideMenu() {
         </SubMenu>
         <MenuItem component={<NavLink to="/admin/courses" />} icon={<FaBook />}>
           Courses
+        </MenuItem>
+        <MenuItem
+          component={<NavLink to="/admin/approvedCourses" />}
+          icon={<FaCheckSquare />}
+        >
+          Approve
         </MenuItem>
         <MenuItem icon={<BiSolidReport />}> Reports </MenuItem>
         <MenuItem icon={<IoIosArchive />}> Archive </MenuItem>

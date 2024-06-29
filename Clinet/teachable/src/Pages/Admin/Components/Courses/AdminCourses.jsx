@@ -28,6 +28,7 @@ const AdminCourses = () => {
   const dispatch = useDispatch();
 
   const [loadingStates, setLoadingStates] = useState({});
+  const [loading, setLoading] = useState({});
   const [open, setOpen] = useState(false);
   const [reloadData, setReloadData] = useState(true);
   const [SelectedIntsructor, setSelectedIntsructor] = useState("");
@@ -84,6 +85,7 @@ const AdminCourses = () => {
             errorMsg: "",
           });
           setReloadData(false);
+          console.log(res.data.data.data);
         })
         .catch((err) => {
           setCourses({
@@ -341,6 +343,34 @@ const AdminCourses = () => {
       });
   }, []);
 
+  
+  const handelDeleteAll = (id) => {
+    setLoading({ ...loading, [id]: true });
+
+    http
+      .PATCH(`courses/removeAllStudents/${id}`)
+      .then((res) => {
+        setLoading({ ...loading, [id]: false });
+
+        setReloadData(true);
+        dispatch(
+          openToast({
+            msg: "Course deleted successfully",
+            type: "success",
+          })
+        );
+      })
+      .catch((err) => {
+        setLoading({ ...loading, [id]: false });
+
+        dispatch(
+          openToast({
+            msg: "Something went wrong",
+            type: "error",
+          })
+        );
+      });
+  };
   // table column and options
   const columns = [
     {
@@ -375,6 +405,42 @@ const AdminCourses = () => {
     },
     {
       name: "duration",
+    },
+    {
+      name: "students",
+      options: {
+        customBodyRender: (value) => {
+          return <div>{value.length}</div>;
+        },
+      },
+    },
+    {
+      name: "action",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          const studentLength =
+            courses.data[tableMeta.rowIndex]?.students.length;
+          const courseId = courses.data[tableMeta.rowIndex]?._id;
+          let status;
+
+          const isLoading = loading[courseId];
+          if (isLoading) {
+            status = <CircularProgress size={20} color="inherit" />;
+          } else {
+            status = "Delete All";
+          }
+          return (
+            <button
+              style={{ width: "150px" }}
+              onClick={() => handelDeleteAll(courseId)}
+              disabled={isLoading || studentLength === 0}
+              className={" main-btn sm delete"}
+            >
+              {status}
+            </button>
+          );
+        },
+      },
     },
     {
       name: "active",

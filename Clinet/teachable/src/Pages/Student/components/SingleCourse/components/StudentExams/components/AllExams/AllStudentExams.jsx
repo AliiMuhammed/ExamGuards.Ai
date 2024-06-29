@@ -22,6 +22,7 @@ const AllStudentExams = () => {
     errorMsg: "",
   });
   const { id } = useParams();
+  const { name } = useParams();
   useEffect(() => {
     setExams({ ...exams, loading: true, errorMsg: "" });
     http
@@ -191,7 +192,7 @@ const AllStudentExams = () => {
                     )}
                     {exam.status === "ended" && (
                       <Link
-                        to={"/instructor/course/" + id + "/exams/" + exam._id}
+                        to={`/student/${name}/${id}/exams/${exam._id}`}
                         className="delete-btn main-btn sm"
                       >
                         More Details
