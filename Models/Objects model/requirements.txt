@@ -1,0 +1,8 @@
+Flask
+Flask-Cors
+numpy
+opencv-python-headless
+ultralytics
+gunicorn
+cloudinary
+pandas
