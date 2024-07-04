@@ -1,0 +1,23 @@
+//- welcome.pug
+
+extends baseEmail
+
+block content
+  p Hi #{firstName} ,
+  p Welcome to Our Learning Platform! 🎓🌟
+  p We're excited to have you join our community. Get ready to embark on an amazing learning journey!
+  table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+    tbody
+      tr
+        td(align='left')
+          table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td
+  p Please verify your email address to complete your registration. Check your inbox soon!
+  p If you need any assistance, feel free to reach out to us.
+  p - The Learning Platform Team
+
+//- Email template adapted from https://github.com/leemunroe/responsive-html-email-template
+//- Converted from HTML using https://html2pug.now.sh/
+
