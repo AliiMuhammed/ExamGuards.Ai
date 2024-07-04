@@ -1,0 +1,10 @@
+Flask==2.0.3
+Flask-SocketIO==5.3.6
+Flask-Cors>=3.0.0
+numpy==1.26.4
+opencv-python-headless
+pandas==2.2.2
+gunicorn==21.2.0
+werkzeug==2.0.2
+dlib==19.24.1
+cloudinary==1.29.0
