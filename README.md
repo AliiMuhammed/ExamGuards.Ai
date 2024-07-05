@@ -42,33 +42,33 @@ __[Watch the demo](https://drive.google.com/file/d/1F6URYNpcUOOD0Li5bVuAo4vPESai
 
 - __Login__:
   
-![login Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/da294592-cd12-4008-9a3b-b5a7d9772c51)
+![login Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/da294592-cd12-4008-9a3b-b5a7d9772c51){:style="width: 50%;"}
 
 - __My Courses__:
   
-![Courses Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/adf07e21-d162-4869-ba85-04ef8c43d942)
+![Courses Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/adf07e21-d162-4869-ba85-04ef8c43d942){:style="width: 50%;"}
 
 - __Course Modules__:
   
-![Modules Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/115111cb-41fe-4100-9033-4becaf9dfdca)
+![Modules Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/115111cb-41fe-4100-9033-4becaf9dfdca){:style="width: 50%;"}
 
 - __Student Profile__:
   
-![Profile Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/258653a0-6229-4d02-a776-7910b2f1d0a4)
+![Profile Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/258653a0-6229-4d02-a776-7910b2f1d0a4){:style="width: 50%;"}
 
 - __Exam Example__:
   
-![Profile Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/7cb6ae6f-b97a-4e37-bac2-2e2044452f95)
+![Profile Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/7cb6ae6f-b97a-4e37-bac2-2e2044452f95){:style="width: 50%;"}
 
 - __Cheating Example__:
   
-![Profile Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/45eac06c-bd55-4044-8902-f59f2bce6019)
+![Profile Screenshot](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/45eac06c-bd55-4044-8902-f59f2bce6019){:style="width: 50%;"}
 
 - __More Example__:
   
-![screencapture-localhost-3000-instructor-course-6663bb4189203a28807d3bec-exams-6663d987cf6ee786b9092113-2024-07-04-19_15_40](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/d76e9daa-fb47-44c1-b50f-4ef5247d83f1)
+![screencapture-localhost-3000-instructor-course-6663bb4189203a28807d3bec-exams-6663d987cf6ee786b9092113-2024-07-04-19_15_40](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/d76e9daa-fb47-44c1-b50f-4ef5247d83f1){:style="width: 50%;"}
 
-![d)](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/3933032f-3613-429d-a6d2-58300ab7553e)
+![d)](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/3933032f-3613-429d-a6d2-58300ab7553e){:style="width: 50%;"}
 
 
 ## Run Locally
