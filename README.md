@@ -69,7 +69,7 @@ __[Watch the demo](https://drive.google.com/file/d/1F6URYNpcUOOD0Li5bVuAo4vPESai
 ![screencapture-localhost-3000-instructor-course-6663bb4189203a28807d3bec-exams-6663d987cf6ee786b9092113-2024-07-04-19_15_40](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/d76e9daa-fb47-44c1-b50f-4ef5247d83f1)
 
 ![d)](https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/3933032f-3613-429d-a6d2-58300ab7553e)
-<img src="https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/d76e9daa-fb47-44c1-b50f-4ef5247d83f1" alt="More Example" width="300px">
+<img src="https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/d76e9daa-fb47-44c1-b50f-4ef5247d83f1" alt="More Example" width="600px">
 
 
 
