@@ -44,25 +44,31 @@ __[Watch the demo](https://drive.google.com/file/d/1F6URYNpcUOOD0Li5bVuAo4vPESai
   
 <img src="https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/da294592-cd12-4008-9a3b-b5a7d9772c51" alt="login Screenshot" width="600px">
 
+
 - __My Courses__:
   
 <img src="https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/adf07e21-d162-4869-ba85-04ef8c43d942" alt="Courses Screenshot" width="600px">
+
 
 - __Course Modules__:
   
 <img src="https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/115111cb-41fe-4100-9033-4becaf9dfdca" alt="Modules Screenshot" width="600px">
 
+
 - __Student Profile__:
   
 <img src="https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/258653a0-6229-4d02-a776-7910b2f1d0a4" alt="Profile Screenshot" width="600px">
+
 
 - __Exam Example__:
   
 <img src="https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/7cb6ae6f-b97a-4e37-bac2-2e2044452f95" alt="Exam Example" width="600px">
 
+
 - __Cheating Example (Not the same student)__:
   
 <img src="https://github.com/AliiMuhammed/ExamGuards.Ai/assets/93393629/45eac06c-bd55-4044-8902-f59f2bce6019" alt="Cheating Example"  width="600px" >
+
 
 - __More Example__:
   
